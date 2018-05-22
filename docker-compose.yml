@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  sedio.server:
+    image: ${DOCKER_REGISTRY}sedioserver
+    build:
+      context: .
+      dockerfile: src/Sedio.Server/Dockerfile
