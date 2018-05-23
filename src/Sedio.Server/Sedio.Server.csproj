@@ -1,18 +1,12 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <UserSecretsId>f60fd89d-88e2-4b2e-8f3c-536e7c121ee0</UserSecretsId>
-    <RuntimeIdentifiers>win-x64;osx-x64;linux-x64</RuntimeIdentifiers>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <LangVersion>7.3</LangVersion>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.8.1" />
@@ -26,11 +20,18 @@
     <PackageReference Include="NSwag.AspNetCore" Version="11.17.9" />
     <PackageReference Include="Rafty" Version="0.4.3" />
   </ItemGroup>
-
+  
   <ItemGroup>
     <ProjectReference Include="..\Sedio.Contracts\Sedio.Contracts.csproj" />
     <ProjectReference Include="..\Sedio.Core\Sedio.Core.csproj" />
-    <ProjectReference Include="..\Sedio.Server\Sedio.Server.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="Logic\Api\Dns\" />
+    <Folder Include="Logic\Api\Validation\" />
+    <Folder Include="Logic\Model\" />
+    <Folder Include="Dns\" />
+    <Folder Include="Http\" />
   </ItemGroup>
 
 </Project>

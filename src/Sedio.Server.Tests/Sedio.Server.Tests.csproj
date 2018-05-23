@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Sedio.Contracts\Sedio.Contracts.csproj" />
+    <ProjectReference Include="..\Sedio.Server\Sedio.Server.csproj" />
   </ItemGroup>
 
 </Project>
