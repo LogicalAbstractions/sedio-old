@@ -11,7 +11,6 @@ namespace Sedio.Server.Http
 {
     [ProducesJson]
     [Route("api/services")]
-    [ApiController]
     public class ServicesController : Controller
     {
         [HttpGet]

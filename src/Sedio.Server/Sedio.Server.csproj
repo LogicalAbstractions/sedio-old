@@ -29,6 +29,7 @@
   <ItemGroup>
     <Folder Include="Model\" />
     <Folder Include="Dns\" />
+    <Folder Include="Execution\" />
   </ItemGroup>
 
 </Project>

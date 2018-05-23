@@ -25,7 +25,7 @@ namespace Sedio
     {
         public static async Task<int> Main(string[] arguments)
         {
-            using (var host = new ServerHost(arguments))
+            using (var host = new SedioHost(arguments))
             {
                 await host.Run(CancellationToken.None);
                 return 0;

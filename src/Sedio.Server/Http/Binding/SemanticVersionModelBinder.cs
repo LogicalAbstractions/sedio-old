@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
 using NuGet.Versioning;
 
-namespace Sedio.Server.Http.Binders
+namespace Sedio.Server.Http.Binding
 {
     public sealed class SemanticVersionModelBinder : AbstractStringModelBinder<SemanticVersion>
     {

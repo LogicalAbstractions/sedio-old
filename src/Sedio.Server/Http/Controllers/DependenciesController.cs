@@ -8,6 +8,7 @@ using Sedio.Contracts.Components;
 
 namespace Sedio.Server.Http
 {
+    [ProducesJson]
     public class DependenciesController : Controller
     {
         [HttpGet("api/services/{serviceId}/versions/{serviceVersion}/dependencies/{dependencyId}")]

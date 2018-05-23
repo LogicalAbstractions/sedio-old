@@ -10,7 +10,6 @@ using Sedio.Server.Framework.Http;
 namespace Sedio.Server.Http
 {
     [ProducesJson]
-    [ApiController]
     public class StatusController : Controller
     {
         [HttpGet("api/services/{serviceId}/status")]

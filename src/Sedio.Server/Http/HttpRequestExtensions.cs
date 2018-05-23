@@ -12,6 +12,7 @@ namespace Sedio.Server.Http
     {
         public static IPAddress GetClientIpAddress(this HttpRequest request,bool tryUseXForwardHeader = true)
         {
+            if (request == null) throw new ArgumentNullException(nameof(request));
             string ip = null;
 
             // todo support new "Forwarded" header (2014) https://en.wikipedia.org/wiki/X-Forwarded-For
@@ -57,6 +58,12 @@ namespace Sedio.Server.Http
 
         public static bool TryGetHeaderValueAs<T>(this HttpRequest request,string headerName,out T value)
         {
+            if (request == null) throw new ArgumentNullException(nameof(request));
+            if (string.IsNullOrWhiteSpace(headerName))
+            {
+                throw new ArgumentException("headerName must be valid", nameof(headerName));
+            }
+
             StringValues values;
 
             if (request?.Headers?.TryGetValue(headerName, out values) ?? false)

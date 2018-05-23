@@ -12,7 +12,7 @@ namespace Sedio.Server.Http
 {
     [ProducesJson]
     [Route("api/services/{serviceId}/versions/{serviceVersion}/instances")]
-    [ApiController]
+    
     public class InstancesController : Controller
     {
         [HttpGet]

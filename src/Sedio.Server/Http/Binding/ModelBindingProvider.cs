@@ -7,9 +7,9 @@ using NuGet.Versioning;
 using Sedio.Contracts.Components;
 using Sedio.Core.Collections.Paging;
 
-namespace Sedio.Server.Http.Binders
+namespace Sedio.Server.Http.Binding
 {
-    public sealed class ContractModelBinderProvider : IModelBinderProvider
+    public sealed class ModelBindingProvider : IModelBinderProvider
     {
         private readonly Dictionary<Type,Type> modelBinderTypes = new Dictionary<Type, Type>()
         {

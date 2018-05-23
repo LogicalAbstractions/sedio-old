@@ -2,13 +2,18 @@
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Sedio.Core.Collections.Paging;
 using Sedio.Server.Framework.Http;
+using Sedio.Server.Framework.Http.Binding;
 
-namespace Sedio.Server.Http.Binders
+namespace Sedio.Server.Http.Binding
 {
     public class PagingParametersModelBinder : IModelBinder
     {
         public Task BindModelAsync(ModelBindingContext bindingContext)
         {
+            var valueName = string.IsNullOrEmpty(bindingContext.ModelName)
+                ? bindingContext.ModelMetadata.Name
+                : bindingContext.ModelName;
+
             var limit = PagingParameters.DefaultLimit;
             var cursor = PagingCursor.Start;
 
@@ -24,6 +29,7 @@ namespace Sedio.Server.Http.Binders
 
             var pagingParameters = new PagingParameters(cursor,limit).Coerce();
 
+            bindingContext.ModelState.MarkFieldValid(valueName);
             bindingContext.Result = ModelBindingResult.Success(pagingParameters);
 
             return Task.CompletedTask;

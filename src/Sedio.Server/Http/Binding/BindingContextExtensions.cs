@@ -1,11 +1,11 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace Sedio.Server.Framework.Http
+namespace Sedio.Server.Framework.Http.Binding
 {
-    public static class BindingContextExtensions
+    public static class ModelBindingContextExtensions
     {
-        public struct BindingResult<T>
+        public struct ModelBindingResult<T>
         {
             public T Value;
             public ValueProviderResult ValueProviderResult;
@@ -13,15 +13,21 @@ namespace Sedio.Server.Framework.Http
 
         }
 
-        public static bool TryGetValue<T>(this ModelBindingContext bindingContext, string key,out BindingResult<T> result)
+        public static bool TryGetValue<T>(this ModelBindingContext bindingContext, string key,out ModelBindingResult<T> result)
         {
-            result = default(BindingResult<T>);
+            if (bindingContext == null) throw new ArgumentNullException(nameof(bindingContext));
+            if (string.IsNullOrWhiteSpace(key))
+            {
+                throw new ArgumentException("key must be valid", nameof(key));
+            }
+
+            result = default(ModelBindingResult<T>);
 
             if (TryGetStringValue(bindingContext,key, out var stringValue))
             {
                 try
                 {
-                    result = new BindingResult<T>()
+                    result = new ModelBindingResult<T>()
                     {
                         Value = (T) Convert.ChangeType(stringValue.Value, typeof(T)),
                         ValueName = stringValue.ValueName,
@@ -39,9 +45,15 @@ namespace Sedio.Server.Framework.Http
             return false;
         }
 
-        public static bool TryGetStringValue(this ModelBindingContext bindingContext,string key,out BindingResult<string> result)
+        public static bool TryGetStringValue(this ModelBindingContext bindingContext,string key,out ModelBindingResult<string> result)
         {
-            result = default(BindingResult<string>);
+            if (bindingContext == null) throw new ArgumentNullException(nameof(bindingContext));
+            if (string.IsNullOrWhiteSpace(key))
+            {
+                throw new ArgumentException("key mus be valid", nameof(key));
+            }
+
+            result = default(ModelBindingResult<string>);
 
             var valueProviderResult = bindingContext.ValueProvider.GetValue(key);
 
@@ -57,7 +69,7 @@ namespace Sedio.Server.Framework.Http
                 return false;
             }
 
-            result = new BindingResult<string>()
+            result = new ModelBindingResult<string>()
             {
                 ValueProviderResult = valueProviderResult,
                 Value = stringValue,
