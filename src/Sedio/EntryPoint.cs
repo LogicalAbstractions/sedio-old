@@ -18,8 +18,6 @@ using Sedio.Contracts.Components;
 using Sedio.Contracts.Converters;
 using Sedio.Core.Collections.Paging;
 using Sedio.Server;
-using Sedio.Server.Framework.Http.Binders;
-using Sedio.Server.Framework.Swagger;
 
 namespace Sedio
 {

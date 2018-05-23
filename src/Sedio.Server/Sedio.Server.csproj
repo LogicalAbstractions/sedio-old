@@ -27,11 +27,8 @@
   </ItemGroup>
   
   <ItemGroup>
-    <Folder Include="Logic\Api\Dns\" />
-    <Folder Include="Logic\Api\Validation\" />
-    <Folder Include="Logic\Model\" />
+    <Folder Include="Model\" />
     <Folder Include="Dns\" />
-    <Folder Include="Http\" />
   </ItemGroup>
 
 </Project>

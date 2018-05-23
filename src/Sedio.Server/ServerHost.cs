@@ -19,9 +19,8 @@ using NuGet.Versioning;
 using Sedio.Contracts.Components;
 using Sedio.Contracts.Converters;
 using Sedio.Core.Collections.Paging;
-using Sedio.Server.Framework.Http.Binders;
-using Sedio.Server.Framework.Swagger;
-using Sedio.Server.Logic.Api.Http;
+using Sedio.Server.Http.Binders;
+using Sedio.Server.Http.Swagger;
 
 namespace Sedio.Server
 {

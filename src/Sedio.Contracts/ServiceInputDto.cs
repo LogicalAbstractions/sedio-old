@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
-using Sedio.Contracts.Components.Providers;
+using Sedio.Contracts.Components;
 
 namespace Sedio.Contracts
 {

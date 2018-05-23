@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Sedio.Contracts.Components;
-using Sedio.Contracts.Components.Providers;
 
 namespace Sedio.Contracts
 {
