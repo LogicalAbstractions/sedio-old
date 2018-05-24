@@ -1,4 +1,4 @@
-﻿namespace Sedio.Server.Application
+﻿namespace Sedio.Server.Runtime.Application
 {
     public interface IBootTask
     {

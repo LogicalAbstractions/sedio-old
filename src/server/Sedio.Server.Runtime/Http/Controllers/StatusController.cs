@@ -5,9 +5,8 @@ using NSwag.Annotations;
 using NuGet.Versioning;
 using Sedio.Contracts;
 using Sedio.Contracts.Components;
-using Sedio.Server.Framework.Http;
 
-namespace Sedio.Server.Http
+namespace Sedio.Server.Runtime.Http.Controllers
 {
     [ProducesJson]
     public class StatusController : Controller

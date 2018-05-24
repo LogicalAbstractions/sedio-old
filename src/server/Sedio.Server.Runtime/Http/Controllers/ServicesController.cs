@@ -5,9 +5,8 @@ using NSwag.Annotations;
 using Sedio.Contracts;
 using Sedio.Contracts.Components;
 using Sedio.Core.Collections.Paging;
-using Sedio.Server.Framework.Http;
 
-namespace Sedio.Server.Http
+namespace Sedio.Server.Runtime.Http.Controllers
 {
     [ProducesJson]
     [Route("api/services")]

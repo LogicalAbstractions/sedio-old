@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
-namespace Sedio.Server.Http.Binding
+namespace Sedio.Server.Runtime.Http.Binding
 {
     public sealed class ModelBindingModule : Autofac.Module
     {

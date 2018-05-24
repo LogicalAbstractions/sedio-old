@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
-namespace Sedio.Server.Http.Json
+namespace Sedio.Server.Runtime.Http.Json
 {
     public sealed class JsonModule : Autofac.Module
     {

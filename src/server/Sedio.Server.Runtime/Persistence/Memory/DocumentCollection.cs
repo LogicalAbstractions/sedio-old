@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Sedio.Server.Persistence.Memory
+namespace Sedio.Server.Runtime.Persistence.Memory
 {
     public sealed class DocumentCollection<TValue>
     {

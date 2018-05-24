@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Sedio.Server.Framework.Http;
-using Sedio.Server.Framework.Http.Binding;
 
-namespace Sedio.Server.Http.Binding
+namespace Sedio.Server.Runtime.Http.Binding
 {
     public abstract class AbstractStringModelBinder<T> : IModelBinder
     {

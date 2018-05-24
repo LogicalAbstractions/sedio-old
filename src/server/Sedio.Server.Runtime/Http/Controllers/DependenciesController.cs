@@ -6,7 +6,7 @@ using NuGet.Versioning;
 using Sedio.Contracts;
 using Sedio.Contracts.Components;
 
-namespace Sedio.Server.Http
+namespace Sedio.Server.Runtime.Http.Controllers
 {
     [ProducesJson]
     public class DependenciesController : Controller

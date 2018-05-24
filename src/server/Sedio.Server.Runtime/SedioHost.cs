@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Sedio.Contracts.Converters;
 
-namespace Sedio.Server
+namespace Sedio.Server.Runtime
 {
     public sealed class SedioHost : IDisposable
     {

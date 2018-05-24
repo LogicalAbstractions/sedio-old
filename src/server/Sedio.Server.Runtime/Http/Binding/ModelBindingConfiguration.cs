@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Options;
 
-namespace Sedio.Server.Http.Binding
+namespace Sedio.Server.Runtime.Http.Binding
 {
     public sealed class ModelBindingConfiguration : IConfigureOptions<MvcOptions>
     {

@@ -1,4 +1,4 @@
-﻿namespace Sedio.Server.Persistence.Memory
+﻿namespace Sedio.Server.Runtime.Persistence.Memory
 {
     public interface IDocumentIndex
     {

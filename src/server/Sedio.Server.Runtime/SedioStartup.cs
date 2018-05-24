@@ -11,10 +11,10 @@ using NSwag.AspNetCore;
 using NuGet.Versioning;
 using Sedio.Contracts.Components;
 using Sedio.Core.Collections.Paging;
-using Sedio.Server.Application;
-using Sedio.Server.Http.Swagger;
+using Sedio.Server.Runtime.Application;
+using Sedio.Server.Runtime.Http.Swagger;
 
-namespace Sedio.Server
+namespace Sedio.Server.Runtime
 {
     internal sealed class SedioStartup
     {

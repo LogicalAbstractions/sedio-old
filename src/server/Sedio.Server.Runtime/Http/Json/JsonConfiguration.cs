@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Options;
 using Sedio.Contracts.Converters;
 
-namespace Sedio.Server.Http.Json
+namespace Sedio.Server.Runtime.Http.Json
 {
     public class JsonConfiguration : IConfigureOptions<MvcJsonOptions>
     {

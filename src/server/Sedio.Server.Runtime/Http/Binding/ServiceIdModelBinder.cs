@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Sedio.Contracts.Components;
 
-namespace Sedio.Server.Http.Binding
+namespace Sedio.Server.Runtime.Http.Binding
 {
     public sealed class ServiceIdModelBinder : AbstractStringModelBinder<ServiceId>
     {

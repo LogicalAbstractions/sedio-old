@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using NJsonSchema;
 using NJsonSchema.Generation.TypeMappers;
 
-namespace Sedio.Server.Http.Swagger
+namespace Sedio.Server.Runtime.Http.Swagger
 {
     public static class TypeMapperExtensions
     {

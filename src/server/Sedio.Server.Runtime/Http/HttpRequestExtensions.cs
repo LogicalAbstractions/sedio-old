@@ -6,7 +6,7 @@ using System.Net.Sockets;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 
-namespace Sedio.Server.Http
+namespace Sedio.Server.Runtime.Http
 {
     public static class HttpRequestExtensions
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using Sedio.Core.Collections;
 
-namespace Sedio.Server.Persistence.Memory
+namespace Sedio.Server.Runtime.Persistence.Memory
 {
     public sealed class DocumentIndex<TKey,TValue> : IDocumentIndex
     {
