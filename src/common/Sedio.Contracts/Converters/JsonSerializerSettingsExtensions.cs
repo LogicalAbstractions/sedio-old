@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 using Sedio.Core.Collections.Paging;
@@ -10,9 +11,8 @@ namespace Sedio.Contracts.Converters
     {
         public static JsonSerializerSettings UseContractTypes(this JsonSerializerSettings settings)
         {
-            settings.NullValueHandling = NullValueHandling.Ignore;
-            settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-
+            if (settings == null) throw new ArgumentNullException(nameof(settings));
+            
             settings.Converters.Add(new PagingCursorJsonConverter());
             settings.Converters.Add(new IpAddressJsonConverter());
             settings.Converters.Add(new SemanticVersionJsonConverter());

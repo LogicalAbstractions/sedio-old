@@ -1,5 +1,6 @@
 ﻿using System;
 using Sedio.Core.Collections;
+using Sedio.Core.Collections.Immutable;
 
 namespace Sedio.Server.Runtime.Persistence.Memory
 {

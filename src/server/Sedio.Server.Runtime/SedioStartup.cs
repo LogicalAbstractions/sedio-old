@@ -11,7 +11,7 @@ using NSwag.AspNetCore;
 using NuGet.Versioning;
 using Sedio.Contracts.Components;
 using Sedio.Core.Collections.Paging;
-using Sedio.Server.Runtime.Application;
+using Sedio.Core.Runtime.Application;
 using Sedio.Server.Runtime.Http.Swagger;
 
 namespace Sedio.Server.Runtime
@@ -72,7 +72,7 @@ namespace Sedio.Server.Runtime
 
         private void Boot(IApplicationBuilder app)
         {
-            foreach (var bootTask in app.ApplicationServices.GetServices<IBootTask>().OrderBy(b => b.Order))
+            foreach (var bootTask in app.ApplicationServices.GetServices<IStartupTask>().OrderBy(b => b.Order))
             {
                 bootTask.Boot();
             }

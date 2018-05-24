@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Sedio.Core.Collections.Paging
 {
@@ -6,7 +7,7 @@ namespace Sedio.Core.Collections.Paging
     {
         public PagingResult(IReadOnlyList<T> items, long totalItemCount, PagingCursor continuationCursor)
         {
-            Items = items;
+            Items = items ?? throw new ArgumentNullException(nameof(items));
             TotalItemCount = totalItemCount;
             ContinuationCursor = continuationCursor;
         }
