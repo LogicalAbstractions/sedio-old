@@ -1,20 +1,13 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>7.2</LangVersion>
   </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <LangVersion>7.3</LangVersion>
-  </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="NuGet.Versioning" Version="4.8.0-preview1.5156" />
   </ItemGroup>
-
   <ItemGroup>
-    <ProjectReference Include="..\Sedio.Core\Sedio.Core.csproj" />
+    <ProjectReference Include="..\..\framework\Sedio.Core\Sedio.Core.csproj" />
   </ItemGroup>
-
 </Project>

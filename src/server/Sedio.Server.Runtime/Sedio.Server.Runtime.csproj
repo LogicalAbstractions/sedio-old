@@ -1,13 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <LangVersion>7.2</LangVersion>
   </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <LangVersion>7.3</LangVersion>
-  </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.8.1" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.2" />
@@ -20,16 +15,14 @@
     <PackageReference Include="NSwag.AspNetCore" Version="11.17.9" />
     <PackageReference Include="Rafty" Version="0.4.3" />
   </ItemGroup>
-  
   <ItemGroup>
-    <ProjectReference Include="..\Sedio.Contracts\Sedio.Contracts.csproj" />
-    <ProjectReference Include="..\Sedio.Core\Sedio.Core.csproj" />
+    <ProjectReference Include="..\..\common\Sedio.Contracts\Sedio.Contracts.csproj" />
+    <ProjectReference Include="..\..\framework\Sedio.Core\Sedio.Core.csproj" />
+    <ProjectReference Include="..\..\framework\Sedio.Core.Runtime\Sedio.Core.Runtime.csproj" />
   </ItemGroup>
-  
   <ItemGroup>
     <Folder Include="Model\" />
     <Folder Include="Dns\" />
     <Folder Include="Execution\" />
   </ItemGroup>
-
 </Project>

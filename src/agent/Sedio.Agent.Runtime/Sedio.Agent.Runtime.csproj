@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <LangVersion>7.2</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\client\Sedio.Client\Sedio.Client.csproj" />
+    <ProjectReference Include="..\..\common\Sedio.Contracts\Sedio.Contracts.csproj" />
+    <ProjectReference Include="..\..\framework\Sedio.Core.Runtime\Sedio.Core.Runtime.csproj" />
+    <ProjectReference Include="..\..\framework\Sedio.Core\Sedio.Core.csproj" />
+  </ItemGroup>
+</Project>
