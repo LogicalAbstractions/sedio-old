@@ -7,4 +7,12 @@
     <ProjectReference Include="..\..\common\Sedio.Contracts\Sedio.Contracts.csproj" />
     <ProjectReference Include="..\Sedio.Core\Sedio.Core.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.8.1" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.2" />
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.0-rc1-final" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Configuration" />
+  </ItemGroup>
 </Project>

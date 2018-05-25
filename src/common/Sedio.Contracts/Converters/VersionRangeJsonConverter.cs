@@ -5,7 +5,7 @@ using Sedio.Core.Converters;
 
 namespace Sedio.Contracts.Converters
 {
-    public sealed class VersionRangeJsonConverter : StringJsonConverter<VersionRange>
+    public sealed class VersionRangeJsonConverter : AbstractStringJsonConverter<VersionRange>
     {
         protected override bool OnFromString(string value, out VersionRange result)
         {

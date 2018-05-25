@@ -3,7 +3,7 @@ using Sedio.Core.Collections.Paging;
 
 namespace Sedio.Core.Converters
 {
-    public sealed class PagingCursorJsonConverter : StringJsonConverter<PagingCursor>
+    public sealed class PagingCursorJsonConverter : AbstractStringJsonConverter<PagingCursor>
     {
         public override bool CanRead { get; } = false;
 

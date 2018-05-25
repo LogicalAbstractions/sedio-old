@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Sedio.Core.Converters
 {
-    public abstract class StringJsonConverter<T> : JsonConverter<T>
+    public abstract class AbstractStringJsonConverter<T> : JsonConverter<T>
     {
         public override T ReadJson(JsonReader reader, Type objectType, T existingValue, bool hasExistingValue, JsonSerializer serializer)
         {

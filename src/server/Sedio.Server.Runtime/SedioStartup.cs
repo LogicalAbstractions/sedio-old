@@ -72,7 +72,7 @@ namespace Sedio.Server.Runtime
 
         private void Boot(IApplicationBuilder app)
         {
-            foreach (var bootTask in app.ApplicationServices.GetServices<IStartupTask>().OrderBy(b => b.Order))
+            foreach (var bootTask in app.ApplicationServices.GetServices<IApplicationEventListener>().OrderBy(b => b.Order))
             {
                 bootTask.Boot();
             }

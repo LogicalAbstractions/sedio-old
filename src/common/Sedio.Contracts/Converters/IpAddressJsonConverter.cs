@@ -5,7 +5,7 @@ using Sedio.Core.Converters;
 
 namespace Sedio.Contracts.Converters
 {
-    public sealed class IpAddressJsonConverter : StringJsonConverter<IPAddress>
+    public sealed class IpAddressJsonConverter : AbstractStringJsonConverter<IPAddress>
     {
         protected override bool OnFromString(string value, out IPAddress result)
         {

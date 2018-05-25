@@ -5,7 +5,7 @@ using Sedio.Core.Converters;
 
 namespace Sedio.Contracts.Converters
 {
-    public sealed class ServiceIdJsonConverter : StringJsonConverter<ServiceId>
+    public sealed class ServiceIdJsonConverter : AbstractStringJsonConverter<ServiceId>
     {
         protected override bool OnFromString(string value, out ServiceId result)
         {
