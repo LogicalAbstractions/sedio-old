@@ -8,11 +8,8 @@ namespace Sedio.Server
     {
         public static async Task<int> Main(string[] arguments)
         {
-            using (var host = new SedioHost(arguments))
-            {
-                await host.Run(CancellationToken.None);
-                return 0;
-            }
+            await new SedioServerHost().Run(arguments);
+            return 0;
         }
     }
 }

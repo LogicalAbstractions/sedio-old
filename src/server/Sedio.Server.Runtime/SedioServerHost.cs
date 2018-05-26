@@ -1,11 +1,15 @@
-﻿using System.Linq;
+﻿using System;
 using System.Net;
-using Autofac;
+using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
+using Autofac.Extensions.DependencyInjection;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using NJsonSchema;
 using NSwag.AspNetCore;
 using NuGet.Versioning;
@@ -16,22 +20,20 @@ using Sedio.Server.Runtime.Http.Swagger;
 
 namespace Sedio.Server.Runtime
 {
-    internal sealed class SedioStartup
+    public sealed class SedioServerHost : WebApplicationHost
     {
-        public SedioStartup(IConfiguration configuration) { }
-
-        public void ConfigureServices(IServiceCollection services)
+        public SedioServerHost() 
+            : base("Sedio.Server", typeof(SedioServerHost).Assembly)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+        }
+
+        protected override void OnConfigureServices(IServiceCollection services)
+        {
+            base.OnConfigureServices(services);
             services.AddSwagger();
         }
 
-        public void ConfigureContainer(ContainerBuilder builder)
-        {
-            builder.RegisterAssemblyModules(GetType().Assembly);
-        }
-
-        public void Configure(IApplicationBuilder app)
+        protected override void OnStart(IApplicationBuilder app)
         {
             var env = app.ApplicationServices.GetRequiredService<IHostingEnvironment>();
 
@@ -66,16 +68,8 @@ namespace Sedio.Server.Runtime
 
             app.UseHttpsRedirection();
             app.UseMvc();
-
-            Boot(app);
-        }
-
-        private void Boot(IApplicationBuilder app)
-        {
-            foreach (var bootTask in app.ApplicationServices.GetServices<IApplicationEventListener>().OrderBy(b => b.Order))
-            {
-                bootTask.Boot();
-            }
+            
+            base.OnStart(app);
         }
     }
 }
