@@ -32,7 +32,7 @@ namespace Sedio.Core.Runtime.Application
             {
                 if (services == null) throw new ArgumentNullException(nameof(services));
 
-                return host.BuildContainer(logger, services);
+                return host.BuildContainer(services);
             }
 
             public void Configure(IApplicationBuilder applicationBuilder)

@@ -6,6 +6,9 @@ namespace Sedio.Server.Runtime.Persistence.Memory
     {
         private readonly Dictionary<string, IDocumentIndex> indices;
 
-
+        public void Do()
+        {
+           
+        }
     }
 }

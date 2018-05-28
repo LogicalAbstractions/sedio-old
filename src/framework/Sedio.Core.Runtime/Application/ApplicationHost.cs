@@ -31,11 +31,10 @@ namespace Sedio.Core.Runtime.Application
 
         public IContainer Container { get; private set; }
              
-        protected IServiceProvider BuildContainer(ILogger logger,IServiceCollection services)
+        protected IServiceProvider BuildContainer(IServiceCollection services)
         {
             if (services == null) throw new ArgumentNullException(nameof(services));
-            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            
+               
             OnConfigureServices(services);
             
             var builder = new ContainerBuilder();
@@ -45,6 +44,7 @@ namespace Sedio.Core.Runtime.Application
             OnConfigureContainer(builder);
 
             this.Container = builder.Build();
+            this.Logger = this.Container.Resolve<ILogger>();
             
             return new AutofacServiceProvider(this.Container);
         }
