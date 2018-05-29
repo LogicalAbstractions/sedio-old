@@ -13,4 +13,7 @@
     <Folder Include="Dns\" />
     <Folder Include="Execution\" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="2.1.0-rc1-final" />
+  </ItemGroup>
 </Project>

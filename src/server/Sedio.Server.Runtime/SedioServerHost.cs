@@ -16,6 +16,7 @@ using NuGet.Versioning;
 using Sedio.Contracts.Components;
 using Sedio.Core.Collections.Paging;
 using Sedio.Core.Runtime.Application;
+using Sedio.Core.Runtime.Configuration;
 using Sedio.Core.Runtime.Http.Swagger;
 
 namespace Sedio.Server.Runtime
@@ -23,7 +24,9 @@ namespace Sedio.Server.Runtime
     public sealed class SedioServerHost : WebApplicationHost
     {
         public SedioServerHost() 
-            : base("Sedio.Server", typeof(SedioServerHost).Assembly)
+            : base("Sedio.Server", 
+                typeof(SedioServerHost).Assembly,
+                typeof(ConfigurationSectionAttribute).Assembly)
         {
         }
 

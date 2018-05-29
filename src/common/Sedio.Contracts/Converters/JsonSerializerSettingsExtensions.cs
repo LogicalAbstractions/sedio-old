@@ -19,6 +19,7 @@ namespace Sedio.Contracts.Converters
             settings.Converters.Add(new ServiceIdJsonConverter());
             settings.Converters.Add(new VersionRangeJsonConverter());
             settings.Converters.Add(new StringEnumConverter(true));
+            settings.Converters.Add(new TimespanJsonConverter());
 
             return settings;
         }
