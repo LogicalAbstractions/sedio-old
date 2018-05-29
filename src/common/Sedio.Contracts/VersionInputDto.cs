@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 using NuGet.Versioning;
 using Sedio.Contracts.Components;
@@ -17,6 +18,7 @@ namespace Sedio.Contracts
             InstanceRoutingDto instanceRouting, 
             InstanceRetirementDto instanceRetirement,
             OrchestrationDto orchestration, 
+            TimeSpan? cacheTime,
             IReadOnlyDictionary<string, object> tags)
         {
             Version = version;
@@ -28,6 +30,7 @@ namespace Sedio.Contracts
             InstanceRouting = instanceRouting;
             InstanceRetirement = instanceRetirement;
             Orchestration = orchestration;
+            CacheTime = cacheTime;
             Tags = tags;
         }
 
@@ -48,6 +51,8 @@ namespace Sedio.Contracts
         public InstanceRetirementDto InstanceRetirement { get; }
 
         public OrchestrationDto Orchestration { get; }
+        
+        public TimeSpan? CacheTime { get; }
 
         public IReadOnlyDictionary<string,object> Tags { get; }
     }

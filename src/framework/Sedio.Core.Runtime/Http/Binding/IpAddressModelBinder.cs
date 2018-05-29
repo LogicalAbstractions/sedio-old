@@ -2,7 +2,7 @@
 using System.Net;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace Sedio.Server.Runtime.Http.Binding
+namespace Sedio.Core.Runtime.Http.Binding
 {
     public sealed class IpAddressModelBinder : AbstractStringModelBinder<IPAddress>
     {

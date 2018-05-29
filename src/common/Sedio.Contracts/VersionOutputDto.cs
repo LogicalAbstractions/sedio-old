@@ -15,6 +15,7 @@ namespace Sedio.Contracts
             NotificationDto notification, 
             InstanceRoutingDto instanceRouting, 
             OrchestrationDto orchestration, 
+            TimeSpan? cacheTime,
             IReadOnlyDictionary<string, object> tags, 
             DateTimeOffset createdAt)
         {
@@ -26,6 +27,7 @@ namespace Sedio.Contracts
             Notification = notification;
             InstanceRouting = instanceRouting;
             Orchestration = orchestration;
+            CacheTime = cacheTime;
             Tags = tags;
             CreatedAt = createdAt;
         }
@@ -45,6 +47,8 @@ namespace Sedio.Contracts
         public InstanceRoutingDto InstanceRouting { get; }
 
         public OrchestrationDto Orchestration { get; }
+        
+        public TimeSpan? CacheTime { get; }
 
         public IReadOnlyDictionary<string, object> Tags { get; }
 

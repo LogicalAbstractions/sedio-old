@@ -16,7 +16,7 @@ using NuGet.Versioning;
 using Sedio.Contracts.Components;
 using Sedio.Core.Collections.Paging;
 using Sedio.Core.Runtime.Application;
-using Sedio.Server.Runtime.Http.Swagger;
+using Sedio.Core.Runtime.Http.Swagger;
 
 namespace Sedio.Server.Runtime
 {

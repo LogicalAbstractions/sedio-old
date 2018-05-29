@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace Sedio.Server.Runtime.Http.Binding
+namespace Sedio.Core.Runtime.Http.Binding
 {
     public static class ModelBindingContextExtensions
     {

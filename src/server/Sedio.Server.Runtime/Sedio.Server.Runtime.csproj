@@ -4,12 +4,6 @@
     <LangVersion>7.2</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="6.2.2" />
-    <PackageReference Include="FluentValidation.AspNetCore" Version="7.5.2" />
-    <PackageReference Include="NSwag.AspNetCore" Version="11.17.9" />
-    <PackageReference Include="Rafty" Version="0.4.3" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\common\Sedio.Contracts\Sedio.Contracts.csproj" />
     <ProjectReference Include="..\..\framework\Sedio.Core\Sedio.Core.csproj" />
     <ProjectReference Include="..\..\framework\Sedio.Core.Runtime\Sedio.Core.Runtime.csproj" />

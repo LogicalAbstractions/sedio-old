@@ -5,6 +5,7 @@ using NSwag.Annotations;
 using Sedio.Contracts;
 using Sedio.Contracts.Components;
 using Sedio.Core.Collections.Paging;
+using Sedio.Core.Runtime.Http;
 
 namespace Sedio.Server.Runtime.Http.Controllers
 {

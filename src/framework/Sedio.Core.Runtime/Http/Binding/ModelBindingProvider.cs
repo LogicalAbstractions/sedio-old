@@ -7,7 +7,7 @@ using NuGet.Versioning;
 using Sedio.Contracts.Components;
 using Sedio.Core.Collections.Paging;
 
-namespace Sedio.Server.Runtime.Http.Binding
+namespace Sedio.Core.Runtime.Http.Binding
 {
     public sealed class ModelBindingProvider : IModelBinderProvider
     {

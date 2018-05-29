@@ -20,6 +20,7 @@ namespace Sedio.Core.Algorithms
                 rootNodes.Remove(n);
                 result.Add(n);
 
+                // TODO: Get rid of allocationsh
                 foreach (var e in edges.Where(e => nodes.Comparer.Equals(e.Item1,n)).ToList()) 
                 {                 
                     var m = e.Item2;
