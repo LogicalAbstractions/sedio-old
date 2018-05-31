@@ -2,13 +2,15 @@
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using Autofac.Extensions.DependencyInjection;
+using Autofac.Core;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Sedio.Core.Runtime.Application.Assemblies;
 
 namespace Sedio.Core.Runtime.Application
 {
@@ -18,21 +20,22 @@ namespace Sedio.Core.Runtime.Application
         {
             private readonly ILogger logger;
             private readonly WebApplicationHost host;
+            private readonly IConfiguration configuration;
             
-            public WebApplicationStartup(ILoggerFactory loggerFactory, WebApplicationHost host)
+            public WebApplicationStartup(ILoggerFactory loggerFactory,IConfiguration configuration,WebApplicationHost host)
             {
                 if (loggerFactory == null) throw new ArgumentNullException(nameof(loggerFactory));
-                if (host == null) throw new ArgumentNullException(nameof(host));
-                
+                   
                 this.logger = loggerFactory.CreateLogger(host.ApplicationId);
-                this.host = host;
+                this.host = host ?? throw new ArgumentNullException(nameof(host));
+                this.configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
             }
             
             public IServiceProvider ConfigureServices(IServiceCollection services)
             {
                 if (services == null) throw new ArgumentNullException(nameof(services));
 
-                return host.BuildContainer(services);
+                return host.BuildContainer(services,logger,configuration);
             }
 
             public void Configure(IApplicationBuilder applicationBuilder)
@@ -44,11 +47,16 @@ namespace Sedio.Core.Runtime.Application
             }
         }
 
-        protected WebApplicationHost(string applicationId, params Assembly[] assemblies) 
-            : base(applicationId, assemblies)
+        protected WebApplicationHost(string applicationId, Func<IModule, bool> modulePredicate = null, params Assembly[] assemblies) 
+            : base(applicationId, modulePredicate, assemblies)
         {
         }
-        
+
+        protected WebApplicationHost(string applicationId, IAssemblyProvider assemblyProvider, Func<IModule, bool> modulePredicate = null) 
+            : base(applicationId, assemblyProvider, modulePredicate)
+        {
+        }
+
         public async Task<int> Run(string[] arguments,CancellationToken cancellationToken = default(CancellationToken))
         {
             using (var webHost = BuildWebHost(arguments))
@@ -67,7 +75,7 @@ namespace Sedio.Core.Runtime.Application
                 .AddViewComponentsAsServices()
                 .AddTagHelpersAsServices();
 
-            foreach (var assembly in Assemblies)
+            foreach (var assembly in AssemblyProvider.Assemblies)
             {
                 mvcBuilder.AddApplicationPart(assembly);
             }

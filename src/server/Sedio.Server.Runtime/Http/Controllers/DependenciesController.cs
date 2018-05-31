@@ -14,7 +14,7 @@ namespace Sedio.Server.Runtime.Http.Controllers
     {
         [HttpGet("api/services/{serviceId}/versions/{serviceVersion}/dependencies/{dependencyId}")]
         [SwaggerTag("Versions")]
-        [SwaggerResponse(HttpStatusCode.OK,typeof(VersionOutputDto))]
+        [SwaggerResponse(HttpStatusCode.OK,typeof(ServiceVersionOutputDto))]
         [SwaggerResponse(HttpStatusCode.NotFound,typeof(void),Description = "The parent service, this version or the dependency was not found")]
         [SwaggerResponse(HttpStatusCode.BadRequest,typeof(void),Description = "Request parameters were incorrect")]
         public async Task<IActionResult> GetDependencyVersion(ServiceId serviceId, SemanticVersion serviceVersion,
@@ -25,7 +25,7 @@ namespace Sedio.Server.Runtime.Http.Controllers
 
         [HttpGet("api/services/{serviceId}/versions/{serviceVersion}/instances/{serviceInstanceAddress}/dependencies/{dependencyId}")]
         [SwaggerTag("Instances")]
-        [SwaggerResponse(HttpStatusCode.OK, typeof(InstanceOutputDto))]
+        [SwaggerResponse(HttpStatusCode.OK, typeof(ServiceInstanceOutputDto))]
         [SwaggerResponse(HttpStatusCode.NotFound, typeof(void), Description = "The parent service, this version or the dependency was not found")]
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Request parameters were incorrect")]
         public async Task<IActionResult> GetDependencyInstance(ServiceId serviceId, SemanticVersion serviceVersion,IPAddress serviceInstanceAddress,

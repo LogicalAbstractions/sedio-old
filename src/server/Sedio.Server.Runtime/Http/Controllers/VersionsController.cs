@@ -16,7 +16,7 @@ namespace Sedio.Server.Runtime.Http.Controllers
     {
         [HttpGet]
         [SwaggerTag("Versions")]
-        [SwaggerResponse(HttpStatusCode.OK, typeof(PagingResult<VersionOutputDto>))]
+        [SwaggerResponse(HttpStatusCode.OK, typeof(PagingResult<ServiceVersionOutputDto>))]
         [SwaggerResponse(HttpStatusCode.NotFound,typeof(void),Description = "The parent service was not found")]
         public async Task<IActionResult> GetMulti(ServiceId serviceId,PagingParameters pagingParameters)
         {
@@ -25,7 +25,7 @@ namespace Sedio.Server.Runtime.Http.Controllers
 
         [HttpGet("{serviceVersion}")]
         [SwaggerTag("Versions")]
-        [SwaggerResponse(HttpStatusCode.OK, typeof(VersionOutputDto))]
+        [SwaggerResponse(HttpStatusCode.OK, typeof(ServiceVersionOutputDto))]
         [SwaggerResponse(HttpStatusCode.NotFound, typeof(void), Description = "The parent service or this version was not found")]
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Request parameters were incorrect")]
 
@@ -41,7 +41,7 @@ namespace Sedio.Server.Runtime.Http.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, typeof(void), Description = "The parent service was not found")]
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Request parameters were incorrect")]
 
-        public async Task<ActionResult> Put(ServiceId serviceId, SemanticVersion serviceVersion,[FromBody]VersionInputDto versionDescription)
+        public async Task<ActionResult> Put(ServiceId serviceId, SemanticVersion serviceVersion,[FromBody]ServiceVersionInputDto versionDescription)
         {
             return CreatedAtAction("GetSingle", new {serviceId, serviceVersion});
         }

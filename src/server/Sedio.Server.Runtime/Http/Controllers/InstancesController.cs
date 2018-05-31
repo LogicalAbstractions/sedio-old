@@ -17,7 +17,7 @@ namespace Sedio.Server.Runtime.Http.Controllers
     {
         [HttpGet]
         [SwaggerTag("Instances")]
-        [SwaggerResponse(HttpStatusCode.OK, typeof(PagingResult<InstanceOutputDto>))]
+        [SwaggerResponse(HttpStatusCode.OK, typeof(PagingResult<ServiceInstanceOutputDto>))]
         [SwaggerResponse(HttpStatusCode.NotFound, typeof(void), Description = "The parent service or version was not found")]
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Request parameters were incorrect")]
 
@@ -29,7 +29,7 @@ namespace Sedio.Server.Runtime.Http.Controllers
 
         [HttpGet("{serviceInstanceAddress}")]
         [SwaggerTag("Instances")]
-        [SwaggerResponse(HttpStatusCode.OK, typeof(InstanceOutputDto))]
+        [SwaggerResponse(HttpStatusCode.OK, typeof(ServiceInstanceOutputDto))]
         [SwaggerResponse(HttpStatusCode.NotFound, typeof(void),Description = "The parent service, version or this instance was not found")]
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Request parameters were incorrect")]
 
@@ -47,7 +47,7 @@ namespace Sedio.Server.Runtime.Http.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Request parameters were incorrect")]
 
         public async Task<IActionResult> Put(ServiceId serviceId, SemanticVersion serviceVersion,
-            IPAddress serviceInstanceAddress, [FromBody]InstanceInputDto instanceDescription)
+            IPAddress serviceInstanceAddress, [FromBody]ServiceInstanceInputDto instanceDescription)
         {
             return CreatedAtAction("GetSingle", new {serviceId, serviceVersion, serviceInstanceAddress},instanceDescription);
         }

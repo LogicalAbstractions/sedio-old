@@ -24,7 +24,7 @@ namespace Sedio.Server.Runtime
     public sealed class SedioServerHost : WebApplicationHost
     {
         public SedioServerHost() 
-            : base("Sedio.Server", 
+            : base("Sedio.Server", null,
                 typeof(SedioServerHost).Assembly,
                 typeof(ConfigurationSectionAttribute).Assembly)
         {

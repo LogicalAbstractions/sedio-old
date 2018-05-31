@@ -14,31 +14,31 @@ namespace Sedio.Server.Runtime.Http.Controllers
     {
         [HttpGet("api/services/{serviceId}/status")]
         [SwaggerTag("Services")]
-        [SwaggerResponse(HttpStatusCode.OK,typeof(StatusOutputDto))]
+        [SwaggerResponse(HttpStatusCode.OK,typeof(ServiceStatusOutputDto))]
         [SwaggerResponse(HttpStatusCode.NotFound,typeof(void),Description = "The service was not found")]
-        public async Task<ActionResult<StatusOutputDto>> Get(ServiceId serviceId)
+        public async Task<ActionResult<ServiceStatusOutputDto>> Get(ServiceId serviceId)
         {
             return Ok();
         }
 
         [HttpGet("api/services/{serviceId}/versions/{serviceVersion}/status")]
         [SwaggerTag("Versions")]
-        [SwaggerResponse(HttpStatusCode.OK, typeof(StatusOutputDto))]
+        [SwaggerResponse(HttpStatusCode.OK, typeof(ServiceStatusOutputDto))]
         [SwaggerResponse(HttpStatusCode.NotFound, typeof(void),Description = "The parent service or this version was not found")]
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Request parameters were incorrect")]
 
-        public async Task<ActionResult<StatusOutputDto>> Get(ServiceId serviceId,SemanticVersion serviceVersion)
+        public async Task<ActionResult<ServiceStatusOutputDto>> Get(ServiceId serviceId,SemanticVersion serviceVersion)
         {
             return Ok();
         }
 
         [HttpGet("api/services/{serviceId}/versions/{serviceVersion}/instances/{serviceInstanceAddress}/status")]
         [SwaggerTag("Instances")]
-        [SwaggerResponse(HttpStatusCode.OK, typeof(StatusOutputDto))]
+        [SwaggerResponse(HttpStatusCode.OK, typeof(ServiceStatusOutputDto))]
         [SwaggerResponse(HttpStatusCode.NotFound, typeof(void),Description = "The parent service, version or this instance was not found")]
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Request parameters were incorrect")]
 
-        public async Task<ActionResult<StatusOutputDto>> Get(ServiceId serviceId, SemanticVersion serviceVersion,IPAddress serviceInstanceAddress)
+        public async Task<ActionResult<ServiceStatusOutputDto>> Get(ServiceId serviceId, SemanticVersion serviceVersion,IPAddress serviceInstanceAddress)
         {
             return Ok();
         }
@@ -49,7 +49,7 @@ namespace Sedio.Server.Runtime.Http.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, typeof(void),Description = "The parent service, version or this instance was not found")]
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Request parameters were incorrect")]
 
-        public async Task<ActionResult> Put(ServiceId serviceId, SemanticVersion serviceVersion, IPAddress serviceInstanceAddress,[FromBody]StatusInputDto statusDescription)
+        public async Task<ActionResult> Put(ServiceId serviceId, SemanticVersion serviceVersion, IPAddress serviceInstanceAddress,[FromBody]ServiceStatusInputDto statusDescription)
         {
             return Ok();
         }
