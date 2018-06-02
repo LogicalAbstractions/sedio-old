@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -15,23 +16,32 @@ namespace Sedio.Server.Runtime.Model
         {
             protected override void OnApply(EntityTypeBuilder<Service> builder)
             {
-                builder.HasKey(s => s.Id);
-                builder.Property(s => s.Id).IsRequired().HasConversion<ServiceIdValueConverter>();
-                builder.HasIndex(s => s.Id).IsUnique();
+                builder.Property(s => s.ServiceId).IsRequired().HasMaxLength(48);
+                builder.HasIndex(s => s.ServiceId).IsUnique();
                 
-                builder.OwnsOneProviderConfiguration(s => s.HealthAggregation);
+                builder.OwnsOne(s => s.HealthAggregation,b => b.Property(h => h.ProviderId)
+                    .IsRequired()
+                    .HasMaxLength(48));
 
-                builder.Property(s => s.CacheTime);
-                builder.Property(s => s.CreatedAt).IsRequired();
+                builder.HasMany(s => s.ServiceVersions)
+                    .WithOne(v => v.Service)
+                    .HasPrincipalKey(s => s.Id)
+                    .HasForeignKey(v => v.ServiceId);
             }
         }
         
-        public ServiceId Id { get; set; }
+        public long Id { get; set; }
+        
+        public string ServiceId { get; set; }
         
         public HealthAggregationConfiguration HealthAggregation { get; set; }
         
         public TimeSpan? CacheTime { get; set; }
         
         public DateTimeOffset CreatedAt { get; set; }
+        
+        // Navigation properties
+        
+        public IList<ServiceVersion> ServiceVersions { get; set; }
     }
 }

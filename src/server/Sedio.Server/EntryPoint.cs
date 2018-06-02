@@ -1,6 +1,8 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Sedio.Server.Runtime;
+using Sedio.Server.Runtime.Model;
 
 namespace Sedio.Server
 {
@@ -8,7 +10,10 @@ namespace Sedio.Server
     {
         public static async Task<int> Main(string[] arguments)
         {
-            await new SedioServerHost().Run(arguments);
+            var context = new ModelDbContext();
+            context.Database.Migrate();
+            
+            //await new SedioServerHost().Run(arguments);
             return 0;
         }
     }

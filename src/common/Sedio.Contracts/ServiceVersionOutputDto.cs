@@ -14,6 +14,7 @@ namespace Sedio.Contracts
             HealthAggregationConfigurationDto healthAggregation, 
             NotificationConfigurationDto notification, 
             InstanceRoutingConfigurationDto instanceRouting, 
+            InstanceRetirementConfigurationDto instanceRetirement,
             OrchestrationConfigurationDto orchestration, 
             TimeSpan? cacheTime,
             DateTimeOffset createdAt)
@@ -25,6 +26,7 @@ namespace Sedio.Contracts
             HealthAggregation = healthAggregation;
             Notification = notification;
             InstanceRouting = instanceRouting;
+            InstanceRetirement = instanceRetirement;
             Orchestration = orchestration;
             CacheTime = cacheTime;
             CreatedAt = createdAt;
@@ -43,6 +45,8 @@ namespace Sedio.Contracts
         public NotificationConfigurationDto Notification { get; }
 
         public InstanceRoutingConfigurationDto InstanceRouting { get; }
+        
+        public InstanceRetirementConfigurationDto InstanceRetirement { get; }
 
         public OrchestrationConfigurationDto Orchestration { get; }
         

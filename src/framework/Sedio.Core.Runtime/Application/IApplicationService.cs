@@ -2,7 +2,7 @@
 
 namespace Sedio.Core.Runtime.Application
 {
-    public interface IApplicationEventListener
+    public interface IApplicationService
     {
         void OnStart();
 

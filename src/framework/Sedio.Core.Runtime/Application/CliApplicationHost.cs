@@ -46,6 +46,7 @@ namespace Sedio.Core.Runtime.Application
             {
                 Console.CancelKeyPress += (sender, args) =>
                 {
+                    // ReSharper disable once AccessToDisposedClosure
                     cancellationTokenSource.Cancel();
                 };
 

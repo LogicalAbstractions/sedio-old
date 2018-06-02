@@ -82,7 +82,7 @@ namespace Sedio.Core.Runtime.Application
         
         protected virtual void OnStart(TStartupArgument startupArgument)
         {
-            var eventListeners = Container.Resolve<IEnumerable<IApplicationEventListener>>();
+            var eventListeners = Container.Resolve<IEnumerable<IApplicationService>>();
 
             foreach (var eventListener in eventListeners.OrderByDependencies())
             {
@@ -92,7 +92,7 @@ namespace Sedio.Core.Runtime.Application
 
         protected virtual void OnStop()
         {
-            var eventListeners = Container.Resolve<IEnumerable<IApplicationEventListener>>();
+            var eventListeners = Container.Resolve<IEnumerable<IApplicationService>>();
 
             foreach (var eventListener in eventListeners.OrderByDependencies().Reverse())
             {

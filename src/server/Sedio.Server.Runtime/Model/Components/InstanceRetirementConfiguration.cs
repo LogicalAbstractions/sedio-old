@@ -1,6 +1,6 @@
 ﻿namespace Sedio.Server.Runtime.Model.Components
 {
-    public class HealthAggregationConfiguration 
+    public class InstanceRetirementConfiguration
     {
         public string ProviderId { get; set; }
         
