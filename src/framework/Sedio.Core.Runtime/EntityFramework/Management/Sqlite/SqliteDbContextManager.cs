@@ -85,12 +85,24 @@ namespace Sedio.Core.Runtime.EntityFramework.Management.Sqlite
                             var sourceConnection = (SqliteConnection)sourceContext.Context.Database.GetDbConnection();
                             var targetConnection = (SqliteConnection)targetContext.Context.Database.GetDbConnection();
 
-                            await Task.Run(() => sourceConnection.BackupDatabase(targetConnection), cancellationToken)
-                                .ConfigureAwait(false);
-
-                            if (!branchPools.TryAdd(targetId, targetPool))
+                            try
                             {
-                                throw new InvalidOperationException($"Branch already created");
+                                sourceConnection.Open();
+                                targetConnection.Open();
+
+                                await Task.Run(() => sourceConnection.BackupDatabase(targetConnection),
+                                        cancellationToken)
+                                    .ConfigureAwait(false);
+
+                                if (!branchPools.TryAdd(targetId, targetPool))
+                                {
+                                    throw new InvalidOperationException($"Branch already created");
+                                }
+                            }
+                            finally
+                            {
+                                sourceConnection.Close();
+                                targetConnection.Close();
                             }
                         }
                     }
@@ -100,7 +112,16 @@ namespace Sedio.Core.Runtime.EntityFramework.Management.Sqlite
 
         public Task DeleteBranch(string id,CancellationToken cancellationToken)
         {
-            throw new System.NotImplementedException();
+            if (branchPools.TryRemove(id, out var pool))
+            {
+                pool.Dispose();
+               
+                File.Delete(CalculateBranchPath(id));
+                
+                branchMarkers.TryRemove(id, out var removedId);
+            }
+
+            return Task.CompletedTask;
         }
 
         public Task<IDbContextHandle<T>> Aquire(string id,CancellationToken cancellationToken)

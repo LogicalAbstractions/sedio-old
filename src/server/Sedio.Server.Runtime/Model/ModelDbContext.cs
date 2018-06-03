@@ -16,6 +16,11 @@ namespace Sedio.Server.Runtime.Model
             new ServiceEndpoint.Schema(), 
         };
 
+        public ModelDbContext(DbContextOptions options) : base(options)
+        {
+            
+        }
+
         public ModelDbContext()
             : this("d:\\temp\\sedio.sqlite3")
         {
