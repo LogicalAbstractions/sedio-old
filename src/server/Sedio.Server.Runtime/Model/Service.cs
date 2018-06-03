@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using NuGet.Versioning;
 using Sedio.Contracts.Components;
 using Sedio.Core.Runtime.EntityFramework.Schema;
 using Sedio.Core.Runtime.EntityFramework.ValueConverters;

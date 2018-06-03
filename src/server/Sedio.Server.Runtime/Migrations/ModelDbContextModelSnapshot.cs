@@ -142,11 +142,15 @@ namespace Sedio.Server.Runtime.Migrations
                         .IsRequired()
                         .HasMaxLength(128);
 
+                    b.Property<int>("VersionOrder");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ServiceId");
 
                     b.HasIndex("Version");
+
+                    b.HasIndex("VersionOrder");
 
                     b.ToTable("ServiceVersions");
                 });

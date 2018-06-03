@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Nito.AsyncEx;
 
 namespace Sedio.Core.Collections.Pooling
 {
-    public sealed class StaticAsyncObjectPool<T> : IAsyncObjectPool<T>
+    public sealed class StaticAsyncObjectPool<T> : IAsyncObjectPool<T>,IDisposable
     {
+        private readonly List<T> allItems = new List<T>();
         private readonly AsyncProducerConsumerQueue<T> items = new AsyncProducerConsumerQueue<T>();
         private readonly Action<T> resetter;
 
@@ -20,6 +22,7 @@ namespace Sedio.Core.Collections.Pooling
             
             foreach (var item in items)
             {
+                this.allItems.Add(item);
                 this.items.Enqueue(item);
             }
         }
@@ -33,6 +36,14 @@ namespace Sedio.Core.Collections.Pooling
         {
             resetter.Invoke(value);
             items.Enqueue(value);
+        }
+
+        public void Dispose()
+        {
+            foreach (var item in allItems.OfType<IDisposable>())
+            {
+                item.Dispose();
+            }
         }
     }
 }

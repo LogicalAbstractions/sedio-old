@@ -1,11 +1,6 @@
 ﻿using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Newtonsoft.Json;
-using NJsonSchema.Infrastructure;
 using Sedio.Core.Runtime.EntityFramework.Schema;
-using Sedio.Core.Runtime.EntityFramework.ValueConverters;
-using Sedio.Server.Runtime.Model.Components;
 
 namespace Sedio.Server.Runtime.Model
 {

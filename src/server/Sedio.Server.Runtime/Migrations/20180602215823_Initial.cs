@@ -31,6 +31,7 @@ namespace Sedio.Server.Runtime.Migrations
                     Id = table.Column<long>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Version = table.Column<string>(maxLength: 128, nullable: false),
+                    VersionOrder = table.Column<int>(nullable: false),
                     HealthCheck_ProviderId = table.Column<string>(maxLength: 48, nullable: false),
                     HealthCheck_ParametersJson = table.Column<string>(nullable: true),
                     HealthAggregation_ProviderId = table.Column<string>(maxLength: 48, nullable: false),
@@ -198,6 +199,11 @@ namespace Sedio.Server.Runtime.Migrations
                 name: "IX_ServiceVersions_Version",
                 table: "ServiceVersions",
                 column: "Version");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ServiceVersions_VersionOrder",
+                table: "ServiceVersions",
+                column: "VersionOrder");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

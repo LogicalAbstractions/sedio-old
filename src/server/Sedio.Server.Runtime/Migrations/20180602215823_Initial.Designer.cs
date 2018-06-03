@@ -9,7 +9,7 @@ using Sedio.Server.Runtime.Model;
 namespace Sedio.Server.Runtime.Migrations
 {
     [DbContext(typeof(ModelDbContext))]
-    [Migration("20180602014245_Initial")]
+    [Migration("20180602215823_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -144,11 +144,15 @@ namespace Sedio.Server.Runtime.Migrations
                         .IsRequired()
                         .HasMaxLength(128);
 
+                    b.Property<int>("VersionOrder");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ServiceId");
 
                     b.HasIndex("Version");
+
+                    b.HasIndex("VersionOrder");
 
                     b.ToTable("ServiceVersions");
                 });

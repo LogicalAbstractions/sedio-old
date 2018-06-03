@@ -18,6 +18,8 @@ namespace Sedio.Server.Runtime.Model
                 builder.Property(s => s.Version).IsRequired().HasMaxLength(128);
                 builder.HasIndex(s => s.Version);
 
+                builder.HasIndex(s => s.VersionOrder);
+                
                 builder.OwnsOne(s => s.HealthCheck,b => b.Property(h => h.ProviderId)
                     .IsRequired()
                     .HasMaxLength(48));
@@ -62,6 +64,8 @@ namespace Sedio.Server.Runtime.Model
         public long Id { get; set; }
         
         public string Version { get; set; }
+        
+        public int VersionOrder { get; set; }
 
         public HealthCheckConfiguration HealthCheck { get; set; }
         
