@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Sedio.Core.Collections.Paging
 {
@@ -17,5 +18,24 @@ namespace Sedio.Core.Collections.Paging
         public long TotalItemCount { get; }
 
         public PagingCursor ContinuationCursor { get; }
+    }
+
+    public static class PagingResultExtensions
+    {
+        public static PagingResult<T> ToPagedResult<T>(this IEnumerable<T> input, PagingParameters pagingParameters)
+        {
+            if (input == null) throw new ArgumentNullException(nameof(input));
+            if (pagingParameters == null) throw new ArgumentNullException(nameof(pagingParameters));
+
+            var offset = pagingParameters.Cursor.IsStart ? 0 : long.Parse(pagingParameters.Cursor.ToString());
+
+            var totalCount = input.LongCount();
+
+            var resultItems = input.Skip((int) offset).Take(pagingParameters.Limit).ToList();
+
+            var continuationCursor = PagingCursor.FromOffset(offset + resultItems.Count);
+            
+            return new PagingResult<T>(resultItems,totalCount,continuationCursor);
+        }
     }
 }

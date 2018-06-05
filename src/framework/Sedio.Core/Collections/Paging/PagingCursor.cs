@@ -15,6 +15,11 @@ namespace Sedio.Core.Collections.Paging
 
         public bool IsStart => string.IsNullOrWhiteSpace(value);
 
+        public static PagingCursor FromOffset(long offset)
+        {
+            return new PagingCursor(offset.ToString());
+        }
+
         public override string ToString()
         {
             return value;
