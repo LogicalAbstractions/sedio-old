@@ -40,7 +40,7 @@ namespace Sedio.Core.Runtime.Application
 
             var bootstrapServiceProvider = bootstrapServices.BuildServiceProvider();
             
-            BuildContainer(bootstrapServices,bootstrapServiceProvider.GetRequiredService<ILoggerFactory>().CreateLogger(ApplicationId),configuration);
+            BuildContainer(bootstrapServices,configuration);
 
             using (var cancellationTokenSource = new CancellationTokenSource())
             {
@@ -58,12 +58,13 @@ namespace Sedio.Core.Runtime.Application
                 }
                 catch (Exception ex)
                 {
-                    Logger.LogError(ex, "Error in {ApplicationId}", ApplicationId);
+                    Logger.Error(ex, "Error in {ApplicationId}", ApplicationId);
                     return -1;
                 }
                 finally
                 {
                     Stop();
+                    bootstrapServiceProvider.Dispose();
                 }
             }
         }

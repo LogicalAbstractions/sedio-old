@@ -6,9 +6,9 @@ using Autofac;
 using Autofac.Core;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using Sedio.Core.Runtime.Application.Assemblies;
 using Sedio.Core.Runtime.Application.Dependencies;
+using Serilog;
 
 namespace Sedio.Core.Runtime.Application.Modules
 {

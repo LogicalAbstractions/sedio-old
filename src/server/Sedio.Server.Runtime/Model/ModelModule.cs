@@ -2,6 +2,7 @@
 using Autofac;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Sedio.Core.Runtime.Application;
 using Sedio.Core.Runtime.EntityFramework.Management;
 using Sedio.Core.Runtime.EntityFramework.Management.Sqlite;
 using Sedio.Core.Runtime.Http;
@@ -19,6 +20,8 @@ namespace Sedio.Server.Runtime.Model
 
                 return new SqliteDbContextManager<ModelDbContext>(databaseDirectoryPath, 100, 5);
             }).As<IDbContextManager<ModelDbContext>>().SingleInstance();
+
+            builder.RegisterType<ModelApplicationService>().As<IApplicationService>().SingleInstance();
         }
     }
 }

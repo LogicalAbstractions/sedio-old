@@ -18,15 +18,11 @@ namespace Sedio.Core.Runtime.Application
     {
         internal sealed class WebApplicationStartup
         {
-            private readonly ILogger logger;
             private readonly WebApplicationHost host;
             private readonly IConfiguration configuration;
             
-            public WebApplicationStartup(ILoggerFactory loggerFactory,IConfiguration configuration,WebApplicationHost host)
-            {
-                if (loggerFactory == null) throw new ArgumentNullException(nameof(loggerFactory));
-                   
-                this.logger = loggerFactory.CreateLogger(host.ApplicationId);
+            public WebApplicationStartup(IConfiguration configuration,WebApplicationHost host)
+            {           
                 this.host = host ?? throw new ArgumentNullException(nameof(host));
                 this.configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
             }
@@ -35,7 +31,7 @@ namespace Sedio.Core.Runtime.Application
             {
                 if (services == null) throw new ArgumentNullException(nameof(services));
 
-                return host.BuildContainer(services,logger,configuration);
+                return host.BuildContainer(services,configuration);
             }
 
             public void Configure(IApplicationBuilder applicationBuilder)

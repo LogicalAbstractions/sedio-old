@@ -14,6 +14,9 @@ using Sedio.Core.Runtime.Application.Assemblies;
 using Sedio.Core.Runtime.Application.Dependencies;
 using Sedio.Core.Runtime.Application.Modules;
 using Sedio.Core.Runtime.Configuration;
+using Serilog;
+using Serilog.Events;
+using ILogger = Microsoft.Extensions.Logging.ILogger;
 
 namespace Sedio.Core.Runtime.Application
 {
@@ -41,17 +44,16 @@ namespace Sedio.Core.Runtime.Application
         
         public IAssemblyProvider AssemblyProvider { get; }
         
-        public ILogger Logger { get; private set; }
+        public Serilog.ILogger Logger { get; private set; }
 
         public IContainer Container { get; private set; }
         
         public IConfiguration Configuration { get; private set; }
              
-        protected IServiceProvider BuildContainer(IServiceCollection services,ILogger logger,IConfiguration configuration)
+        protected IServiceProvider BuildContainer(IServiceCollection services,IConfiguration configuration)
         {
             if (services == null) throw new ArgumentNullException(nameof(services));
             
-            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
             this.Configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
             
             OnConfigureServices(services);
@@ -82,21 +84,23 @@ namespace Sedio.Core.Runtime.Application
         
         protected virtual void OnStart(TStartupArgument startupArgument)
         {
-            var eventListeners = Container.Resolve<IEnumerable<IApplicationService>>();
+            var applicationServices = Container.Resolve<IEnumerable<IApplicationService>>();
 
-            foreach (var eventListener in eventListeners.OrderByDependencies())
+            foreach (var applicationService in applicationServices.OrderByDependencies())
             {
-                eventListener.OnStart();
+                Logger.Information("Starting application service: {ApplicationService}",applicationService.GetType().Name);
+                applicationService.OnStart();
             }
         }
 
         protected virtual void OnStop()
         {
-            var eventListeners = Container.Resolve<IEnumerable<IApplicationService>>();
+            var applicationServices = Container.Resolve<IEnumerable<IApplicationService>>();
 
-            foreach (var eventListener in eventListeners.OrderByDependencies().Reverse())
+            foreach (var applicationService in applicationServices.OrderByDependencies().Reverse())
             {
-                eventListener.OnStop();
+                Logger.Information("Stopping application service: {ApplicationService}",applicationService.GetType().Name);
+                applicationService.OnStop();
             }
         }
 
@@ -113,7 +117,14 @@ namespace Sedio.Core.Runtime.Application
 
         protected virtual void OnConfigureLogging(IConfiguration configuration,ILoggingBuilder builder,string applicationPath)
         {
-            builder.AddConsole();
+            Logger = new LoggerConfiguration()
+                .MinimumLevel.Debug()
+                .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+                .Enrich.FromLogContext()
+                .WriteTo.ColoredConsole()
+                .CreateLogger();
+
+            builder.AddSerilog(Logger);
         }
 
         protected virtual void OnConfigureConfiguration(IConfigurationBuilder builder, string applicationPath)

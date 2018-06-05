@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NJsonSchema;
 using NSwag.AspNetCore;
+using NSwag.SwaggerGeneration.Processors;
 using NuGet.Versioning;
 using Sedio.Contracts.Components;
 using Sedio.Core.Collections.Paging;
@@ -61,6 +62,8 @@ namespace Sedio.Server.Runtime
                 settings.GeneratorSettings.Title = "Sedio";
 
                 settings.GeneratorSettings.IsAspNetCore = true;
+                settings.UseJsonEditor = true;
+                settings.GeneratorSettings.OperationProcessors.Add(new BranchIdHeaderOperationProcessor());
 
                 settings.GeneratorSettings.TypeMappers.MapTo<IPAddress>()
                     .MapTo<SemanticVersion>()

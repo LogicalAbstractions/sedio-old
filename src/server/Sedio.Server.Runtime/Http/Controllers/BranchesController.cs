@@ -1,6 +1,11 @@
-﻿namespace Sedio.Server.Runtime.Http.Controllers
+﻿using Microsoft.AspNetCore.Mvc;
+using Sedio.Core.Runtime.Http;
+
+namespace Sedio.Server.Runtime.Http.Controllers
 {
-    public class BranchesController
+    [ProducesJson]
+    [Route("api/branches")]
+    public class BranchesController : Controller
     {
         
     }
