@@ -17,6 +17,6 @@ namespace Sedio.Core.Runtime.EntityFramework.Management
 
         Task DeleteBranch(string id,CancellationToken cancellationToken);
 
-        Task<IDbContextHandle<T>> Aquire(string id,CancellationToken cancellationToken);
+        IDbContextPool<T> GetPool(string id);
     }
 }

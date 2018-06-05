@@ -72,6 +72,12 @@ namespace Sedio.Core.Runtime.Http
 
                 if (!string.IsNullOrEmpty(rawValues))
                 {
+                    if (typeof(T) == typeof(string))
+                    {
+                        value = (T)(object)rawValues;
+                        return true;
+                    }
+                    
                     try
                     {
                         value = (T) Convert.ChangeType(rawValues, typeof(T));

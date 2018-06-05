@@ -15,7 +15,7 @@ namespace Sedio.Server
             manager.Initialize();
             manager.CreateBranch(null, "test01", CancellationToken.None).Wait();
             
-            //await new SedioServerHost().Run(arguments);
+            await new SedioServerHost().Run(arguments);
             return 0;
         }
     }

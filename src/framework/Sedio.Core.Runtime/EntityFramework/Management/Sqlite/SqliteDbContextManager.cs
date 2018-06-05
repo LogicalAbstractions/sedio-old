@@ -22,13 +22,12 @@ namespace Sedio.Core.Runtime.EntityFramework.Management.Sqlite
         private const string BranchSubDirectory = "branches";
         private const string RootDbFilename = "root.db";
 
-        private readonly object lockObject = new object();
         private readonly string rootPath;
         private readonly int rootPoolSize;
         private readonly int branchPoolSize;
 
         private StaticDbContextPool<T> rootPool;
-        private ConcurrentDictionary<string, StaticDbContextPool<T>> branchPools;
+        private ConcurrentDictionary<string, Lazy<StaticDbContextPool<T>>> branchPools;
         private ConcurrentDictionary<string, string> branchMarkers;
 
         public SqliteDbContextManager(string rootPath, int rootPoolSize, int branchPoolSize)
@@ -47,10 +46,10 @@ namespace Sedio.Core.Runtime.EntityFramework.Management.Sqlite
             EnsureDirectoryHierarchy();
             
             // Enumerate branches and precreate pools
-            branchPools = new ConcurrentDictionary<string, StaticDbContextPool<T>>(
+            branchPools = new ConcurrentDictionary<string, Lazy<StaticDbContextPool<T>>>(
                 EnumerateBranches()
-                .Select(branchId => new KeyValuePair<string, StaticDbContextPool<T>>(branchId,
-                        CreatePool(branchId,branchPoolSize))),StringComparer.InvariantCultureIgnoreCase
+                .Select(branchId => new KeyValuePair<string, Lazy<StaticDbContextPool<T>>>(branchId,
+                        new Lazy<StaticDbContextPool<T>>(() => CreatePool(branchId,branchPoolSize)))),StringComparer.InvariantCultureIgnoreCase
             );
             
             branchMarkers = new ConcurrentDictionary<string, string>(branchPools.Select(kv => new KeyValuePair<string, string>(kv.Key,kv.Key)),
@@ -80,7 +79,7 @@ namespace Sedio.Core.Runtime.EntityFramework.Management.Sqlite
 
                     using (var targetContext = await targetPool.Aquire(cancellationToken).ConfigureAwait(false))
                     {
-                        using (var sourceContext = await Aquire(sourceId, cancellationToken).ConfigureAwait(false))
+                        using (var sourceContext = await GetPool(sourceId).Aquire(cancellationToken).ConfigureAwait(false))
                         {
                             var sourceConnection = (SqliteConnection)sourceContext.Context.Database.GetDbConnection();
                             var targetConnection = (SqliteConnection)targetContext.Context.Database.GetDbConnection();
@@ -94,7 +93,7 @@ namespace Sedio.Core.Runtime.EntityFramework.Management.Sqlite
                                         cancellationToken)
                                     .ConfigureAwait(false);
 
-                                if (!branchPools.TryAdd(targetId, targetPool))
+                                if (!branchPools.TryAdd(targetId, new Lazy<StaticDbContextPool<T>>(() => targetPool)))
                                 {
                                     throw new InvalidOperationException($"Branch already created");
                                 }
@@ -114,8 +113,11 @@ namespace Sedio.Core.Runtime.EntityFramework.Management.Sqlite
         {
             if (branchPools.TryRemove(id, out var pool))
             {
-                pool.Dispose();
-               
+                if (pool.IsValueCreated)
+                {
+                    pool.Value.Dispose();
+                }
+
                 File.Delete(CalculateBranchPath(id));
                 
                 branchMarkers.TryRemove(id, out var removedId);
@@ -124,18 +126,16 @@ namespace Sedio.Core.Runtime.EntityFramework.Management.Sqlite
             return Task.CompletedTask;
         }
 
-        public Task<IDbContextHandle<T>> Aquire(string id,CancellationToken cancellationToken)
+        public IDbContextPool<T> GetPool(string id)
         {
             if (id == null)
             {
-                return rootPool.Aquire(cancellationToken);
+                return rootPool;
             }
-            else
+
+            if (branchPools.TryGetValue(id, out var branchPool))
             {
-                if (branchPools.TryGetValue(id, out var pool))
-                {
-                    return pool.Aquire(cancellationToken);
-                }
+                return branchPool.Value;
             }
 
             throw new InvalidOperationException($"Cannot find branch {id}");
