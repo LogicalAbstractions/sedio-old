@@ -9,6 +9,7 @@
     <ProjectReference Include="..\..\framework\Sedio.Core.Runtime\Sedio.Core.Runtime.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Api\Internal\Services" />
     <Folder Include="Model\" />
     <Folder Include="Execution\" />
   </ItemGroup>
