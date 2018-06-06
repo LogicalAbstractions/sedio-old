@@ -22,9 +22,11 @@ namespace Sedio.Core.Runtime.Http
             // approach might be to read each IP from right to left and use the first public IP.
             // http://stackoverflow.com/a/43554000/538763
             //
-            if (tryUseXForwardHeader && request.TryGetHeaderValueAs("X-Forwarded-For", out ip))
+            var forwardedFor = request.GetHeaderValue("X-Forwarded-For");
+            
+            if (tryUseXForwardHeader && forwardedFor != null)
             {
-                ip = ip.TrimEnd(',')
+                ip = forwardedFor.TrimEnd(',')
                     .Split(',')
                     .AsEnumerable<string>()
                     .Select(s => s.Trim()).FirstOrDefault();
@@ -37,9 +39,15 @@ namespace Sedio.Core.Runtime.Http
 
             if (string.IsNullOrWhiteSpace(ip))
             {
-                if (!request.TryGetHeaderValueAs("REMOTE_ADD", out ip))
+                var remoteAdd = request.GetHeaderValue("REMOTE_ADD");
+                
+                if (remoteAdd == null)
                 {
                     throw new HttpRequestException("Unable to determine request ip");
+                }
+                else
+                {
+                    ip = remoteAdd;
                 }
             }
 
@@ -56,43 +64,18 @@ namespace Sedio.Core.Runtime.Http
             return result;
         }
 
-        public static bool TryGetHeaderValueAs<T>(this HttpRequest request,string headerName,out T value)
+        public static string GetHeaderValue(this HttpRequest request, string headerName)
         {
             if (request == null) throw new ArgumentNullException(nameof(request));
             if (string.IsNullOrWhiteSpace(headerName))
+                throw new ArgumentException("Value cannot be null or whitespace.", nameof(headerName));
+            
+            if (request.Headers.TryGetValue(headerName, out var result))
             {
-                throw new ArgumentException("headerName must be valid", nameof(headerName));
+                return result.ToString();
             }
 
-            StringValues values;
-
-            if (request?.Headers?.TryGetValue(headerName, out values) ?? false)
-            {
-                string rawValues = values.ToString();   // writes out as Csv when there are multiple.
-
-                if (!string.IsNullOrEmpty(rawValues))
-                {
-                    if (typeof(T) == typeof(string))
-                    {
-                        value = (T)(object)rawValues;
-                        return true;
-                    }
-                    
-                    try
-                    {
-                        value = (T) Convert.ChangeType(rawValues, typeof(T));
-                        return true;
-                    }
-                    catch (Exception)
-                    {
-                        value = default(T);
-                        return false;
-                    }
-                }
-            }
-
-            value = default(T);
-            return false;
+            return null;
         }
     }
 }

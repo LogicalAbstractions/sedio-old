@@ -11,7 +11,7 @@ namespace Sedio.Server.Runtime.Http.Controllers
 {
     [ProducesJson]
     [Route("api/services")]
-    public class ServicesController : Controller
+    public class ServicesController : AbstractExecutorController
     {
         [HttpGet]
         [SwaggerTag("Services")]

@@ -12,7 +12,7 @@ namespace Sedio.Server.Runtime.Http.Controllers
 {
     [ProducesJson]
     [Route("api/services/{serviceId}/versions")]
-    public class VersionsController : Controller
+    public class VersionsController : AbstractExecutorController
     {
         [HttpGet]
         [SwaggerTag("Versions")]
