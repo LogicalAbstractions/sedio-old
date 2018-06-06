@@ -7,7 +7,7 @@ using Sedio.Contracts.Components;
 using Sedio.Core.Collections.Paging;
 using Sedio.Core.Runtime.Http;
 
-namespace Sedio.Server.Runtime.Http.Controllers
+namespace Sedio.Server.Runtime.Api.Http.Controllers
 {
     [ProducesJson]
     [Route("api/services")]
@@ -44,7 +44,7 @@ namespace Sedio.Server.Runtime.Http.Controllers
         [SwaggerTag("Services")]
         [SwaggerResponse(HttpStatusCode.NoContent,typeof(void),Description = "The service was deleted")]
         [SwaggerResponse(HttpStatusCode.NotFound,typeof(void),Description="The service was not found")]
-        public async Task<ActionResult> Delete(ServiceId serviceId)
+        public async Task<IActionResult> Delete(ServiceId serviceId)
         {
             return Ok();
         }

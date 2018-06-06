@@ -7,7 +7,7 @@ using Sedio.Contracts;
 using Sedio.Contracts.Components;
 using Sedio.Core.Runtime.Http;
 
-namespace Sedio.Server.Runtime.Http.Controllers
+namespace Sedio.Server.Runtime.Api.Http.Controllers
 {
     [ProducesJson]
     public class StatusController : AbstractExecutorController

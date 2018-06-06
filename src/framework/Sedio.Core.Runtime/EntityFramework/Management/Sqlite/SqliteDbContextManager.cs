@@ -67,7 +67,7 @@ namespace Sedio.Core.Runtime.EntityFramework.Management.Sqlite
 
         public ISet<string> BranchIds => branchPools.Keys.ToHashSet();
         
-        public async Task CreateBranch(string sourceId, string targetId,CancellationToken cancellationToken)
+        public async Task<bool> CreateBranch(string sourceId, string targetId,CancellationToken cancellationToken)
         {
             if (targetId == null) throw new ArgumentNullException(nameof(targetId));
 
@@ -97,6 +97,8 @@ namespace Sedio.Core.Runtime.EntityFramework.Management.Sqlite
                                 {
                                     throw new InvalidOperationException($"Branch already created");
                                 }
+
+                                return true;
                             }
                             finally
                             {
@@ -107,9 +109,11 @@ namespace Sedio.Core.Runtime.EntityFramework.Management.Sqlite
                     }
                 }
             }
+
+            return false;
         }
 
-        public Task DeleteBranch(string id,CancellationToken cancellationToken)
+        public Task<bool> DeleteBranch(string id,CancellationToken cancellationToken)
         {
             if (branchPools.TryRemove(id, out var pool))
             {
@@ -121,9 +125,11 @@ namespace Sedio.Core.Runtime.EntityFramework.Management.Sqlite
                 File.Delete(CalculateBranchPath(id));
                 
                 branchMarkers.TryRemove(id, out var removedId);
+
+                return Task.FromResult(true);
             }
 
-            return Task.CompletedTask;
+            return Task.FromResult(false);
         }
 
         public IDbContextPool<T> GetPool(string id)

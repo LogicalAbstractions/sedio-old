@@ -19,7 +19,7 @@ using Sedio.Core.Collections.Paging;
 using Sedio.Core.Runtime.Application;
 using Sedio.Core.Runtime.Configuration;
 using Sedio.Core.Runtime.Http.Swagger;
-using Sedio.Server.Runtime.Http.Swagger;
+using Sedio.Server.Runtime.Api.Http.Swagger;
 
 namespace Sedio.Server.Runtime
 {

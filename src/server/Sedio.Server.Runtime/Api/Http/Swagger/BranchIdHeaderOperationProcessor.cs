@@ -4,7 +4,7 @@ using NSwag;
 using NSwag.SwaggerGeneration.Processors;
 using NSwag.SwaggerGeneration.Processors.Contexts;
 
-namespace Sedio.Server.Runtime.Http.Swagger
+namespace Sedio.Server.Runtime.Api.Http.Swagger
 {
     public sealed class BranchIdHeaderOperationProcessor : IOperationProcessor
     {

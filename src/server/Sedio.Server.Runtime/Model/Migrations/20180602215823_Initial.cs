@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Sedio.Server.Runtime.Migrations
+namespace Sedio.Server.Runtime.Model.Migrations
 {
     public partial class Initial : Migration
     {

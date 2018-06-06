@@ -2,22 +2,26 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
-using Sedio.Contracts;
 using Sedio.Core.Collections.Paging;
 using Sedio.Core.Runtime.Http;
+using Sedio.Server.Runtime.Api.Internal.Branches;
 
-namespace Sedio.Server.Runtime.Http.Controllers
+namespace Sedio.Server.Runtime.Api.Http.Controllers
 {
     [ProducesJson]
     [Route("api/branches")]
-    public class BranchesController : Controller
+    public class BranchesController : AbstractExecutorController
     {
+        public BranchesController() : base(true) {}
+        
         [HttpGet]
         [SwaggerTag("Branches")]
         [SwaggerResponse(HttpStatusCode.OK,typeof(PagingResult<string>))]
         public async Task<IActionResult> GetMulti(PagingParameters pagingParameters)
         {
-            return Ok();
+            var branchIds = await ExecuteQuery(new BranchListQuery(pagingParameters));
+            
+            return Ok(branchIds);
         }
         
         [HttpGet("{branchId}")]
@@ -26,7 +30,9 @@ namespace Sedio.Server.Runtime.Http.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound,typeof(void),Description = "The branch was not found")]
         public async Task<IActionResult> GetSingle(string branchId)
         {
-            return Ok();
+            var branchExists = await ExecuteQuery(new BranchExistsQuery(branchId));
+
+            return branchExists ? (IActionResult) Ok(branchId) : NotFound();
         }
         
         [HttpPut("{branchId}")]
@@ -35,16 +41,25 @@ namespace Sedio.Server.Runtime.Http.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest,typeof(void),Description = "Request parameters were incorrect")]
         public async Task<IActionResult> Put(string branchId)
         {
-            return CreatedAtAction("GetSingle",branchId,new {branchId});
+            var wasCreated = await ExecuteCommand(new BranchCreationCommand(branchId));
+
+            if (wasCreated)
+            {
+                return CreatedAtAction("GetSingle", new {branchId}, branchId);
+            }
+
+            return BadRequest();
         }
 
         [HttpDelete("{branchId}")]
         [SwaggerTag("Branches")]
         [SwaggerResponse(HttpStatusCode.NoContent,typeof(void),Description = "The branch was deleted")]
         [SwaggerResponse(HttpStatusCode.NotFound,typeof(void),Description="The branch was not found")]
-        public async Task<ActionResult> Delete(string branchId)
+        public async Task<IActionResult> Delete(string branchId)
         {
-            return Ok();
+            var wasDeleted = await ExecuteCommand(new BranchDeletionCommand(branchId));
+
+            return wasDeleted ? (IActionResult)NoContent() : NotFound();
         }
     }
 }

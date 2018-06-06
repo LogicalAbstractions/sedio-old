@@ -13,9 +13,9 @@ namespace Sedio.Core.Runtime.EntityFramework.Management
 
         ISet<string> BranchIds { get; }
         
-        Task CreateBranch(string sourceId,string targetId,CancellationToken cancellationToken);
+        Task<bool> CreateBranch(string sourceId,string targetId,CancellationToken cancellationToken);
 
-        Task DeleteBranch(string id,CancellationToken cancellationToken);
+        Task<bool> DeleteBranch(string id,CancellationToken cancellationToken);
 
         IDbContextPool<T> GetPool(string id);
     }

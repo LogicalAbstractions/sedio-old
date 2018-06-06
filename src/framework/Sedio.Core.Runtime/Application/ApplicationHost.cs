@@ -16,7 +16,6 @@ using Sedio.Core.Runtime.Application.Modules;
 using Sedio.Core.Runtime.Configuration;
 using Serilog;
 using Serilog.Events;
-using ILogger = Microsoft.Extensions.Logging.ILogger;
 
 namespace Sedio.Core.Runtime.Application
 {
@@ -53,6 +52,8 @@ namespace Sedio.Core.Runtime.Application
         protected IServiceProvider BuildContainer(IServiceCollection services,IConfiguration configuration)
         {
             if (services == null) throw new ArgumentNullException(nameof(services));
+
+            services.AddSingleton(typeof(Serilog.ILogger), Logger);
             
             this.Configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
             

@@ -66,11 +66,8 @@ namespace Sedio.Core.Runtime.Application
         {
             base.OnConfigureServices(services);
 
-            var mvcBuilder = services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
-                .AddControllersAsServices()
-                .AddViewComponentsAsServices()
-                .AddTagHelpersAsServices();
-
+            var mvcBuilder = services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+                
             foreach (var assembly in AssemblyProvider.Assemblies)
             {
                 mvcBuilder.AddApplicationPart(assembly);
