@@ -11,11 +11,11 @@
 
 [Windows-X64](https://ci.appveyor.com/api/projects/bernhardglueck/sedio/artifacts/sedio-server-win-x64.zip)
 
-[MacOsX-X64](https://ci.appveyor.com/api/projects/bernhardglueck/sedio/artifacts/sedio-server-macosx-x64.zip)
+[Mac-Osx-X64](https://ci.appveyor.com/api/projects/bernhardglueck/sedio/artifacts/sedio-server-osx-x64.zip)
 
 ### Agent
 [Linux-X64](https://ci.appveyor.com/api/projects/bernhardglueck/sedio/artifacts/sedio-agent-linux-x64.zip)
 
 [Windows-X64](https://ci.appveyor.com/api/projects/bernhardglueck/sedio/artifacts/sedio-agent-win-x64.zip)
 
-[MacOsX-X64](https://ci.appveyor.com/api/projects/bernhardglueck/sedio/artifacts/sedio-agent-macosx-x64.zip)
+[Mac-Osx-X64](https://ci.appveyor.com/api/projects/bernhardglueck/sedio/artifacts/sedio-agent-osx-x64.zip)
