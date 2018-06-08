@@ -21,7 +21,7 @@ namespace Sedio.Server.Runtime.Api.Http.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, typeof(void), Description = "The parent service or version was not found")]
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Request parameters were incorrect")]
 
-        public async Task<IActionResult> GetMulti(ServiceId serviceId,
+        public async Task<IActionResult> GetList(ServiceId serviceId,
             SemanticVersion serviceVersion, PagingParameters pagingParameters)
         {
             return Ok();
@@ -33,7 +33,7 @@ namespace Sedio.Server.Runtime.Api.Http.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, typeof(void),Description = "The parent service, version or this instance was not found")]
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Request parameters were incorrect")]
 
-        public async Task<IActionResult> GetSingle(ServiceId serviceId,
+        public async Task<IActionResult> Get(ServiceId serviceId,
             SemanticVersion serviceVersion, IPAddress serviceInstanceAddress)
         {
             return Ok();
@@ -49,7 +49,7 @@ namespace Sedio.Server.Runtime.Api.Http.Controllers
         public async Task<IActionResult> Put(ServiceId serviceId, SemanticVersion serviceVersion,
             IPAddress serviceInstanceAddress, [FromBody]ServiceInstanceInputDto instanceDescription)
         {
-            return CreatedAtAction("GetSingle", new {serviceId, serviceVersion, serviceInstanceAddress},instanceDescription);
+            return CreatedAtAction("Get", new {serviceId, serviceVersion, serviceInstanceAddress},instanceDescription);
         }
 
         [HttpDelete("{serviceInstanceAddress}")]

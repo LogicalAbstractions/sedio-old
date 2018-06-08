@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Sedio.Server.Runtime.Execution.Queries
 {
-    public abstract class AbstractSingleGetQuery<TId,TEntity,TOutput> : AbstractQuery<TOutput>
+    public abstract class AbstractGetQuery<TId,TEntity,TOutput> : AbstractQuery<TOutput>
         where TEntity : class
         where TOutput : class
     {
-        protected AbstractSingleGetQuery(TId id)
+        protected AbstractGetQuery(TId id)
         {
             Id = id;
         }
@@ -21,7 +21,7 @@ namespace Sedio.Server.Runtime.Execution.Queries
         {
             var dbSet = context.DbContext.Set<TEntity>();
 
-            var query = await OnGetCreateExpression(context,Id).ConfigureAwait(false);
+            var query = await OnGetFilterExpression(context,Id).ConfigureAwait(false);
             var entity = await dbSet.FirstOrDefaultAsync(query,context.CancellationToken).ConfigureAwait(false);
 
             if (entity != null)
@@ -34,6 +34,6 @@ namespace Sedio.Server.Runtime.Execution.Queries
 
         protected abstract TOutput OnMapToOutput(IExecutionContext context, TId id,TEntity entity);
 
-        protected abstract Task<Expression<Func<TEntity, bool>>> OnGetCreateExpression(IExecutionContext context,TId id);
+        protected abstract Task<Expression<Func<TEntity, bool>>> OnGetFilterExpression(IExecutionContext context,TId id);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
@@ -6,6 +7,8 @@ using Sedio.Contracts;
 using Sedio.Contracts.Components;
 using Sedio.Core.Collections.Paging;
 using Sedio.Core.Runtime.Http;
+using Sedio.Server.Runtime.Api.Internal.Services;
+using Sedio.Server.Runtime.Execution.Commands;
 
 namespace Sedio.Server.Runtime.Api.Http.Controllers
 {
@@ -16,18 +19,22 @@ namespace Sedio.Server.Runtime.Api.Http.Controllers
         [HttpGet]
         [SwaggerTag("Services")]
         [SwaggerResponse(HttpStatusCode.OK,typeof(PagingResult<ServiceOutputDto>))]
-        public async Task<IActionResult> GetMulti(PagingParameters pagingParameters)
+        public async Task<IActionResult> GetList(PagingParameters pagingParameters)
         {
-            return Ok();
+            var result = await ExecuteQuery(new ServiceListQuery(pagingParameters));
+
+            return Ok(result);
         }
 
         [HttpGet("{serviceId}")]
         [SwaggerTag("Services")]
         [SwaggerResponse(HttpStatusCode.OK,typeof(ServiceOutputDto))]
         [SwaggerResponse(HttpStatusCode.NotFound,typeof(void),Description = "The service was not found")]
-        public async Task<IActionResult> GetSingle(ServiceId serviceId)
+        public async Task<IActionResult> Get(ServiceId serviceId)
         {
-            return Ok();
+            var result = await ExecuteQuery(new ServiceGetQuery(serviceId.ToString()));
+
+            return result != null ? (IActionResult) Ok(result) : NotFound();
         }
 
         [HttpPut("{serviceId}")]
@@ -37,7 +44,16 @@ namespace Sedio.Server.Runtime.Api.Http.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest,typeof(void),Description = "Request parameters were incorrect")]
         public async Task<IActionResult> Put(ServiceId serviceId, [FromBody]ServiceInputDto serviceDescription)
         {
-            return CreatedAtAction("GetSingle", serviceDescription, new {serviceId});
+            var result = await ExecuteCommand(new ServiceCreationCommand(serviceId.ToString(), serviceDescription));
+
+            if (result == CreationResultType.Created)
+            {
+                return CreatedAtAction("Get",new {serviceId},null);
+            }
+            else
+            {
+                return result.ToHttpStatusResult();
+            }
         }
 
         [HttpDelete("{serviceId}")]
@@ -46,7 +62,9 @@ namespace Sedio.Server.Runtime.Api.Http.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound,typeof(void),Description="The service was not found")]
         public async Task<IActionResult> Delete(ServiceId serviceId)
         {
-            return Ok();
+            var wasDeleted = await ExecuteCommand(new ServiceDeletionCommand(serviceId.ToString()));
+
+            return wasDeleted ? (IActionResult) NoContent() : NotFound();
         }
     }
 }

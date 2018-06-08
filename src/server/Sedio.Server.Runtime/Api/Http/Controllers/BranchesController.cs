@@ -17,7 +17,7 @@ namespace Sedio.Server.Runtime.Api.Http.Controllers
         [HttpGet]
         [SwaggerTag("Branches")]
         [SwaggerResponse(HttpStatusCode.OK,typeof(PagingResult<string>))]
-        public async Task<IActionResult> GetMulti(PagingParameters pagingParameters)
+        public async Task<IActionResult> GetList(PagingParameters pagingParameters)
         {
             var branchIds = await ExecuteQuery(new BranchListQuery(pagingParameters));
             
@@ -28,7 +28,7 @@ namespace Sedio.Server.Runtime.Api.Http.Controllers
         [SwaggerTag("Branches")]
         [SwaggerResponse(HttpStatusCode.OK,typeof(string))]
         [SwaggerResponse(HttpStatusCode.NotFound,typeof(void),Description = "The branch was not found")]
-        public async Task<IActionResult> GetSingle(string branchId)
+        public async Task<IActionResult> Get(string branchId)
         {
             var branchExists = await ExecuteQuery(new BranchExistsQuery(branchId));
 
@@ -45,7 +45,7 @@ namespace Sedio.Server.Runtime.Api.Http.Controllers
 
             if (wasCreated)
             {
-                return CreatedAtAction("GetSingle", new {branchId}, branchId);
+                return CreatedAtAction("Get", new {branchId}, null);
             }
 
             return BadRequest();

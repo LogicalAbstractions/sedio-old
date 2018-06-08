@@ -1,4 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Sedio.Server.Runtime.Execution.Commands
 {
@@ -13,8 +16,9 @@ namespace Sedio.Server.Runtime.Execution.Commands
 
         protected override async Task<bool> OnExecute(IExecutionContext context)
         {
-            var dbSet      = context.DbContext.Set<TEntity>();
-            var entity     = await dbSet.FindAsync(Id, context.CancellationToken).ConfigureAwait(false);
+            var dbSet              = context.DbContext.Set<TEntity>();
+            var filterExpression   = await OnGetFilterExpression(context, Id).ConfigureAwait(false);
+            var entity             = await dbSet.FirstOrDefaultAsync(filterExpression,context.CancellationToken).ConfigureAwait(false);
 
             if (entity != null)
             {
@@ -26,5 +30,7 @@ namespace Sedio.Server.Runtime.Execution.Commands
 
             return false;
         }
+        
+        protected abstract Task<Expression<Func<TEntity, bool>>> OnGetFilterExpression(IExecutionContext context,TId id);
     }
 }

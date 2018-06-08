@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Sedio.Server.Runtime.Execution.Commands
 {
@@ -33,7 +35,8 @@ namespace Sedio.Server.Runtime.Execution.Commands
             var dbSet = context.DbContext.Set<TEntity>();
 
             // Try to find an existing entity:
-            var targetEntity = await dbSet.FindAsync(Id, context.CancellationToken).ConfigureAwait(false);
+            var filterExpression = await OnGetFilterExpression(context, Id).ConfigureAwait(false);
+            var targetEntity = await dbSet.FirstOrDefaultAsync(filterExpression,context.CancellationToken).ConfigureAwait(false);
 
             var isUpdate = targetEntity != null;
 
@@ -62,6 +65,8 @@ namespace Sedio.Server.Runtime.Execution.Commands
             await context.DbContext.SaveChangesAsync().ConfigureAwait(false);
             return isUpdate ? CreationResultType.Updated : CreationResultType.Created;
         }
+        
+        protected abstract Task<Expression<Func<TEntity, bool>>> OnGetFilterExpression(IExecutionContext context,TId id);
 
         protected virtual Task<bool> OnValidate(IExecutionContext context, TId id,TInput source, TEntity target,bool isUpdate)
         {

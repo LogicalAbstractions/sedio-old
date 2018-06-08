@@ -7,11 +7,11 @@ using Sedio.Core.Runtime.Collections;
 
 namespace Sedio.Server.Runtime.Execution.Queries
 {
-    public abstract class AbstractMultiGetQuery<TEntity,TOutput> : AbstractQuery<PagingResult<TOutput>>
+    public abstract class AbstractListQuery<TEntity,TOutput> : AbstractQuery<PagingResult<TOutput>>
         where TEntity : class
         where TOutput : class
     {
-        protected AbstractMultiGetQuery(PagingParameters pagingParameters)
+        protected AbstractListQuery(PagingParameters pagingParameters)
         {
             PagingParameters = pagingParameters ?? throw new ArgumentNullException(nameof(pagingParameters));
         }
@@ -31,6 +31,9 @@ namespace Sedio.Server.Runtime.Execution.Queries
 
         protected abstract TOutput OnMapToOuput(IExecutionContext context, TEntity entity);
 
-        protected abstract Task<Expression<Func<TEntity, bool>>> OnGetFilterExpression(IExecutionContext context);
+        protected virtual Task<Expression<Func<TEntity, bool>>> OnGetFilterExpression(IExecutionContext context)
+        {
+            return Task.FromResult<Expression<Func<TEntity, bool>>>(null);
+        }
     }
 }
