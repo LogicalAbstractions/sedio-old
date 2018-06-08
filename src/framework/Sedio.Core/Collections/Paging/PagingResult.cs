@@ -37,5 +37,13 @@ namespace Sedio.Core.Collections.Paging
             
             return new PagingResult<T>(resultItems,totalCount,continuationCursor);
         }
+
+        public static PagingResult<TOut> Map<TIn, TOut>(this PagingResult<TIn> input, Func<TIn, TOut> mappingFunction)
+        {
+            if (input == null) throw new ArgumentNullException(nameof(input));
+            if (mappingFunction == null) throw new ArgumentNullException(nameof(mappingFunction));
+            
+            return new PagingResult<TOut>(input.Items.Select(mappingFunction).ToList(),input.TotalItemCount,input.ContinuationCursor);
+        }
     }
 }
