@@ -4,20 +4,8 @@ namespace Sedio.Contracts.Components
 {
     public sealed class EndpointDto
     {
-        [JsonConstructor]
-        public EndpointDto(string protocol, int port)
-        {
-            if (string.IsNullOrWhiteSpace(protocol))
-            {
-                throw new System.ArgumentException("protocol must be specified", nameof(protocol));
-            }
+        public string Protocol { get; set; }
 
-            Protocol = protocol;
-            Port = port;
-        }
-
-        public string Protocol { get; }
-
-        public int Port { get; }
+        public int Port { get; set; }
     }
 }

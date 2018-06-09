@@ -17,7 +17,10 @@ namespace Sedio.Server.Runtime.Api.Internal.Services
         {
         }
 
-        protected override async Task<Expression<Func<Service, bool>>> OnGetFilterExpression(IExecutionContext context, string id)
+#pragma warning disable 1998
+        protected override async Task<Expression<Func<Service, bool>>> OnGetFilterExpression(IExecutionContext context,
+#pragma warning restore 1998
+            string id)
         {
             return service => service.ServiceId == id;
         }
@@ -29,12 +32,8 @@ namespace Sedio.Server.Runtime.Api.Internal.Services
             target.CreatedAt = timeProvider.UtcNow;
             target.CacheTime = source.CacheTime;
             target.ServiceId = id;
-        
-            target.HealthAggregation = new HealthAggregationConfiguration()
-            {
-                ParametersJson = source.HealthAggregation?.Parameters?.ToString(),
-                ProviderId = source.HealthAggregation?.ProviderId
-            };
+
+            target.HealthAggregation = source.HealthAggregation.ToEntity<HealthAggregationConfiguration>();
            
             return Task.CompletedTask;
         }

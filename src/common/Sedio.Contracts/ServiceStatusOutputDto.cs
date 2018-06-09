@@ -5,17 +5,10 @@ namespace Sedio.Contracts
 {
     public sealed class ServiceStatusOutputDto
     {
-        public ServiceStatusOutputDto(HealthStatusType status, string message, DateTimeOffset createdAt)
-        {
-            Status = status;
-            Message = message;
-            CreatedAt = createdAt;
-        }
+        public HealthStatusType Status { get; set; }
 
-        public HealthStatusType Status { get; }
+        public string Message { get; set; }
 
-        public string Message { get; }
-
-        public DateTimeOffset CreatedAt { get; }
+        public DateTimeOffset CreatedAt { get; set; }
     }
 }

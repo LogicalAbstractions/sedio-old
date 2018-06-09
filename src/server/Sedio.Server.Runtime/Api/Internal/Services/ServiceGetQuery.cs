@@ -10,9 +10,9 @@ namespace Sedio.Server.Runtime.Api.Internal.Services
 {
     public sealed class ServiceGetQuery : AbstractGetQuery<string,Service,ServiceOutputDto>
     {
-        public ServiceGetQuery(string id) : base(id)
-        {
-        }
+        public ServiceGetQuery(string id) 
+            : base(id)
+        {}
 
         protected override async Task<Expression<Func<Service, bool>>> OnGetFilterExpression(IExecutionContext context, string id)
         {

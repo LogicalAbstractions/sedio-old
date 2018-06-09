@@ -8,17 +8,10 @@ namespace Sedio.Contracts
 {
     public sealed class ServiceInstanceOutputDto
     {
-        public ServiceInstanceOutputDto(IPAddress address,SemanticVersion version, DateTimeOffset createdAt)
-        {
-            Address = address;
-            Version = version;
-            CreatedAt = createdAt;
-        }
+        public IPAddress Address { get; set; }
 
-        public IPAddress Address { get; }
+        public SemanticVersion Version { get; set; }
 
-        public SemanticVersion Version { get; }
-
-        public DateTimeOffset CreatedAt { get; }
+        public DateTimeOffset CreatedAt { get; set; }
     }
 }

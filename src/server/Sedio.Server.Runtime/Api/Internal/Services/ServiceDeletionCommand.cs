@@ -9,9 +9,9 @@ namespace Sedio.Server.Runtime.Api.Internal.Services
 {
     public sealed class ServiceDeletionCommand : AbstractDeletionCommand<string,Service>
     {
-        public ServiceDeletionCommand(string id) : base(id)
-        {
-        }
+        public ServiceDeletionCommand(string id)
+            : base(id)
+        {}
 
         protected override async Task<Expression<Func<Service, bool>>> OnGetFilterExpression(IExecutionContext context, string id)
         {

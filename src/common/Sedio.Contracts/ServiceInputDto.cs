@@ -7,14 +7,7 @@ namespace Sedio.Contracts
 {
     public sealed class ServiceInputDto
     {
-        [JsonConstructor]
-        public ServiceInputDto(HealthAggregationConfigurationDto healthAggregation,TimeSpan? cacheTime)
-        {
-            HealthAggregation = healthAggregation;
-            CacheTime = cacheTime;
-        }
-
-        public HealthAggregationConfigurationDto HealthAggregation { get; }
+        public HealthAggregationConfigurationDto HealthAggregation { get; set; }
         
         public TimeSpan? CacheTime { get; set; }
     }

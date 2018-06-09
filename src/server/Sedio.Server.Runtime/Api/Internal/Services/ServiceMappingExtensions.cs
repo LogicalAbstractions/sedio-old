@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using Sedio.Contracts;
 using Sedio.Contracts.Components;
 using Sedio.Server.Runtime.Model;
+using Sedio.Server.Runtime.Model.Components;
 
 namespace Sedio.Server.Runtime.Api.Internal.Services
 {
@@ -12,12 +13,13 @@ namespace Sedio.Server.Runtime.Api.Internal.Services
         {
             if (service == null) throw new ArgumentNullException(nameof(service));
 
-            var healthParametersJson = service.HealthAggregation.ParametersJson;
-            
-            return new ServiceOutputDto(new ServiceId(service.ServiceId),
-                new HealthAggregationConfigurationDto(service.HealthAggregation.ProviderId,healthParametersJson != null ? JObject.Parse(healthParametersJson) : new JObject() ),
-                service.CacheTime,
-                service.CreatedAt  );
+            return new ServiceOutputDto()
+            {
+                Id                = new ServiceId(service.ServiceId),
+                CacheTime         = service.CacheTime,
+                CreatedAt         = service.CreatedAt,
+                HealthAggregation = service.HealthAggregation.ToOutput<HealthAggregationConfigurationDto>()
+            };
         }
     }
 }

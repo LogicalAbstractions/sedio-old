@@ -3,21 +3,10 @@ using Newtonsoft.Json.Linq;
 
 namespace Sedio.Contracts.Components
 {
-    public abstract class AbstractProviderConfigurationDto
+    public abstract class AbstractProviderConfigurationDto : IProviderConfigurationDto
     {
-        protected AbstractProviderConfigurationDto(string providerId, JObject parameters)
-        {
-            if (string.IsNullOrWhiteSpace(providerId))
-            {
-                throw new System.ArgumentException("providerId must be specified", nameof(providerId));
-            }
+        public string ProviderId { get; set; }
 
-            ProviderId = providerId;
-            Parameters = parameters;
-        }
-
-        public string ProviderId { get; }
-
-        public JObject Parameters { get; }
+        public JObject ProviderParameters { get; set; }
     }
 }

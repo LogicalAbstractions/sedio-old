@@ -1,9 +1,9 @@
 ﻿namespace Sedio.Server.Runtime.Model.Components
 {
-    public class NotificationConfiguration 
+    public class NotificationConfiguration : IProviderConfiguration
     {
         public string ProviderId { get; set; }
         
-        public string ParametersJson { get; set; }
+        public string ProviderParametersJson { get; set; }
     }
 }

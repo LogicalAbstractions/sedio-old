@@ -160,11 +160,11 @@ namespace Sedio.Server.Runtime.Model.Migrations
                         {
                             b1.Property<long>("ServiceId");
 
-                            b1.Property<string>("ParametersJson");
-
                             b1.Property<string>("ProviderId")
                                 .IsRequired()
                                 .HasMaxLength(48);
+
+                            b1.Property<string>("ProviderParametersJson");
 
                             b1.ToTable("Services");
 
@@ -218,11 +218,11 @@ namespace Sedio.Server.Runtime.Model.Migrations
                         {
                             b1.Property<long?>("ServiceVersionId");
 
-                            b1.Property<string>("ParametersJson");
-
                             b1.Property<string>("ProviderId")
                                 .IsRequired()
                                 .HasMaxLength(48);
+
+                            b1.Property<string>("ProviderParametersJson");
 
                             b1.ToTable("ServiceVersions");
 
@@ -236,11 +236,11 @@ namespace Sedio.Server.Runtime.Model.Migrations
                         {
                             b1.Property<long?>("ServiceVersionId");
 
-                            b1.Property<string>("ParametersJson");
-
                             b1.Property<string>("ProviderId")
                                 .IsRequired()
                                 .HasMaxLength(48);
+
+                            b1.Property<string>("ProviderParametersJson");
 
                             b1.ToTable("ServiceVersions");
 
@@ -254,11 +254,11 @@ namespace Sedio.Server.Runtime.Model.Migrations
                         {
                             b1.Property<long?>("ServiceVersionId");
 
-                            b1.Property<string>("ParametersJson");
-
                             b1.Property<string>("ProviderId")
                                 .IsRequired()
                                 .HasMaxLength(48);
+
+                            b1.Property<string>("ProviderParametersJson");
 
                             b1.ToTable("ServiceVersions");
 
@@ -272,11 +272,11 @@ namespace Sedio.Server.Runtime.Model.Migrations
                         {
                             b1.Property<long?>("ServiceVersionId");
 
-                            b1.Property<string>("ParametersJson");
-
                             b1.Property<string>("ProviderId")
                                 .IsRequired()
                                 .HasMaxLength(48);
+
+                            b1.Property<string>("ProviderParametersJson");
 
                             b1.ToTable("ServiceVersions");
 
@@ -290,11 +290,11 @@ namespace Sedio.Server.Runtime.Model.Migrations
                         {
                             b1.Property<long?>("ServiceVersionId");
 
-                            b1.Property<string>("ParametersJson");
-
                             b1.Property<string>("ProviderId")
                                 .IsRequired()
                                 .HasMaxLength(48);
+
+                            b1.Property<string>("ProviderParametersJson");
 
                             b1.ToTable("ServiceVersions");
 
@@ -308,11 +308,11 @@ namespace Sedio.Server.Runtime.Model.Migrations
                         {
                             b1.Property<long>("ServiceVersionId");
 
-                            b1.Property<string>("ParametersJson");
-
                             b1.Property<string>("ProviderId")
                                 .IsRequired()
                                 .HasMaxLength(48);
+
+                            b1.Property<string>("ProviderParametersJson");
 
                             b1.ToTable("ServiceVersions");
 

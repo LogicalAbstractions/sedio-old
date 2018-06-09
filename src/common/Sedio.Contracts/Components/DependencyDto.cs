@@ -5,15 +5,8 @@ namespace Sedio.Contracts.Components
 {
     public sealed class DependencyDto
     {
-        [JsonConstructor]
-        public DependencyDto(ServiceId serviceId, VersionRange versionRequirement)
-        {
-            ServiceId = serviceId;
-            VersionRequirement = versionRequirement;
-        }
+        public ServiceId ServiceId { get; set; }
 
-        public ServiceId ServiceId { get; }
-
-        public VersionRange VersionRequirement { get; }
+        public VersionRange VersionRequirement { get; set; }
     }
 }

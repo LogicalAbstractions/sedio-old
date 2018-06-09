@@ -6,20 +6,12 @@ namespace Sedio.Contracts
 {
     public sealed class ServiceOutputDto
     {
-        public ServiceOutputDto(ServiceId id, HealthAggregationConfigurationDto healthAggregation,TimeSpan? cacheTime, DateTimeOffset createdAt)
-        {
-            Id = id;
-            HealthAggregation = healthAggregation;
-            CacheTime = cacheTime;
-            CreatedAt = createdAt;
-        }
+        public ServiceId Id { get; set; }
 
-        public ServiceId Id { get; }
+        public HealthAggregationConfigurationDto HealthAggregation { get; set; }
 
-        public HealthAggregationConfigurationDto HealthAggregation { get; }
+        public TimeSpan? CacheTime { get; set; }
 
-        public TimeSpan? CacheTime { get; }
-
-        public DateTimeOffset CreatedAt { get; }
+        public DateTimeOffset CreatedAt { get; set; }
     }
 }
