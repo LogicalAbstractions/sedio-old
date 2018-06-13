@@ -12,7 +12,9 @@ namespace Sedio.Server.Runtime.Api.Http
             {CreationResultType.Conflict,HttpStatusCode.Conflict},
             {CreationResultType.Created,HttpStatusCode.Created},
             {CreationResultType.Updated,HttpStatusCode.Accepted},
-            {CreationResultType.ValidationFailed,HttpStatusCode.BadRequest}
+            {CreationResultType.ValidationFailed,HttpStatusCode.BadRequest},
+            {CreationResultType.NotFound,HttpStatusCode.NotFound},
+            {CreationResultType.DependencyNotFound,HttpStatusCode.NotFound}
         };
 
         public static IActionResult ToHttpStatusResult(this CreationResultType resultType)

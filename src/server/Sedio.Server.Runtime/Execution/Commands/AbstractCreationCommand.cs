@@ -11,6 +11,8 @@ namespace Sedio.Server.Runtime.Execution.Commands
         Updated,
         Conflict,
         ValidationFailed,
+        NotFound,
+        DependencyNotFound,
     }
     
     public abstract class AbstractCreationCommand<TId,TInput,TEntity> : AbstractCommand<CreationResultType>

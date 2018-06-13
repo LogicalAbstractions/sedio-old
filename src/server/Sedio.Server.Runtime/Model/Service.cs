@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using NuGet.Versioning;
 using Sedio.Contracts.Components;
 using Sedio.Core.Runtime.EntityFramework.Schema;
-using Sedio.Core.Runtime.EntityFramework.ValueConverters;
 using Sedio.Server.Runtime.Model.Components;
 
 namespace Sedio.Server.Runtime.Model

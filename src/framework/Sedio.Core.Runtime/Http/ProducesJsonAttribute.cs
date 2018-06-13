@@ -6,7 +6,7 @@ using Microsoft.Net.Http.Headers;
 namespace Sedio.Core.Runtime.Http
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
-    public class ProducesJsonAttribute : ProducesAttribute
+    public sealed class ProducesJsonAttribute : ProducesAttribute
     {
         public ProducesJsonAttribute(Type type) : base(type)
         {

@@ -8,7 +8,4 @@
     <PackageReference Include="Nito.AsyncEx.Coordination" Version="5.0.0-pre-05" />
     <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.0" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Patterns" />
-  </ItemGroup>
 </Project>

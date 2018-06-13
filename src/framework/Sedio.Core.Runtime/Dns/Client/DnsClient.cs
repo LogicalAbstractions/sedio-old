@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using Sedio.Core.Runtime.Dns.Client.RequestResolver;
 using Sedio.Core.Runtime.Dns.Protocol;
 using Sedio.Core.Runtime.Dns.Protocol.ResourceRecords;
+using Sedio.Core.Runtime.Dns.RequestResolver;
 
 namespace Sedio.Core.Runtime.Dns.Client
 {

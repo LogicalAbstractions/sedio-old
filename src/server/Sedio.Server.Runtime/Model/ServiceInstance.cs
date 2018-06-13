@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Net;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Sedio.Core.Runtime.EntityFramework.Schema;
-using Sedio.Core.Runtime.EntityFramework.ValueConverters;
 
 namespace Sedio.Server.Runtime.Model
 {

@@ -2,7 +2,6 @@
 using NuGet.Versioning;
 using Sedio.Contracts.Components;
 using Sedio.Core.Runtime.EntityFramework.Schema;
-using Sedio.Core.Runtime.EntityFramework.ValueConverters;
 
 namespace Sedio.Server.Runtime.Model
 {

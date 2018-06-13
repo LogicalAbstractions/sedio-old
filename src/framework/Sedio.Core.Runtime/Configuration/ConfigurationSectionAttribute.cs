@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace Sedio.Core.Runtime.Configuration
 {
-    public class ConfigurationSectionAttribute : System.Attribute
+    public sealed class ConfigurationSectionAttribute : System.Attribute
     {
         private readonly string name;
         

@@ -1,7 +1,8 @@
 ﻿using System.Threading.Tasks;
+using Sedio.Core.Runtime.Dns.Client;
 using Sedio.Core.Runtime.Dns.Protocol;
 
-namespace Sedio.Core.Runtime.Dns.Client.RequestResolver
+namespace Sedio.Core.Runtime.Dns.RequestResolver
 {
     public class NullRequestResolver : IRequestResolver
     {
