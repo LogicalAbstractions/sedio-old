@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Net;
+using Sedio.Core.Runtime.Dns.Protocol.Utils;
 
 namespace Sedio.Core.Runtime.Dns.Protocol.ResourceRecords
 {
-    public class PointerResourceRecord : BaseResourceRecord
+    public class PointerResourceRecord : AbstractResourceRecord
     {
         public PointerResourceRecord(IResourceRecord record, byte[] message, int dataOffset)
             : base(record)
@@ -12,7 +13,7 @@ namespace Sedio.Core.Runtime.Dns.Protocol.ResourceRecords
         }
 
         public PointerResourceRecord(IPAddress ip, Domain pointer, TimeSpan ttl = default(TimeSpan)) :
-            base(new ResourceRecord(Domain.PointerName(ip), pointer.ToArray(), RecordType.PTR, RecordClass.IN, ttl))
+            base(new ResourceRecord(Domain.PointerName(ip), pointer.ToArray(), DnsRecordType.PTR, DnsRecordClass.IN, ttl))
         {
             PointerDomainName = pointer;
         }

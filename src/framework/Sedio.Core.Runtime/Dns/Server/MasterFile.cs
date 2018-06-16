@@ -6,11 +6,12 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Sedio.Core.Runtime.Dns.Protocol;
 using Sedio.Core.Runtime.Dns.Protocol.ResourceRecords;
+using Sedio.Core.Runtime.Dns.Protocol.Utils;
 using Sedio.Core.Runtime.Dns.RequestResolver;
 
 namespace Sedio.Core.Runtime.Dns.Server
 {
-    public class MasterFile : IRequestResolver
+    public class MasterFile : IDnsRequestResolver
     {
         private static readonly TimeSpan DEFAULT_TTL = new TimeSpan(0);
 
@@ -109,11 +110,11 @@ namespace Sedio.Core.Runtime.Dns.Server
             Add(new TextResourceRecord(new Domain(domain), attributeName, attributeValue, ttl));
         }
 
-        public Task<IResponse> Resolve(IRequest request)
+        public Task<IDnsResponse> Resolve(IDnsRequest request)
         {
-            IResponse response = DefaultResponse.FromRequest(request);
+            IDnsResponse response = DefaultDnsResponse.FromRequest(request);
 
-            foreach (Question question in request.Questions)
+            foreach (DnsQuestion question in request.Questions)
             {
                 IList<IResourceRecord> answers = Get(question);
 
@@ -123,19 +124,19 @@ namespace Sedio.Core.Runtime.Dns.Server
                 }
                 else
                 {
-                    response.ResponseCode = ResponseCode.NameError;
+                    response.ResponseCode = DnsResponseCode.NameError;
                 }
             }
 
             return Task.FromResult(response);
         }
 
-        private IList<IResourceRecord> Get(Domain domain, RecordType type)
+        private IList<IResourceRecord> Get(Domain domain, DnsRecordType type)
         {
             return entries.Where(e => Matches(domain, e.Name) && e.Type == type).ToList();
         }
 
-        private IList<IResourceRecord> Get(Question question)
+        private IList<IResourceRecord> Get(DnsQuestion question)
         {
             return Get(question.Name, question.Type);
         }

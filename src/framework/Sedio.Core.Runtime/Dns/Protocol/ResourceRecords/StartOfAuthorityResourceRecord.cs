@@ -4,7 +4,7 @@ using Sedio.Core.Runtime.Dns.Protocol.Utils;
 
 namespace Sedio.Core.Runtime.Dns.Protocol.ResourceRecords
 {
-    public class StartOfAuthorityResourceRecord : BaseResourceRecord
+    public class StartOfAuthorityResourceRecord : AbstractResourceRecord
     {
         private static IResourceRecord Create(Domain domain, Domain master, Domain responsible, long serial,
                                               TimeSpan refresh, TimeSpan retry, TimeSpan expire, TimeSpan minTtl,
@@ -25,7 +25,7 @@ namespace Sedio.Core.Runtime.Dns.Protocol.ResourceRecords
                 .Append(responsible.ToArray())
                 .Append(Marshalling.Struct.GetBytes(tail));
 
-            return new ResourceRecord(domain, data.ToArray(), RecordType.SOA, RecordClass.IN, ttl);
+            return new ResourceRecord(domain, data.ToArray(), DnsRecordType.SOA, DnsRecordClass.IN, ttl);
         }
 
         public StartOfAuthorityResourceRecord(IResourceRecord record, byte[] message, int dataOffset)

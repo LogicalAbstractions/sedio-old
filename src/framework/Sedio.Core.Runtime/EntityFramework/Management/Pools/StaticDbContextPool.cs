@@ -5,30 +5,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Nito.AsyncEx;
+using Sedio.Core.Patterns;
 
 namespace Sedio.Core.Runtime.EntityFramework.Management.Pools
 {
     public sealed class StaticDbContextPool<T> : IDbContextPool<T>
         where T : DbContext
     {
-        internal sealed class StaticDbContextHandle : IDbContextHandle<T>
-        {
-            private readonly StaticDbContextPool<T> pool;
-            
-            internal StaticDbContextHandle(StaticDbContextPool<T> pool,T context)
-            {
-                this.pool = pool;
-                Context = context;
-            }
-
-            public void Dispose()
-            {
-                pool.Release(Context);
-            }
-
-            public T Context { get; }
-        }
-        
         private readonly AsyncProducerConsumerQueue<T> items;
         private readonly List<T> allItems;
 
@@ -40,11 +23,11 @@ namespace Sedio.Core.Runtime.EntityFramework.Management.Pools
             this.items = new AsyncProducerConsumerQueue<T>(allItems);
         }
 
-        public async Task<IDbContextHandle<T>> Aquire(CancellationToken cancellationToken)
+        public async Task<DisposableHandle<T>> Aquire(CancellationToken cancellationToken)
         {
             var context = await items.DequeueAsync(cancellationToken).ConfigureAwait(false);
             
-            return new StaticDbContextHandle(this,context);
+            return new DisposableHandle<T>(context,Release);
         }
 
         public void Dispose()

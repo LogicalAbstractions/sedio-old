@@ -2,7 +2,7 @@
 
 namespace Sedio.Core.Runtime.Dns.Protocol.ResourceRecords
 {
-    public interface IResourceRecord : IMessageEntry
+    public interface IResourceRecord : IDnsMessageEntry
     {
         TimeSpan TimeToLive { get; }
 

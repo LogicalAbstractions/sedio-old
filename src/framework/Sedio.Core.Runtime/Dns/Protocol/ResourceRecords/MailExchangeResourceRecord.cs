@@ -1,8 +1,9 @@
 ﻿using System;
+using Sedio.Core.Runtime.Dns.Protocol.Utils;
 
 namespace Sedio.Core.Runtime.Dns.Protocol.ResourceRecords
 {
-    public class MailExchangeResourceRecord : BaseResourceRecord
+    public class MailExchangeResourceRecord : AbstractResourceRecord
     {
         private const int PREFERENCE_SIZE = 2;
 
@@ -19,7 +20,7 @@ namespace Sedio.Core.Runtime.Dns.Protocol.ResourceRecords
             pref.CopyTo(data, 0);
             exchange.ToArray().CopyTo(data, pref.Length);
 
-            return new ResourceRecord(domain, data, RecordType.MX, RecordClass.IN, ttl);
+            return new ResourceRecord(domain, data, DnsRecordType.MX, DnsRecordClass.IN, ttl);
         }
 
         public MailExchangeResourceRecord(IResourceRecord record, byte[] message, int dataOffset)

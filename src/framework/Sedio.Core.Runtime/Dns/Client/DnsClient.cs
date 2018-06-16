@@ -5,6 +5,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Sedio.Core.Runtime.Dns.Protocol;
 using Sedio.Core.Runtime.Dns.Protocol.ResourceRecords;
+using Sedio.Core.Runtime.Dns.Protocol.Utils;
 using Sedio.Core.Runtime.Dns.RequestResolver;
 
 namespace Sedio.Core.Runtime.Dns.Client
@@ -14,10 +15,10 @@ namespace Sedio.Core.Runtime.Dns.Client
         private const           int    DEFAULT_PORT = 53;
         private static readonly Random RANDOM       = new Random();
 
-        private IRequestResolver resolver;
+        private IDnsRequestResolver resolver;
 
         public DnsClient(IPEndPoint dns) :
-            this(new UdpRequestResolver(dns, new TcpRequestResolver(dns)))
+            this(new UdpDnsRequestResolver(dns, new TcpDnsRequestResolver(dns)))
         {
         }
 
@@ -31,30 +32,30 @@ namespace Sedio.Core.Runtime.Dns.Client
         {
         }
 
-        public DnsClient(IRequestResolver resolver)
+        public DnsClient(IDnsRequestResolver resolver)
         {
             this.resolver = resolver;
         }
 
-        public ClientRequest FromArray(byte[] message)
+        public ClientDnsRequest FromArray(byte[] message)
         {
-            DefaultRequest request = DefaultRequest.FromArray(message);
-            return new ClientRequest(resolver, request);
+            DefaultDnsRequest request = DefaultDnsRequest.FromArray(message);
+            return new ClientDnsRequest(resolver, request);
         }
 
-        public ClientRequest Create(IRequest request = null)
+        public ClientDnsRequest Create(IDnsRequest request = null)
         {
-            return new ClientRequest(resolver, request);
+            return new ClientDnsRequest(resolver, request);
         }
 
-        public async Task<IList<IPAddress>> Lookup(string domain, RecordType type = RecordType.A)
+        public async Task<IList<IPAddress>> Lookup(string domain, DnsRecordType type = DnsRecordType.A)
         {
-            if (type != RecordType.A && type != RecordType.AAAA)
+            if (type != DnsRecordType.A && type != DnsRecordType.AAAA)
             {
                 throw new ArgumentException("Invalid record type " + type);
             }
 
-            IResponse response = await Resolve(domain, type);
+            IDnsResponse response = await Resolve(domain, type);
             IList<IPAddress> ips = response.AnswerRecords
                 .Where(r => r.Type == type)
                 .Cast<IPAddressResourceRecord>()
@@ -63,7 +64,7 @@ namespace Sedio.Core.Runtime.Dns.Client
 
             if (ips.Count == 0)
             {
-                throw new ResponseException(response, "No matching records");
+                throw new DnsResponseException(response, "No matching records");
             }
 
             return ips;
@@ -76,29 +77,29 @@ namespace Sedio.Core.Runtime.Dns.Client
 
         public async Task<string> Reverse(IPAddress ip)
         {
-            IResponse       response = await Resolve(Domain.PointerName(ip), RecordType.PTR);
-            IResourceRecord ptr      = response.AnswerRecords.FirstOrDefault(r => r.Type == RecordType.PTR);
+            IDnsResponse       response = await Resolve(Domain.PointerName(ip), DnsRecordType.PTR);
+            IResourceRecord ptr      = response.AnswerRecords.FirstOrDefault(r => r.Type == DnsRecordType.PTR);
 
             if (ptr == null)
             {
-                throw new ResponseException(response, "No matching records");
+                throw new DnsResponseException(response, "No matching records");
             }
 
             return ((PointerResourceRecord) ptr).PointerDomainName.ToString();
         }
 
-        public Task<IResponse> Resolve(string domain, RecordType type)
+        public Task<IDnsResponse> Resolve(string domain, DnsRecordType type)
         {
             return Resolve(new Domain(domain), type);
         }
 
-        public Task<IResponse> Resolve(Domain domain, RecordType type)
+        public Task<IDnsResponse> Resolve(Domain domain, DnsRecordType type)
         {
-            ClientRequest request  = Create();
-            Question      question = new Question(domain, type);
+            ClientDnsRequest request  = Create();
+            DnsQuestion      question = new DnsQuestion(domain, type);
 
             request.Questions.Add(question);
-            request.OperationCode = OperationCode.Query;
+            request.OperationCode = DnsOperationCode.Query;
             request.RecursionDesired = true;
 
             return request.Resolve();

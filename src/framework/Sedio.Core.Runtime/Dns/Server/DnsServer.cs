@@ -15,9 +15,9 @@ namespace Sedio.Core.Runtime.Dns.Server
         private const int DEFAULT_PORT = 53;
         private const int UDP_TIMEOUT  = 2000;
 
-        public delegate void RequestedEventHandler(IRequest request);
+        public delegate void RequestedEventHandler(IDnsRequest request);
 
-        public delegate void RespondedEventHandler(IRequest request, IResponse response);
+        public delegate void RespondedEventHandler(IDnsRequest request, IDnsResponse response);
 
         public delegate void ListeningEventHandler();
 
@@ -34,10 +34,10 @@ namespace Sedio.Core.Runtime.Dns.Server
         private bool             run      = true;
         private bool             disposed = false;
         private UdpClient        udp;
-        private IRequestResolver resolver;
+        private IDnsRequestResolver resolver;
 
         public DnsServer(MasterFile masterFile, IPEndPoint endServer) :
-            this(new FallbackRequestResolver(masterFile, new UdpRequestResolver(endServer)))
+            this(new FallbackDnsRequestResolver(masterFile, new UdpDnsRequestResolver(endServer)))
         {
         }
 
@@ -52,7 +52,7 @@ namespace Sedio.Core.Runtime.Dns.Server
         }
 
         public DnsServer(IPEndPoint endServer) :
-            this(new UdpRequestResolver(endServer))
+            this(new UdpDnsRequestResolver(endServer))
         {
         }
 
@@ -66,7 +66,7 @@ namespace Sedio.Core.Runtime.Dns.Server
         {
         }
 
-        public DnsServer(IRequestResolver resolver)
+        public DnsServer(IDnsRequestResolver resolver)
         {
             this.resolver = resolver;
         }
@@ -125,13 +125,13 @@ namespace Sedio.Core.Runtime.Dns.Server
             Dispose(true);
         }
 
-        protected virtual void OnRequested(IRequest request)
+        protected virtual void OnRequested(IDnsRequest request)
         {
             RequestedEventHandler handlers = Requested;
             if (handlers != null) handlers(request);
         }
 
-        protected virtual void OnResponded(IRequest request, IResponse response)
+        protected virtual void OnResponded(IDnsRequest request, IDnsResponse response)
         {
             RespondedEventHandler handlers = Responded;
             if (handlers != null) handlers(request, response);
@@ -165,14 +165,14 @@ namespace Sedio.Core.Runtime.Dns.Server
 
         private async void HandleRequest(byte[] data, IPEndPoint remote)
         {
-            DefaultRequest request = null;
+            DefaultDnsRequest request = null;
 
             try
             {
-                request = DefaultRequest.FromArray(data);
+                request = DefaultDnsRequest.FromArray(data);
                 OnRequested(request);
 
-                IResponse response = await resolver.Resolve(request);
+                IDnsResponse response = await resolver.Resolve(request);
 
                 OnResponded(request, response);
                 await udp
@@ -203,13 +203,13 @@ namespace Sedio.Core.Runtime.Dns.Server
             {
                 OnErrored(e);
             }
-            catch (ResponseException e)
+            catch (DnsResponseException e)
             {
-                IResponse response = e.Response;
+                IDnsResponse response = e.DnsResponse;
 
                 if (response == null)
                 {
-                    response = DefaultResponse.FromRequest(request);
+                    response = DefaultDnsResponse.FromRequest(request);
                 }
 
                 try
@@ -231,20 +231,20 @@ namespace Sedio.Core.Runtime.Dns.Server
             }
         }
 
-        private class FallbackRequestResolver : IRequestResolver
+        private class FallbackDnsRequestResolver : IDnsRequestResolver
         {
-            private IRequestResolver[] resolvers;
+            private IDnsRequestResolver[] resolvers;
 
-            public FallbackRequestResolver(params IRequestResolver[] resolvers)
+            public FallbackDnsRequestResolver(params IDnsRequestResolver[] resolvers)
             {
                 this.resolvers = resolvers;
             }
 
-            public async Task<IResponse> Resolve(IRequest request)
+            public async Task<IDnsResponse> Resolve(IDnsRequest request)
             {
-                IResponse response = null;
+                IDnsResponse response = null;
 
-                foreach (IRequestResolver resolver in resolvers)
+                foreach (IDnsRequestResolver resolver in resolvers)
                 {
                     response = await resolver.Resolve(request);
                     if (response.AnswerRecords.Count > 0) break;

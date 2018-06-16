@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Net;
+using Sedio.Core.Runtime.Dns.Protocol.Utils;
 
 namespace Sedio.Core.Runtime.Dns.Protocol.ResourceRecords
 {
-    public class IPAddressResourceRecord : BaseResourceRecord
+    public class IPAddressResourceRecord : AbstractResourceRecord
     {
         private static IResourceRecord Create(Domain domain, IPAddress ip, TimeSpan ttl)
         {
             byte[]     data = ip.GetAddressBytes();
-            RecordType type = data.Length == 4 ? RecordType.A : RecordType.AAAA;
+            DnsRecordType type = data.Length == 4 ? DnsRecordType.A : DnsRecordType.AAAA;
 
-            return new ResourceRecord(domain, data, type, RecordClass.IN, ttl);
+            return new ResourceRecord(domain, data, type, DnsRecordClass.IN, ttl);
         }
 
         public IPAddressResourceRecord(IResourceRecord record) : base(record)

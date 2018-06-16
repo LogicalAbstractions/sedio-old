@@ -55,6 +55,8 @@ namespace Sedio.Core.Runtime.Application
 
         public async Task<int> Run(string[] arguments,CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (arguments == null) throw new ArgumentNullException(nameof(arguments));
+            
             using (var webHost = BuildWebHost(arguments))
             {
                 await webHost.RunAsync(cancellationToken);
@@ -94,6 +96,7 @@ namespace Sedio.Core.Runtime.Application
                 {
                    
                 })
+                .SuppressStatusMessages(true)
                 .Build();
         }     
     }

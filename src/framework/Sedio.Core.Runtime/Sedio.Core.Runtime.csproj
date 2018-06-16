@@ -8,6 +8,7 @@
     <ProjectReference Include="..\Sedio.Core\Sedio.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="App.Metrics" Version="2.1.0" />
     <PackageReference Include="Autofac" Version="4.8.1" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.2" />
     <PackageReference Include="FluentValidation" Version="7.6.0" />

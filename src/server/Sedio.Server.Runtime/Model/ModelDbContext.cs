@@ -1,6 +1,11 @@
-﻿using Microsoft.Data.Sqlite;
+﻿using System;
+using System.Threading.Tasks;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Sedio.Core.Runtime.EntityFramework.Management;
 using Sedio.Core.Runtime.EntityFramework.Schema;
+using Sedio.Core.Runtime.Execution.Context;
 
 namespace Sedio.Server.Runtime.Model
 {
@@ -67,6 +72,24 @@ namespace Sedio.Server.Runtime.Model
                 {
                     
                 }).Options;
+        }
+    }
+
+    public static class ExecutionContextExtensions
+    {
+        public static 
+        
+        public static async Task<ModelDbContext> GetDbContext(this IExecutionContext executionContext)
+        {
+            if (executionContext == null) throw new ArgumentNullException(nameof(executionContext));
+            
+            var dbContextHandle = await executionContext.Services.GetRequiredService<IDbContextManager<ModelDbContext>>()
+                .GetPool(executionContext.BranchId)
+                .Aquire(executionContext.CancellationToken).ConfigureAwait(false);
+            
+            executionContext.RegisterCleanup(() => dbContextHandle.Dispose());
+
+            return dbContextHandle.Value;
         }
     }
 }

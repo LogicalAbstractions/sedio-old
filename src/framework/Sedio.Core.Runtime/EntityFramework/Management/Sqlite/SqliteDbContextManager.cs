@@ -61,7 +61,7 @@ namespace Sedio.Core.Runtime.EntityFramework.Management.Sqlite
             // Initialize the root database
             using (var rootContext = rootPool.Aquire(CancellationToken.None).Result)
             {
-                rootContext.Context.Database.Migrate();
+                rootContext.Value.Database.Migrate();
             }
         }
 
@@ -81,8 +81,8 @@ namespace Sedio.Core.Runtime.EntityFramework.Management.Sqlite
                     {
                         using (var sourceContext = await GetPool(sourceId).Aquire(cancellationToken).ConfigureAwait(false))
                         {
-                            var sourceConnection = (SqliteConnection)sourceContext.Context.Database.GetDbConnection();
-                            var targetConnection = (SqliteConnection)targetContext.Context.Database.GetDbConnection();
+                            var sourceConnection = (SqliteConnection)sourceContext.Value.Database.GetDbConnection();
+                            var targetConnection = (SqliteConnection)targetContext.Value.Database.GetDbConnection();
 
                             try
                             {

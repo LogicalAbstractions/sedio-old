@@ -34,20 +34,20 @@ namespace Sedio.Core.Runtime.Dns.Protocol.ResourceRecords
 
             switch (record.Type)
             {
-                case RecordType.A:
-                case RecordType.AAAA:
+                case DnsRecordType.A:
+                case DnsRecordType.AAAA:
                     return new IPAddressResourceRecord(record);
-                case RecordType.NS:
+                case DnsRecordType.NS:
                     return new NameServerResourceRecord(record, message, dataOffset);
-                case RecordType.CNAME:
+                case DnsRecordType.CNAME:
                     return new CanonicalNameResourceRecord(record, message, dataOffset);
-                case RecordType.SOA:
+                case DnsRecordType.SOA:
                     return new StartOfAuthorityResourceRecord(record, message, dataOffset);
-                case RecordType.PTR:
+                case DnsRecordType.PTR:
                     return new PointerResourceRecord(record, message, dataOffset);
-                case RecordType.MX:
+                case DnsRecordType.MX:
                     return new MailExchangeResourceRecord(record, message, dataOffset);
-                case RecordType.TXT:
+                case DnsRecordType.TXT:
                     return new TextResourceRecord(record);
                 default:
                     return record;

@@ -1,17 +1,22 @@
-﻿namespace Sedio.Core.Runtime.Dns.Protocol.Utils
+﻿using System.Runtime.CompilerServices;
+
+namespace Sedio.Core.Runtime.Dns.Protocol.Utils
 {
     public static class ByteExtensions
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static byte GetBitValueAt(this byte b, byte offset, byte length)
         {
             return (byte) ((b >> offset) & ~(0xff << length));
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static byte GetBitValueAt(this byte b, byte offset)
         {
             return b.GetBitValueAt(offset, 1);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static byte SetBitValueAt(this byte b, byte offset, byte length, byte value)
         {
             int mask = ~(0xff << length);
@@ -20,6 +25,7 @@
             return (byte) ((value << offset) | (b & ~(mask << offset)));
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static byte SetBitValueAt(this byte b, byte offset, byte value)
         {
             return b.SetBitValueAt(offset, 1, value);

@@ -27,6 +27,8 @@ namespace Sedio.Core.Runtime.Application
 
         public async Task<int> Run(string[] arguments)
         {
+            if (arguments == null) throw new ArgumentNullException(nameof(arguments));
+            
             var contentRootPath = AppDomain.CurrentDomain.BaseDirectory;
             
             var bootstrapServices = new ServiceCollection();

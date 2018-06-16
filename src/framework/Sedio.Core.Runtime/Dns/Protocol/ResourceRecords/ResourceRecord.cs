@@ -8,8 +8,8 @@ namespace Sedio.Core.Runtime.Dns.Protocol.ResourceRecords
     public class ResourceRecord : IResourceRecord
     {
         private Domain      domain;
-        private RecordType  type;
-        private RecordClass klass;
+        private DnsRecordType  type;
+        private DnsRecordClass klass;
         private TimeSpan    ttl;
         private byte[]      data;
 
@@ -51,13 +51,13 @@ namespace Sedio.Core.Runtime.Dns.Protocol.ResourceRecords
             return new ResourceRecord(domain, data, tail.Type, tail.Class, tail.TimeToLive);
         }
 
-        public static ResourceRecord FromQuestion(Question question, byte[] data, TimeSpan ttl = default(TimeSpan))
+        public static ResourceRecord FromQuestion(DnsQuestion question, byte[] data, TimeSpan ttl = default(TimeSpan))
         {
             return new ResourceRecord(question.Name, data, question.Type, question.Class, ttl);
         }
 
-        public ResourceRecord(Domain domain, byte[] data, RecordType type,
-                              RecordClass klass = RecordClass.IN, TimeSpan ttl = default(TimeSpan))
+        public ResourceRecord(Domain domain, byte[] data, DnsRecordType type,
+                              DnsRecordClass klass = DnsRecordClass.IN, TimeSpan ttl = default(TimeSpan))
         {
             this.domain = domain;
             this.type = type;
@@ -71,12 +71,12 @@ namespace Sedio.Core.Runtime.Dns.Protocol.ResourceRecords
             get { return domain; }
         }
 
-        public RecordType Type
+        public DnsRecordType Type
         {
             get { return type; }
         }
 
-        public RecordClass Class
+        public DnsRecordClass Class
         {
             get { return klass; }
         }
@@ -137,15 +137,15 @@ namespace Sedio.Core.Runtime.Dns.Protocol.ResourceRecords
             private uint   ttl;
             private ushort dataLength;
 
-            public RecordType Type
+            public DnsRecordType Type
             {
-                get { return (RecordType) type; }
+                get { return (DnsRecordType) type; }
                 set { type = (ushort) value; }
             }
 
-            public RecordClass Class
+            public DnsRecordClass Class
             {
-                get { return (RecordClass) klass; }
+                get { return (DnsRecordClass) klass; }
                 set { klass = (ushort) value; }
             }
 

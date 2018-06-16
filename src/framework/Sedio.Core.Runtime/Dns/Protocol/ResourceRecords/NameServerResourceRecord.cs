@@ -1,8 +1,9 @@
 ﻿using System;
+using Sedio.Core.Runtime.Dns.Protocol.Utils;
 
 namespace Sedio.Core.Runtime.Dns.Protocol.ResourceRecords
 {
-    public class NameServerResourceRecord : BaseResourceRecord
+    public class NameServerResourceRecord : AbstractResourceRecord
     {
         public NameServerResourceRecord(IResourceRecord record, byte[] message, int dataOffset)
             : base(record)
@@ -11,7 +12,7 @@ namespace Sedio.Core.Runtime.Dns.Protocol.ResourceRecords
         }
 
         public NameServerResourceRecord(Domain domain, Domain nsDomain, TimeSpan ttl = default(TimeSpan)) :
-            base(new ResourceRecord(domain, nsDomain.ToArray(), RecordType.NS, RecordClass.IN, ttl))
+            base(new ResourceRecord(domain, nsDomain.ToArray(), DnsRecordType.NS, DnsRecordClass.IN, ttl))
         {
             NSDomainName = nsDomain;
         }

@@ -4,10 +4,11 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using Sedio.Core.Runtime.Dns.Protocol.Utils;
 
 namespace Sedio.Core.Runtime.Dns.Protocol.ResourceRecords
 {
-    public class TextResourceRecord : BaseResourceRecord
+    public class TextResourceRecord : AbstractResourceRecord
     {
         /// Regular expression that matches the attribute name/value.
         /// The first unescaped equal sign is the name/value delimiter.
@@ -39,7 +40,7 @@ namespace Sedio.Core.Runtime.Dns.Protocol.ResourceRecords
                 offset += characterString.Size;
             }
 
-            return new ResourceRecord(domain, data, RecordType.TXT, RecordClass.IN, ttl);
+            return new ResourceRecord(domain, data, DnsRecordType.TXT, DnsRecordClass.IN, ttl);
         }
 
         private static IList<CharacterString> FormatAttributeNameValue(string attributeName, string attributeValue)
