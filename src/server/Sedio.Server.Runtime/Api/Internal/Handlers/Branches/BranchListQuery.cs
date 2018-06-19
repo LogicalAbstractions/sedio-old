@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Sedio.Core.Collections.Paging;
-using Sedio.Server.Runtime.Execution;
-using Sedio.Server.Runtime.Execution.Queries;
 
-namespace Sedio.Server.Runtime.Api.Internal.Branches
+namespace Sedio.Server.Runtime.Api.Internal.Handlers.Branches
 {
     public sealed class BranchListQuery : AbstractQuery<PagingResult<string>>
     {

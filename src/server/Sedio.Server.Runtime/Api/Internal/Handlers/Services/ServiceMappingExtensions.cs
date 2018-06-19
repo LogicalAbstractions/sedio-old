@@ -1,11 +1,10 @@
 ﻿using System;
-using Newtonsoft.Json.Linq;
 using Sedio.Contracts;
 using Sedio.Contracts.Components;
 using Sedio.Server.Runtime.Model;
 using Sedio.Server.Runtime.Model.Components;
 
-namespace Sedio.Server.Runtime.Api.Internal.Services
+namespace Sedio.Server.Runtime.Api.Internal.Handlers.Services
 {
     public static class ServiceMappingExtensions
     {

@@ -2,11 +2,9 @@
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Sedio.Contracts;
-using Sedio.Server.Runtime.Execution;
-using Sedio.Server.Runtime.Execution.Queries;
 using Sedio.Server.Runtime.Model;
 
-namespace Sedio.Server.Runtime.Api.Internal.Services
+namespace Sedio.Server.Runtime.Api.Internal.Handlers.Services
 {
     public sealed class ServiceGetQuery : AbstractGetQuery<string,Service,ServiceOutputDto>
     {

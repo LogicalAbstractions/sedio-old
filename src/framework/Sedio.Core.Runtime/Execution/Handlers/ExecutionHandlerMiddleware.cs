@@ -2,11 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Sedio.Core.Runtime.Execution.Context;
+using Sedio.Core.Runtime.Execution.Middleware;
 
-namespace Sedio.Core.Runtime.Execution
+namespace Sedio.Core.Runtime.Execution.Handlers
 {
     public sealed class ExecutionHandlerMiddleware : IExecutionMiddleware
     {
+        public sealed class Provider : AbstractExecutionMiddlewareProvider<ExecutionHandlerMiddleware>
+        {}
+        
         private readonly IReadOnlyList<IExecutionRequestHandler> requestHandlers;
 
         public ExecutionHandlerMiddleware(IEnumerable<IExecutionRequestHandler> requestHandlers)
@@ -15,7 +20,7 @@ namespace Sedio.Core.Runtime.Execution
             this.requestHandlers = requestHandlers.ToList();
         }
 
-        public Task Execute(IExecutionContext context, Func<IExecutionContext, Task> next)
+        public async Task Execute(IExecutionContext context, Func<IExecutionContext, Task> next)
         {
             if (context == null) throw new ArgumentNullException(nameof(context));
             if (next == null) throw new ArgumentNullException(nameof(next));
@@ -24,10 +29,11 @@ namespace Sedio.Core.Runtime.Execution
 
             if (requestHandler != null)
             {
-                return requestHandler.Execute(context);
+                await requestHandler.Execute(context).ConfigureAwait(false);
+                return;
             }
 
-            return Task.FromException(new NotImplementedException($"Could not find handler for request: {context.Request}"));
+            throw new NotImplementedException($"Could not find handler for request: {context.Request}");
         }
     }
 }

@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Sedio.Server.Runtime.Execution;
-using Sedio.Server.Runtime.Execution.Commands;
 using Sedio.Server.Runtime.Model;
 
-namespace Sedio.Server.Runtime.Api.Internal.Services
+namespace Sedio.Server.Runtime.Api.Internal.Handlers.Services
 {
     public sealed class ServiceDeletionCommand : AbstractDeletionCommand<string,Service>
     {

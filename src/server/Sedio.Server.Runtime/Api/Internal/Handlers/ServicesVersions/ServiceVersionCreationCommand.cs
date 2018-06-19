@@ -1,19 +1,14 @@
 ﻿using System;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using NuGet.Versioning;
 using Sedio.Contracts;
 using Sedio.Contracts.Components;
 using Sedio.Core.Timing;
-using Sedio.Server.Runtime.Execution;
-using Sedio.Server.Runtime.Execution.Commands;
 using Sedio.Server.Runtime.Model;
 using Sedio.Server.Runtime.Model.Components;
 
-namespace Sedio.Server.Runtime.Api.Internal.ServicesVersions
+namespace Sedio.Server.Runtime.Api.Internal.Handlers.ServicesVersions
 {
     public sealed class ServiceVersionCreationCommand : AbstractCreationCommand<SemanticVersion,ServiceVersionInputDto,ServiceVersion>
     {

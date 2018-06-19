@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using Sedio.Core.Runtime.Execution.Context;
 
-namespace Sedio.Core.Runtime.Execution
+namespace Sedio.Core.Runtime.Execution.Middleware
 {
     public sealed class ExecutionMiddlewarePipeline
     {
@@ -14,11 +13,11 @@ namespace Sedio.Core.Runtime.Execution
             this.compiledPipeline = compiledPipeline ?? throw new ArgumentNullException(nameof(compiledPipeline));
         }
 
-        public Task Execute(IExecutionContext context)
+        public async Task Execute(IExecutionContext context)
         {
             if (context == null) throw new ArgumentNullException(nameof(context));
 
-            return compiledPipeline.Invoke(context);
+            await compiledPipeline.Invoke(context).ConfigureAwait(false);
         }
 
         public static ExecutionMiddlewarePipeline Compile(IServiceProvider serviceProvider,

@@ -7,7 +7,8 @@ using Sedio.Contracts;
 using Sedio.Contracts.Components;
 using Sedio.Core.Collections.Paging;
 using Sedio.Core.Runtime.Http;
-using Sedio.Server.Runtime.Api.Internal.Services;
+using Sedio.Core.Runtime.Http.Controllers;
+using Sedio.Server.Runtime.Api.Internal.Handlers.Services;
 using Sedio.Server.Runtime.Execution.Commands;
 
 namespace Sedio.Server.Runtime.Api.Http.Controllers

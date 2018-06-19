@@ -9,10 +9,8 @@
     <ProjectReference Include="..\..\framework\Sedio.Core.Runtime\Sedio.Core.Runtime.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Api\Internal\ServiceInstances" />
-    <Folder Include="Execution" />
+    <Folder Include="Api\Internal\Handlers" />
     <Folder Include="Model\" />
-    <Folder Include="Execution\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="FluentValidation" Version="7.6.101" />

@@ -6,6 +6,7 @@ using NuGet.Versioning;
 using Sedio.Contracts;
 using Sedio.Contracts.Components;
 using Sedio.Core.Runtime.Http;
+using Sedio.Core.Runtime.Http.Controllers;
 
 namespace Sedio.Server.Runtime.Api.Http.Controllers
 {

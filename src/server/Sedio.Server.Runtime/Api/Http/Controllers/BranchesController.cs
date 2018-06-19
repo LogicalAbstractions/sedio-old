@@ -4,7 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
 using Sedio.Core.Collections.Paging;
 using Sedio.Core.Runtime.Http;
-using Sedio.Server.Runtime.Api.Internal.Branches;
+using Sedio.Core.Runtime.Http.Controllers;
+using Sedio.Server.Runtime.Api.Internal.Handlers.Branches;
 
 namespace Sedio.Server.Runtime.Api.Http.Controllers
 {
@@ -39,9 +40,10 @@ namespace Sedio.Server.Runtime.Api.Http.Controllers
         [SwaggerTag("Branches")]
         [SwaggerResponse(HttpStatusCode.Created,typeof(void),Description="The branch was created")]
         [SwaggerResponse(HttpStatusCode.BadRequest,typeof(void),Description = "Request parameters were incorrect")]
+        [SwaggerResponse(HttpStatusCode.Conflict,typeof(void),Description = "The branch already exists")]
         public async Task<IActionResult> Put(string branchId)
         {
-            var wasCreated = await ExecuteCommand(new BranchCreationCommand(branchId));
+            var wasCreated = await ExecuteCommand(new BranchCreationRequest(branchId));
 
             if (wasCreated)
             {
@@ -57,7 +59,7 @@ namespace Sedio.Server.Runtime.Api.Http.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound,typeof(void),Description="The branch was not found")]
         public async Task<IActionResult> Delete(string branchId)
         {
-            var wasDeleted = await ExecuteCommand(new BranchDeletionCommand(branchId));
+            var wasDeleted = await ExecuteCommand(new BranchDeletionRequest(branchId));
 
             return wasDeleted ? (IActionResult)NoContent() : NotFound();
         }

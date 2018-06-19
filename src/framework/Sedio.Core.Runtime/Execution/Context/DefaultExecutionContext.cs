@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 
-namespace Sedio.Core.Runtime.Execution
+namespace Sedio.Core.Runtime.Execution.Context
 {
     public sealed class DefaultExecutionContext : IExecutionContext
     {
