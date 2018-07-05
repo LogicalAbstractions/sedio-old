@@ -1,9 +1,9 @@
-﻿using Autofac;
+using Autofac;
 using Sedio.Core.Timing;
 
-namespace Sedio.Server.Runtime
+namespace Sedio.Core.Runtime
 {
-    public sealed class SedioServerModule : Autofac.Module
+    public sealed class CoreModule : Module
     {
         protected override void Load(ContainerBuilder builder)
         {

@@ -34,7 +34,7 @@ namespace Sedio.Server.Runtime.Api.Http.Controllers
         
         [HttpPut("{branchId}")]
         [SwaggerTag("Branches")]
-        [SwaggerResponse(HttpStatusCode.Created,typeof(void),Description="The branch was created")]
+        [SwaggerResponse(HttpStatusCode.Created,typeof(string),Description="The branch was created")]
         [SwaggerResponse(HttpStatusCode.BadRequest,typeof(void),Description = "Request parameters were incorrect")]
         [SwaggerResponse(HttpStatusCode.Conflict,typeof(void),Description = "The branch already exists")]
         public async Task<IActionResult> Put(string branchId)

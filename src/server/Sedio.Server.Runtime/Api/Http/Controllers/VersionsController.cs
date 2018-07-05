@@ -37,7 +37,7 @@ namespace Sedio.Server.Runtime.Api.Http.Controllers
 
         [HttpPut("{serviceVersion}")]
         [SwaggerTag("Versions")]
-        [SwaggerResponse(HttpStatusCode.Created, typeof(void),Description ="The service version was created")]
+        [SwaggerResponse(HttpStatusCode.Created, typeof(ServiceVersionOutputDto),Description ="The service version was created")]
         [SwaggerResponse(HttpStatusCode.Conflict,typeof(void),Description ="A service version cannot be changed after creation")]
         [SwaggerResponse(HttpStatusCode.NotFound, typeof(void), Description = "The parent service was not found")]
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Request parameters were incorrect")]

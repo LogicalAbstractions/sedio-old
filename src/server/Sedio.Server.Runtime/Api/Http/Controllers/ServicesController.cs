@@ -35,8 +35,8 @@ namespace Sedio.Server.Runtime.Api.Http.Controllers
 
         [HttpPut("{serviceId}")]
         [SwaggerTag("Services")]
-        [SwaggerResponse(HttpStatusCode.Accepted, typeof(void),Description = "The service was updated with new data")]
-        [SwaggerResponse(HttpStatusCode.Created,typeof(void),Description="The service was created")]
+        [SwaggerResponse(HttpStatusCode.Accepted, typeof(ServiceOutputDto),Description = "The service was updated with new data")]
+        [SwaggerResponse(HttpStatusCode.Created,typeof(ServiceOutputDto),Description="The service was created")]
         [SwaggerResponse(HttpStatusCode.BadRequest,typeof(void),Description = "Request parameters were incorrect")]
         public async Task<IActionResult> Put(string serviceId, [FromBody]ServiceInputDto serviceDescription)
         {

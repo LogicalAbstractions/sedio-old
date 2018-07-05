@@ -22,11 +22,11 @@ namespace Sedio.Server.Runtime.Api.Internal.Configurationi
         {
             builder.Register(c => ExecutionMiddlewarePipeline.Compile(c.Resolve<IServiceProvider>(),
                 new ModelDbContextExecutionMiddleware.Provider(),
-                new ModelDbContextExecutionMiddleware.Provider()
+                new ExecutionHandlerMiddleware.Provider()
             )).AsSelf().SingleInstance();
             
-            builder.RegisterType<ModelDbContextExecutionMiddleware>().As<IExecutionMiddleware>().SingleInstance();
-            builder.RegisterType<ExecutionHandlerMiddleware>().As<IExecutionMiddleware>().SingleInstance();
+            builder.RegisterType<ModelDbContextExecutionMiddleware>().AsSelf().SingleInstance();
+            builder.RegisterType<ExecutionHandlerMiddleware>().AsSelf().SingleInstance();
 
             builder.RegisterType<LocalExecutor>().As<IExecutor>().SingleInstance();
 

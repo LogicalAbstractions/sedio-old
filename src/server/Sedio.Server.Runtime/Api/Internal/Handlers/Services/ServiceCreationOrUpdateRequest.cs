@@ -26,7 +26,7 @@ namespace Sedio.Server.Runtime.Api.Internal.Handlers.Services
                     .FirstOrDefaultAsync(s => s.ServiceId == request.Id,context.CancellationToken)
                     .ConfigureAwait(false);
 
-                var successResult = Updated();
+                var successResult = Updated(request.Id,"Get","serviceId",service.ToOutput());
                 
                 if (service == null)
                 {
@@ -34,7 +34,7 @@ namespace Sedio.Server.Runtime.Api.Internal.Handlers.Services
                     service = new Service {CreatedAt = context.Services.GetRequiredService<ITimeProvider>().UtcNow};
 
                     dbContext.Services.Add(service);
-                    successResult = Created(request.Id, "Get");
+                    successResult = Created(request.Id, "Get","serviceId",service.ToOutput());
                 }
 
                 service.CacheTime = request.Input.CacheTime;

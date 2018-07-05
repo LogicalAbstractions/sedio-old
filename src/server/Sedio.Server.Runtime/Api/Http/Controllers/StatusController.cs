@@ -46,7 +46,7 @@ namespace Sedio.Server.Runtime.Api.Http.Controllers
 
         [HttpPut("api/services/{serviceId}/versions/{serviceVersion}/instances/{serviceInstanceAddress}/status")]
         [SwaggerTag("Instances")]
-        [SwaggerResponse(HttpStatusCode.Accepted, typeof(void),Description = "The status was updated")]
+        [SwaggerResponse(HttpStatusCode.Accepted, typeof(ServiceStatusOutputDto),Description = "The status was updated")]
         [SwaggerResponse(HttpStatusCode.NotFound, typeof(void),Description = "The parent service, version or this instance was not found")]
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Request parameters were incorrect")]
 

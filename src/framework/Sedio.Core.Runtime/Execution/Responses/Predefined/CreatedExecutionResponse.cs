@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 
 namespace Sedio.Core.Runtime.Execution.Responses.Predefined
 {
@@ -8,22 +9,28 @@ namespace Sedio.Core.Runtime.Execution.Responses.Predefined
     {
         public object Id { get; }
         
+        public string IdName { get; set; }
+        
         public string ActionName { get; }
         
-        public object Model { get; }
+        public object Model { get; set; }
         
-        public CreatedExecutionResponse(object id = null,string actionName = null,object model = null) 
+        public CreatedExecutionResponse(object id,string actionName) 
             : base(null)
         {
             Id = id;
             ActionName = actionName;
-            Model = model;
-            
+
             RegisterTransform<Controller,IActionResult>((context, response) =>
             {
                 if (Id != null && ActionName != null)
                 {
-                    return context.Context.CreatedAtAction(ActionName, new {id = Id},Model);
+                    var routeValues = new RouteValueDictionary()
+                    {
+                        {IdName ?? "id", Id}
+                    };
+                    
+                    return context.Context.CreatedAtAction(ActionName,routeValues,Model);
                 }
 
                 return context.Context.StatusCode((int) HttpStatusCode.Created);

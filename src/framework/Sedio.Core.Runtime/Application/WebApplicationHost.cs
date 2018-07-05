@@ -96,7 +96,7 @@ namespace Sedio.Core.Runtime.Application
                 {
                    
                 })
-                .SuppressStatusMessages(true)
+                //.SuppressStatusMessages(true)
                 .Build();
         }     
     }
