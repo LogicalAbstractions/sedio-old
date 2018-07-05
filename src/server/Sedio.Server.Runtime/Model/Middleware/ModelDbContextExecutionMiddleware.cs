@@ -55,7 +55,19 @@ namespace Sedio.Server.Runtime.Model.Middleware
             return context.Items[ModelDbContextExecutionMiddleware.DbContextManagerKey] as
                 IDbContextManager<ModelDbContext>;
         }
-        
-        
+
+        public static IDbContextPool<ModelDbContext> DbContextPool(this IExecutionContext context)
+        {
+            if (context == null) throw new ArgumentNullException(nameof(context));
+
+            return context.Items[ModelDbContextExecutionMiddleware.DbContextPoolKey] as IDbContextPool<ModelDbContext>;
+        }
+
+        public static ModelDbContext DbContext(this IExecutionContext executionContext)
+        {
+            if (executionContext == null) throw new ArgumentNullException(nameof(executionContext));
+            
+            return executionContext.Items[ModelDbContextExecutionMiddleware.DbContextKey] as ModelDbContext;
+        }
     }
 }

@@ -22,7 +22,7 @@ namespace Sedio.Server.Runtime.Api.Http.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, typeof(void), Description = "The parent service or version was not found")]
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Request parameters were incorrect")]
 
-        public async Task<IActionResult> GetList(ServiceId serviceId,
+        public async Task<IActionResult> GetList(string serviceId,
             SemanticVersion serviceVersion, PagingParameters pagingParameters)
         {
             return Ok();
@@ -34,7 +34,7 @@ namespace Sedio.Server.Runtime.Api.Http.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, typeof(void),Description = "The parent service, version or this instance was not found")]
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Request parameters were incorrect")]
 
-        public async Task<IActionResult> Get(ServiceId serviceId,
+        public async Task<IActionResult> Get(string serviceId,
             SemanticVersion serviceVersion, IPAddress serviceInstanceAddress)
         {
             return Ok();
@@ -47,7 +47,7 @@ namespace Sedio.Server.Runtime.Api.Http.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, typeof(void), Description = "The parent service or version was not found")]
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Request parameters were incorrect")]
 
-        public async Task<IActionResult> Put(ServiceId serviceId, SemanticVersion serviceVersion,
+        public async Task<IActionResult> Put(string serviceId, SemanticVersion serviceVersion,
             IPAddress serviceInstanceAddress, [FromBody]ServiceInstanceInputDto instanceDescription)
         {
             return CreatedAtAction("Get", new {serviceId, serviceVersion, serviceInstanceAddress},instanceDescription);
@@ -59,7 +59,7 @@ namespace Sedio.Server.Runtime.Api.Http.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, typeof(void), Description = "The parent service, version or this instance was not found")]
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Request parameters were incorrect")]
 
-        public async Task<IActionResult> Delete(ServiceId serviceId, SemanticVersion serviceVersion,IPAddress serviceInstanceAddress)
+        public async Task<IActionResult> Delete(string serviceId, SemanticVersion serviceVersion,IPAddress serviceInstanceAddress)
         {
             return Ok();
         }

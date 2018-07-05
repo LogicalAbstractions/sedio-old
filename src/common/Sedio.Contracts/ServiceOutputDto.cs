@@ -6,7 +6,7 @@ namespace Sedio.Contracts
 {
     public sealed class ServiceOutputDto
     {
-        public ServiceId Id { get; set; }
+        public string Id { get; set; }
 
         public HealthAggregationConfigurationDto HealthAggregation { get; set; }
 

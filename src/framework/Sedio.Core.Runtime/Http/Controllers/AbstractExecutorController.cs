@@ -23,7 +23,7 @@ namespace Sedio.Core.Runtime.Http.Controllers
         
         protected string BranchId => forceMainBranch ? null : Request.GetHeaderValue("X-Branch");
 
-        protected async Task<IActionResult> Execute<TResult>(IExecutionRequest request)
+        protected async Task<IActionResult> Execute(IExecutionRequest request)
         {
             if (request == null) throw new ArgumentNullException(nameof(request));
             

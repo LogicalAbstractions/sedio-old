@@ -9,14 +9,14 @@ namespace Sedio.Server.Runtime.Api.Internal.Handlers.Branches
 {
     public sealed class BranchDeletionRequest : AbstractExecutionRequest
     {
-        public class Handler : AbstractExecutionHandler<BranchDeletionRequest>
+        public sealed class Handler : AbstractExecutionHandler<BranchDeletionRequest>
         {
             protected override async Task<IExecutionResponse> OnExecute(IExecutionContext context, BranchDeletionRequest request)
             {
                 var wasDeleted = await context.DbContextManager()
                     .DeleteBranch(request.BranchId, context.CancellationToken).ConfigureAwait(false);
-                
-                return wasDeleted ? 
+
+                return wasDeleted ? Deleted() : NotFound();
             }
         }
         

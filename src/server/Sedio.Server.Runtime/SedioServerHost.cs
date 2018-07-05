@@ -68,7 +68,6 @@ namespace Sedio.Server.Runtime
 
                 settings.GeneratorSettings.TypeMappers.MapTo<IPAddress>()
                     .MapTo<SemanticVersion>()
-                    .MapTo<ServiceId>()
                     .MapTo<VersionRange>()
                     .MapTo<PagingCursor>();
             });

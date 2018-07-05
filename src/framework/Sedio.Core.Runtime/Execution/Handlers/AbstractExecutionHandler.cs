@@ -44,6 +44,11 @@ namespace Sedio.Core.Runtime.Execution.Handlers
             return new ConflictExecutionResponse();
         }
 
+        protected IExecutionResponse Deleted()
+        {
+            return new DeletedExecutionResponse();
+        }
+
         protected IExecutionResponse Created(object id = null, string actionName = null,object model = null)
         {
             return new CreatedExecutionResponse(id,actionName,model);

@@ -20,9 +20,7 @@ namespace Sedio.Server.Runtime.Api.Http.Controllers
         [SwaggerResponse(HttpStatusCode.OK,typeof(PagingResult<string>))]
         public async Task<IActionResult> GetList(PagingParameters pagingParameters)
         {
-            var branchIds = await ExecuteQuery(new BranchListQuery(pagingParameters));
-            
-            return Ok(branchIds);
+            return await Execute(new BranchListRequest(pagingParameters));
         }
         
         [HttpGet("{branchId}")]
@@ -31,9 +29,7 @@ namespace Sedio.Server.Runtime.Api.Http.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound,typeof(void),Description = "The branch was not found")]
         public async Task<IActionResult> Get(string branchId)
         {
-            var branchExists = await ExecuteQuery(new BranchExistsQuery(branchId));
-
-            return branchExists ? (IActionResult) Ok(branchId) : NotFound();
+            return await Execute(new BranchGetRequest(branchId));
         }
         
         [HttpPut("{branchId}")]
@@ -43,14 +39,7 @@ namespace Sedio.Server.Runtime.Api.Http.Controllers
         [SwaggerResponse(HttpStatusCode.Conflict,typeof(void),Description = "The branch already exists")]
         public async Task<IActionResult> Put(string branchId)
         {
-            var wasCreated = await ExecuteCommand(new BranchCreationRequest(branchId));
-
-            if (wasCreated)
-            {
-                return CreatedAtAction("Get", new {branchId}, null);
-            }
-
-            return BadRequest();
+            return await Execute(new BranchCreationRequest(branchId));
         }
 
         [HttpDelete("{branchId}")]
@@ -59,9 +48,7 @@ namespace Sedio.Server.Runtime.Api.Http.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound,typeof(void),Description="The branch was not found")]
         public async Task<IActionResult> Delete(string branchId)
         {
-            var wasDeleted = await ExecuteCommand(new BranchDeletionRequest(branchId));
-
-            return wasDeleted ? (IActionResult)NoContent() : NotFound();
+            return await Execute(new BranchDeletionRequest(branchId));
         }
     }
 }

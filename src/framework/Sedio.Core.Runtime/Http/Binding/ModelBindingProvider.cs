@@ -16,7 +16,6 @@ namespace Sedio.Core.Runtime.Http.Binding
             {typeof(IPAddress),typeof(IpAddressModelBinder) },
             {typeof(PagingParameters),typeof(PagingParametersModelBinder) },
             {typeof(SemanticVersion),typeof(SemanticVersionModelBinder) },
-            {typeof(ServiceId),typeof(ServiceIdModelBinder) },
             {typeof(VersionRange),typeof(VersionRangeModelBinder) }
         };
 

@@ -16,7 +16,6 @@ namespace Sedio.Contracts.Converters
             settings.Converters.Add(new PagingCursorJsonConverter());
             settings.Converters.Add(new IpAddressJsonConverter());
             settings.Converters.Add(new SemanticVersionJsonConverter());
-            settings.Converters.Add(new ServiceIdJsonConverter());
             settings.Converters.Add(new VersionRangeJsonConverter());
             settings.Converters.Add(new StringEnumConverter(true));
             settings.Converters.Add(new TimespanJsonConverter());

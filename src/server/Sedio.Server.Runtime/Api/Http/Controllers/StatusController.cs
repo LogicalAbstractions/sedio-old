@@ -17,7 +17,7 @@ namespace Sedio.Server.Runtime.Api.Http.Controllers
         [SwaggerTag("Services")]
         [SwaggerResponse(HttpStatusCode.OK,typeof(ServiceStatusOutputDto))]
         [SwaggerResponse(HttpStatusCode.NotFound,typeof(void),Description = "The service was not found")]
-        public async Task<ActionResult<ServiceStatusOutputDto>> Get(ServiceId serviceId)
+        public async Task<ActionResult<ServiceStatusOutputDto>> Get(string serviceId)
         {
             return Ok();
         }
@@ -28,7 +28,7 @@ namespace Sedio.Server.Runtime.Api.Http.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, typeof(void),Description = "The parent service or this version was not found")]
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Request parameters were incorrect")]
 
-        public async Task<ActionResult<ServiceStatusOutputDto>> Get(ServiceId serviceId,SemanticVersion serviceVersion)
+        public async Task<ActionResult<ServiceStatusOutputDto>> Get(string serviceId,SemanticVersion serviceVersion)
         {
             return Ok();
         }
@@ -39,7 +39,7 @@ namespace Sedio.Server.Runtime.Api.Http.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, typeof(void),Description = "The parent service, version or this instance was not found")]
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Request parameters were incorrect")]
 
-        public async Task<ActionResult<ServiceStatusOutputDto>> Get(ServiceId serviceId, SemanticVersion serviceVersion,IPAddress serviceInstanceAddress)
+        public async Task<ActionResult<ServiceStatusOutputDto>> Get(string serviceId, SemanticVersion serviceVersion,IPAddress serviceInstanceAddress)
         {
             return Ok();
         }
@@ -50,7 +50,7 @@ namespace Sedio.Server.Runtime.Api.Http.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, typeof(void),Description = "The parent service, version or this instance was not found")]
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Request parameters were incorrect")]
 
-        public async Task<ActionResult> Put(ServiceId serviceId, SemanticVersion serviceVersion, IPAddress serviceInstanceAddress,[FromBody]ServiceStatusInputDto statusDescription)
+        public async Task<ActionResult> Put(string serviceId, SemanticVersion serviceVersion, IPAddress serviceInstanceAddress,[FromBody]ServiceStatusInputDto statusDescription)
         {
             return Ok();
         }

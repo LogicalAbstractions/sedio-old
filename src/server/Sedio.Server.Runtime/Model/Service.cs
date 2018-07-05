@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using NuGet.Versioning;
+using Sedio.Contracts;
 using Sedio.Contracts.Components;
 using Sedio.Core.Runtime.EntityFramework.Schema;
 using Sedio.Server.Runtime.Model.Components;
@@ -43,5 +44,21 @@ namespace Sedio.Server.Runtime.Model
         // Navigation properties
         
         public IList<ServiceVersion> ServiceVersions { get; set; }
+    }
+    
+    public static class ServiceMappingExtensions
+    {
+        public static ServiceOutputDto ToOutput(this Service service)
+        {
+            if (service == null) throw new ArgumentNullException(nameof(service));
+
+            return new ServiceOutputDto()
+            {
+                Id                = service.ServiceId,
+                CacheTime         = service.CacheTime,
+                CreatedAt         = service.CreatedAt,
+                HealthAggregation = service.HealthAggregation.ToOutput<HealthAggregationConfigurationDto>()
+            };
+        }
     }
 }

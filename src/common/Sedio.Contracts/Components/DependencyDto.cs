@@ -5,7 +5,7 @@ namespace Sedio.Contracts.Components
 {
     public sealed class DependencyDto
     {
-        public ServiceId ServiceId { get; set; }
+        public string ServiceId { get; set; }
 
         public VersionRange VersionRequirement { get; set; }
     }
