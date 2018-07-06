@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Net;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using NuGet.Versioning;
+using Sedio.Contracts;
 using Sedio.Core.Runtime.EntityFramework.Schema;
 
 namespace Sedio.Server.Runtime.Model
@@ -35,5 +37,20 @@ namespace Sedio.Server.Runtime.Model
         public long ServiceVersionId { get; set; }
         
         public ServiceVersion ServiceVersion { get; set; }
+    }
+    
+    public static class ServiceInstanceMappingExtensions
+    {
+        public static ServiceInstanceOutputDto ToOutput(this ServiceInstance serviceInstance)
+        {
+            if (serviceInstance == null) throw new ArgumentNullException(nameof(serviceInstance));
+
+            return new ServiceInstanceOutputDto()
+            {
+                Address = IPAddress.Parse(serviceInstance.Address),
+                CreatedAt = serviceInstance.CreatedAt,
+                Version = SemanticVersion.Parse(serviceInstance.ServiceVersion.Version)
+            };
+        }
     }
 }

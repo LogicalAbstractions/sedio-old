@@ -18,11 +18,11 @@ namespace Sedio.Server.Runtime.Api.Internal.Handlers.Services
         {
             protected override async Task<IExecutionResponse> OnExecute(IExecutionContext context, ServiceListRequest request)
             {
-                var pagedServices = await context.DbContext().Services
+                var services = await context.DbContext().Services
                     .AsNoTracking()
                     .ToPagedResult(request.PagingParameters, context.CancellationToken).ConfigureAwait(false);
 
-                return Ok(pagedServices.Map(s => s.ToOutput()));
+                return Ok(services.Map(s => s.ToOutput()));
             }
         }
         

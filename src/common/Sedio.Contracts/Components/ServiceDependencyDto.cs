@@ -3,7 +3,7 @@ using NuGet.Versioning;
 
 namespace Sedio.Contracts.Components
 {
-    public sealed class DependencyDto
+    public sealed class ServiceDependencyDto
     {
         public string ServiceId { get; set; }
 

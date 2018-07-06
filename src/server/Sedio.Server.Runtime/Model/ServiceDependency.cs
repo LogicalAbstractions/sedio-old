@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using NuGet.Versioning;
 using Sedio.Contracts.Components;
 using Sedio.Core.Runtime.EntityFramework.Schema;
@@ -28,5 +29,19 @@ namespace Sedio.Server.Runtime.Model
         public long ServiceVersionId { get; set; }
         
         public ServiceVersion ServiceVersion { get; set; }
+    }
+
+    public static class ServiceDependencyMappingExtensions
+    {
+        public static ServiceDependencyDto ToOutput(this ServiceDependency serviceDependency)
+        {
+            if (serviceDependency == null) throw new ArgumentNullException(nameof(serviceDependency));
+
+            return new ServiceDependencyDto()
+            {
+                ServiceId = serviceDependency.ServiceId,
+                VersionRequirement = VersionRange.Parse(serviceDependency.VersionRequirement)
+            };
+        }
     }
 }

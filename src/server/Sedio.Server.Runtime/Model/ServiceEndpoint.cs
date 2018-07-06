@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Sedio.Contracts.Components;
 using Sedio.Core.Runtime.EntityFramework.Schema;
 
 namespace Sedio.Server.Runtime.Model
@@ -22,5 +24,19 @@ namespace Sedio.Server.Runtime.Model
         public long ServiceVersionId { get; set; }
         
         public ServiceVersion ServiceVersion { get; set; }
+    }
+
+    public static class ServiceEndpointMappingExtensions
+    {
+        public static ServiceEndpointDto ToOutput(this ServiceEndpoint serviceEndpoint)
+        {
+            if (serviceEndpoint == null) throw new ArgumentNullException(nameof(serviceEndpoint));
+
+            return new ServiceEndpointDto()
+            {
+                Protocol = serviceEndpoint.Protocol,
+                Port = serviceEndpoint.Port
+            };
+        }
     }
 }

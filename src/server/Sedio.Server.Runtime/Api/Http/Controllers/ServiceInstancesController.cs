@@ -8,6 +8,7 @@ using Sedio.Contracts.Components;
 using Sedio.Core.Collections.Paging;
 using Sedio.Core.Runtime.Http;
 using Sedio.Core.Runtime.Http.Controllers;
+using Sedio.Server.Runtime.Api.Internal.Handlers.ServiceInstances;
 
 namespace Sedio.Server.Runtime.Api.Http.Controllers
 {
@@ -25,7 +26,7 @@ namespace Sedio.Server.Runtime.Api.Http.Controllers
         public async Task<IActionResult> GetList(string serviceId,
             SemanticVersion serviceVersion, PagingParameters pagingParameters)
         {
-            return Ok();
+            return await Execute(new ServiceInstanceListRequest(serviceId, serviceVersion, pagingParameters));
         }
 
         [HttpGet("{serviceInstanceAddress}")]
@@ -37,7 +38,7 @@ namespace Sedio.Server.Runtime.Api.Http.Controllers
         public async Task<IActionResult> Get(string serviceId,
             SemanticVersion serviceVersion, IPAddress serviceInstanceAddress)
         {
-            return Ok();
+            return await Execute(new ServiceInstanceGetRequest(serviceId, serviceVersion, serviceInstanceAddress));
         }
 
         [HttpPut("{serviceInstanceAddress}")]
@@ -48,9 +49,10 @@ namespace Sedio.Server.Runtime.Api.Http.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Request parameters were incorrect")]
 
         public async Task<IActionResult> Put(string serviceId, SemanticVersion serviceVersion,
-            IPAddress serviceInstanceAddress, [FromBody]ServiceInstanceInputDto instanceDescription)
+            IPAddress serviceInstanceAddress, [FromBody]ServiceInstanceInputDto serviceInstanceDescription)
         {
-            return CreatedAtAction("Get", new {serviceId, serviceVersion, serviceInstanceAddress},instanceDescription);
+            return await Execute(new ServiceInstanceCreationOrUpdateRequest(serviceId, serviceVersion,
+                serviceInstanceAddress, serviceInstanceDescription));
         }
 
         [HttpDelete("{serviceInstanceAddress}")]
@@ -61,7 +63,7 @@ namespace Sedio.Server.Runtime.Api.Http.Controllers
 
         public async Task<IActionResult> Delete(string serviceId, SemanticVersion serviceVersion,IPAddress serviceInstanceAddress)
         {
-            return Ok();
+            return await Execute(new ServiceInstanceDeletionRequest(serviceId, serviceVersion, serviceInstanceAddress));
         }
     }
 }

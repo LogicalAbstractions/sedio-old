@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using NuGet.Versioning;
 using Sedio.Contracts;
@@ -104,7 +105,19 @@ namespace Sedio.Server.Runtime.Model
 
             return new ServiceVersionOutputDto()
             {
+                Version = SemanticVersion.Parse(serviceVersion.Version),
+                Dependencies = serviceVersion.ServiceDependencies.Select(d => d.ToOutput()).ToList(),
+                Endpoints = serviceVersion.ServiceEndpoints.Select(e => e.ToOutput()).ToList(),
                 
+                HealthAggregation = serviceVersion.HealthAggregation.ToOutput<HealthAggregationConfigurationDto>(),
+                HealthCheck = serviceVersion.HealthCheck.ToOutput<HealthCheckConfigurationDto>(),
+                Notification = serviceVersion.Notification.ToOutput<NotificationConfigurationDto>(),
+                InstanceRouting = serviceVersion.InstanceRouting.ToOutput<InstanceRoutingConfigurationDto>(),
+                InstanceRetirement = serviceVersion.InstanceRetirement.ToOutput<InstanceRetirementConfigurationDto>(),
+                Orchestration = serviceVersion.Orchestration.ToOutput<OrchestrationConfigurationDto>(),
+                
+                CacheTime = serviceVersion.CacheTime,
+                CreatedAt = serviceVersion.CreatedAt
             };
         }
     }

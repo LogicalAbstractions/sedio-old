@@ -9,9 +9,9 @@ namespace Sedio.Contracts
     {
         public SemanticVersion Version { get; set; }
 
-        public IReadOnlyList<DependencyDto> Dependencies { get; set; }
+        public IReadOnlyList<ServiceDependencyDto> Dependencies { get; set; }
 
-        public IReadOnlyList<EndpointDto> Endpoints { get; set; }
+        public IReadOnlyList<ServiceEndpointDto> Endpoints { get; set; }
 
         public HealthCheckConfigurationDto HealthCheck { get; set; }
 

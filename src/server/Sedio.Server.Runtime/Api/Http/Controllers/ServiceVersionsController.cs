@@ -44,9 +44,9 @@ namespace Sedio.Server.Runtime.Api.Http.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, typeof(void), Description = "The parent service was not found")]
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Request parameters were incorrect")]
 
-        public async Task<IActionResult> Put(string serviceId, SemanticVersion serviceVersion,[FromBody]ServiceVersionInputDto versionDescription)
+        public async Task<IActionResult> Put(string serviceId, SemanticVersion serviceVersion,[FromBody]ServiceVersionInputDto serviceVersionDescription)
         {
-            return await Execute(new ServiceVersionCreationRequest(serviceId, serviceVersion, versionDescription));
+            return await Execute(new ServiceVersionCreationRequest(serviceId, serviceVersion, serviceVersionDescription));
         }
     }
 }

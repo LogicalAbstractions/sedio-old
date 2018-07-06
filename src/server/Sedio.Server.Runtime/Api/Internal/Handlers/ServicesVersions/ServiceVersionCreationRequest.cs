@@ -23,10 +23,9 @@ namespace Sedio.Server.Runtime.Api.Internal.Handlers.ServicesVersions
             protected override async Task<IExecutionResponse> OnExecute(IExecutionContext context, ServiceVersionCreationRequest request)
             {
                 var dbContext = context.DbContext();
-                var versionString = request.Version.ToFullString();
+                var versionString = request.ServiceVersion.ToFullString();
 
                 var service = await dbContext.Services
-                    .AsNoTracking()
                     .FirstOrDefaultAsync(s => s.ServiceId == request.ServiceId,
                     context.CancellationToken)
                     .ConfigureAwait(false);
@@ -40,7 +39,7 @@ namespace Sedio.Server.Runtime.Api.Internal.Handlers.ServicesVersions
                 
                 // Check if we already have the same version:
                 var existingVersion =
-                    await dbContext.ServiceVersions.AsNoTracking().
+                    await dbContext.ServiceVersions.
                         Where(s => s.Version == versionString && s.ServiceId == service.Id)
                         .FirstOrDefaultAsync(context.CancellationToken).ConfigureAwait(false);
 
@@ -90,7 +89,7 @@ namespace Sedio.Server.Runtime.Api.Internal.Handlers.ServicesVersions
                 return Created(new
                 {
                     serviceId = request.ServiceId,
-                    serviceVersion = request.Input.Version
+                    serviceVersion = request.ServiceVersion
                 }, model: newVersion.ToOutput());
             }
 
@@ -111,17 +110,17 @@ namespace Sedio.Server.Runtime.Api.Internal.Handlers.ServicesVersions
             }
         }
         
-        public ServiceVersionCreationRequest(string serviceId, SemanticVersion version, ServiceVersionInputDto input)
+        public ServiceVersionCreationRequest(string serviceId, SemanticVersion serviceVersion, ServiceVersionInputDto input)
             : base(ExecutionRequestType.Mutation)
         {
             ServiceId = serviceId ?? throw new ArgumentNullException(nameof(serviceId));
-            Version = version ?? throw new ArgumentNullException(nameof(version));
+            ServiceVersion = serviceVersion ?? throw new ArgumentNullException(nameof(serviceVersion));
             Input = input ?? throw new ArgumentNullException(nameof(input));
         }
 
         public string ServiceId { get; set; }
         
-        public SemanticVersion Version { get; set; }
+        public SemanticVersion ServiceVersion { get; set; }
         
         public ServiceVersionInputDto Input { get; set; }
     }

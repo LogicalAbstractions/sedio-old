@@ -28,7 +28,7 @@ namespace Sedio.Server.Runtime.Api.Internal.Handlers.ServicesVersions
                     return NotFound();
                 }
 
-                var versionString = request.Version.ToFullString();
+                var versionString = request.ServiceVersion.ToFullString();
                 
                 var serviceVersion = await dbContext.ServiceVersions
                     .AsNoTracking()
@@ -43,15 +43,15 @@ namespace Sedio.Server.Runtime.Api.Internal.Handlers.ServicesVersions
         
         public string ServiceId { get; }
         
-        public SemanticVersion Version { get; }
+        public SemanticVersion ServiceVersion { get; }
         
-        public ServiceVersionGetRequest(string serviceId, SemanticVersion version)
+        public ServiceVersionGetRequest(string serviceId, SemanticVersion serviceVersion)
         {
             if (string.IsNullOrWhiteSpace(serviceId))
                 throw new ArgumentException("Value cannot be null or whitespace.", nameof(serviceId));
             
             ServiceId = serviceId;
-            Version = version ?? throw new ArgumentNullException(nameof(version));
+            ServiceVersion = serviceVersion ?? throw new ArgumentNullException(nameof(serviceVersion));
         }
     }
 }
