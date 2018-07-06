@@ -19,7 +19,8 @@ namespace Sedio.Server.Runtime.Api.Internal.Handlers.Services
                 var dbContext = context.DbContext();
 
                 var service = await dbContext.Services
-                    .FirstOrDefaultAsync(s => s.ServiceId == request.Id, context.CancellationToken)
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(s => s.ServiceId == request.ServiceId, context.CancellationToken)
                     .ConfigureAwait(false);
 
                 if (service != null)
@@ -31,13 +32,13 @@ namespace Sedio.Server.Runtime.Api.Internal.Handlers.Services
             }
         }
         
-        public ServiceGetRequest(string id)
+        public ServiceGetRequest(string serviceId)
         {
-            if (string.IsNullOrWhiteSpace(id))
-                throw new ArgumentException("Value cannot be null or whitespace.", nameof(id));
-            Id = id;
+            if (string.IsNullOrWhiteSpace(serviceId))
+                throw new ArgumentException("Value cannot be null or whitespace.", nameof(serviceId));
+            ServiceId = serviceId;
         }
 
-        public string Id { get; }
+        public string ServiceId { get; }
     }
 }

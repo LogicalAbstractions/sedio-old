@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Sedio.Core.Collections.Paging;
 using Sedio.Core.Runtime.EntityFramework;
 using Sedio.Core.Runtime.Execution;
@@ -18,6 +19,7 @@ namespace Sedio.Server.Runtime.Api.Internal.Handlers.Services
             protected override async Task<IExecutionResponse> OnExecute(IExecutionContext context, ServiceListRequest request)
             {
                 var pagedServices = await context.DbContext().Services
+                    .AsNoTracking()
                     .ToPagedResult(request.PagingParameters, context.CancellationToken).ConfigureAwait(false);
 
                 return Ok(pagedServices.Map(s => s.ToOutput()));

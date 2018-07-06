@@ -17,7 +17,10 @@ namespace Sedio.Server.Runtime.Api.Internal.Handlers.Branches
                     .CreateBranch(null, request.BranchId, context.CancellationToken)
                     .ConfigureAwait(false);
 
-                return wasCreated ? Created(request.BranchId, "Get", "branchId",request.BranchId) : Conflict();
+                return wasCreated ? Created(new
+                {
+                    branchId = request.BranchId
+                },model: request.BranchId) : Conflict();
             }
         }
         
@@ -26,6 +29,7 @@ namespace Sedio.Server.Runtime.Api.Internal.Handlers.Branches
         {
             if (string.IsNullOrWhiteSpace(branchId))
                 throw new ArgumentException("Value cannot be null or whitespace.", nameof(branchId));
+            
             BranchId = branchId;
         }
 

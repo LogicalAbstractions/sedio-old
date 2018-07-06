@@ -6,33 +6,26 @@ namespace Sedio.Core.Runtime.Execution.Responses.Predefined
 {
     public sealed class UpdatedExecutionResponse : AbstractExecutionResponse<UpdatedExecutionResponse>
     {
-        public object Id { get; }
-        
-        public string IdName { get; set; }
+        public object RouteValues { get; }
         
         public string ActionName { get; }
         
         public object Model { get; set; }
         
-        public UpdatedExecutionResponse(object id,string actionName) 
+        public UpdatedExecutionResponse(object routeValues,string actionName) 
             : base(null)
         {
-            Id = id;
+            RouteValues = routeValues;
             ActionName = actionName;
 
             RegisterTransform<Controller,IActionResult>((context, response) =>
             {
-                if (Id != null && ActionName != null)
+                if (RouteValues != null && ActionName != null)
                 {
-                    var routeValues = new RouteValueDictionary()
-                    {
-                        {IdName ?? "id", Id}
-                    };
-                    
-                    return context.Context.CreatedAtAction(ActionName,routeValues,Model);
+                    return context.Context.AcceptedAtAction(ActionName,routeValues,Model);
                 }
 
-                return context.Context.StatusCode((int) HttpStatusCode.Created);
+                return context.Context.StatusCode((int) HttpStatusCode.Accepted);
             } );
         }
     }

@@ -9,13 +9,6 @@ namespace Sedio.Core.Runtime.Execution.Handlers
     public abstract class AbstractExecutionHandler<TRequest> : IExecutionRequestHandler
         where TRequest : class,IExecutionRequest
     {
-        protected string DefaultIdName { get; }
-
-        protected AbstractExecutionHandler(string defaultIdName = null)
-        {
-            DefaultIdName = defaultIdName;
-        }
-        
         public bool CanHandle(IExecutionContext context)
         {
             if (context == null) throw new ArgumentNullException(nameof(context));
@@ -56,11 +49,10 @@ namespace Sedio.Core.Runtime.Execution.Handlers
             return new DeletedExecutionResponse();
         }
 
-        protected IExecutionResponse Created(object id, string actionName,string idName = null,object model = null)
+        protected IExecutionResponse Created(object routeValues,string actionName = "Get",object model = null)
         {
-            return new CreatedExecutionResponse(id,actionName)
+            return new CreatedExecutionResponse(routeValues,actionName)
             {
-                IdName = idName ?? DefaultIdName,
                 Model = model
             };
         }
@@ -70,11 +62,10 @@ namespace Sedio.Core.Runtime.Execution.Handlers
             return new NotFoundExecutionResponse();
         }
 
-        protected IExecutionResponse Updated(object id, string actionName,string idName = null,object model = null)
+        protected IExecutionResponse Updated(object routeValues, string actionName = "Get",object model = null)
         {
-            return new UpdatedExecutionResponse(id,actionName)
+            return new UpdatedExecutionResponse(routeValues,actionName)
             {
-                IdName = idName ?? DefaultIdName,
                 Model = model
             };
         }

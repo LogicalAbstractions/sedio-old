@@ -8,12 +8,14 @@ using Sedio.Contracts.Components;
 using Sedio.Core.Collections.Paging;
 using Sedio.Core.Runtime.Http;
 using Sedio.Core.Runtime.Http.Controllers;
+using Sedio.Server.Runtime.Api.Internal.Handlers.Services;
+using Sedio.Server.Runtime.Api.Internal.Handlers.ServicesVersions;
 
 namespace Sedio.Server.Runtime.Api.Http.Controllers
 {
     [ProducesJson]
     [Route("api/services/{serviceId}/versions")]
-    public class VersionsController : AbstractExecutorController
+    public class ServiceVersionsController : AbstractExecutorController
     {
         [HttpGet]
         [SwaggerTag("Versions")]
@@ -21,7 +23,7 @@ namespace Sedio.Server.Runtime.Api.Http.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound,typeof(void),Description = "The parent service was not found")]
         public async Task<IActionResult> GetList(string serviceId,PagingParameters pagingParameters)
         {
-            return Ok();
+            return await Execute(new ServiceVersionListRequest(serviceId, pagingParameters));
         }
 
         [HttpGet("{serviceVersion}")]
@@ -32,7 +34,7 @@ namespace Sedio.Server.Runtime.Api.Http.Controllers
 
         public async Task<IActionResult> Get(string serviceId, SemanticVersion serviceVersion)
         {
-            return Ok();
+            return await Execute(new ServiceVersionGetRequest(serviceId, serviceVersion));
         }
 
         [HttpPut("{serviceVersion}")]
@@ -42,9 +44,9 @@ namespace Sedio.Server.Runtime.Api.Http.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, typeof(void), Description = "The parent service was not found")]
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Request parameters were incorrect")]
 
-        public async Task<ActionResult> Put(string serviceId, SemanticVersion serviceVersion,[FromBody]ServiceVersionInputDto versionDescription)
+        public async Task<IActionResult> Put(string serviceId, SemanticVersion serviceVersion,[FromBody]ServiceVersionInputDto versionDescription)
         {
-            return CreatedAtAction("Get", new {serviceId, serviceVersion});
+            return await Execute(new ServiceVersionCreationRequest(serviceId, serviceVersion, versionDescription));
         }
     }
 }

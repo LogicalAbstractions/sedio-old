@@ -11,7 +11,7 @@ using Sedio.Core.Runtime.Http.Controllers;
 namespace Sedio.Server.Runtime.Api.Http.Controllers
 {
     [ProducesJson]
-    public class DependenciesController : AbstractExecutorController
+    public class ServiceDependenciesController : AbstractExecutorController
     {
         [HttpGet("api/services/{serviceId}/versions/{serviceVersion}/dependencies/{dependencyId}")]
         [SwaggerTag("Versions")]

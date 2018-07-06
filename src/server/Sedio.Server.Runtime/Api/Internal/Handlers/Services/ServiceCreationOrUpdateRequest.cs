@@ -23,10 +23,13 @@ namespace Sedio.Server.Runtime.Api.Internal.Handlers.Services
                 var dbContext = context.DbContext();
 
                 var service = await dbContext.Services
-                    .FirstOrDefaultAsync(s => s.ServiceId == request.Id,context.CancellationToken)
+                    .FirstOrDefaultAsync(s => s.ServiceId == request.ServiceId,context.CancellationToken)
                     .ConfigureAwait(false);
 
-                var successResult = Updated(request.Id,"Get","serviceId",service.ToOutput());
+                var successResult = Updated(new
+                {
+                    serviceId = request.ServiceId
+                },model: service.ToOutput());
                 
                 if (service == null)
                 {
@@ -34,12 +37,15 @@ namespace Sedio.Server.Runtime.Api.Internal.Handlers.Services
                     service = new Service {CreatedAt = context.Services.GetRequiredService<ITimeProvider>().UtcNow};
 
                     dbContext.Services.Add(service);
-                    successResult = Created(request.Id, "Get","serviceId",service.ToOutput());
+                    successResult = Created(new
+                    {
+                        serviceId = request.ServiceId
+                    },model: service.ToOutput());
                 }
 
                 service.CacheTime = request.Input.CacheTime;
                 service.HealthAggregation = request.Input.HealthAggregation?.ToEntity<HealthAggregationConfiguration>();
-                service.ServiceId = request.Id;
+                service.ServiceId = request.ServiceId;
 
                 dbContext.SaveChangesAsync(context.CancellationToken).ConfigureAwait(false);
 
@@ -47,14 +53,17 @@ namespace Sedio.Server.Runtime.Api.Internal.Handlers.Services
             }
         }
         
-        public ServiceCreationOrUpdateRequest(string id, ServiceInputDto input) 
+        public ServiceCreationOrUpdateRequest(string serviceId, ServiceInputDto input) 
             : base(ExecutionRequestType.Mutation)
         {
-            Id = id;
-            Input = input;
+            if (string.IsNullOrWhiteSpace(serviceId))
+                throw new ArgumentException("Value cannot be null or whitespace.", nameof(serviceId));
+            
+            ServiceId = serviceId;
+            Input = input ?? throw new ArgumentNullException(nameof(input));
         }
         
-        public string Id { get; }
+        public string ServiceId { get; }
         
         public ServiceInputDto Input { get; }
     }

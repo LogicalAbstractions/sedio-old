@@ -25,6 +25,7 @@ namespace Sedio.Server.Runtime.Api.Internal.Handlers.Branches
         {
             if (string.IsNullOrWhiteSpace(branchId))
                 throw new ArgumentException("Value cannot be null or whitespace.", nameof(branchId));
+            
             BranchId = branchId;
         }
 

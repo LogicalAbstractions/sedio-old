@@ -14,7 +14,7 @@ namespace Sedio.Server.Runtime.Api.Http.Controllers
     [ProducesJson]
     [Route("api/services/{serviceId}/versions/{serviceVersion}/instances")]
     
-    public class InstancesController : AbstractExecutorController
+    public class ServiceInstancesController : AbstractExecutorController
     {
         [HttpGet]
         [SwaggerTag("Instances")]

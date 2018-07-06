@@ -9,8 +9,6 @@
     <ProjectReference Include="..\..\framework\Sedio.Core.Runtime\Sedio.Core.Runtime.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Api\Internal\Handlers" />
-    <Folder Include="Api\Internal\Handlers\ServicesVersions" />
     <Folder Include="Model\" />
   </ItemGroup>
   <ItemGroup>

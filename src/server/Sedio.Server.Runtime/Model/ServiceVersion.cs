@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using NuGet.Versioning;
+using Sedio.Contracts;
 using Sedio.Contracts.Components;
 using Sedio.Core.Runtime.EntityFramework.Schema;
 using Sedio.Server.Runtime.Model.Components;
@@ -93,5 +94,18 @@ namespace Sedio.Server.Runtime.Model
         public long ServiceId { get; set; }
         
         public Service Service { get; set; }
+    }
+    
+    public static class ServiceVersionMappingExtensions
+    {
+        public static ServiceVersionOutputDto ToOutput(this ServiceVersion serviceVersion)
+        {
+            if (serviceVersion == null) throw new ArgumentNullException(nameof(serviceVersion));
+
+            return new ServiceVersionOutputDto()
+            {
+                
+            };
+        }
     }
 }
