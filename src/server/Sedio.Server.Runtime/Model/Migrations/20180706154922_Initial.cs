@@ -87,7 +87,7 @@ namespace Sedio.Server.Runtime.Model.Migrations
                     Id = table.Column<long>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Protocol = table.Column<string>(maxLength: 48, nullable: false),
-                    Port = table.Column<int>(nullable: false),
+                    Port = table.Column<int>(nullable: true),
                     ServiceVersionId = table.Column<long>(nullable: false)
                 },
                 constraints: table =>

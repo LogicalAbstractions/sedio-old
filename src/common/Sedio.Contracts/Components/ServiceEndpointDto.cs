@@ -6,6 +6,6 @@ namespace Sedio.Contracts.Components
     {
         public string Protocol { get; set; }
 
-        public int Port { get; set; }
+        public int? Port { get; set; }
     }
 }

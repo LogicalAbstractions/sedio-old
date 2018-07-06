@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using NuGet.Versioning;
 using Sedio.Contracts;
+using Sedio.Core.Networking;
 using Sedio.Core.Runtime.Execution;
 using Sedio.Core.Runtime.Execution.Handlers;
 using Sedio.Core.Runtime.Execution.Requests;
@@ -74,8 +75,8 @@ namespace Sedio.Server.Runtime.Api.Internal.Handlers.ServicesVersions
                 var newEndpoints = request.Input.Endpoints.Select(e => new ServiceEndpoint()
                 {
                     ServiceVersion = newVersion,
-                    Port = e.Port,
-                    Protocol = e.Protocol
+                    Port = WellKnownProtocols.ResolveProtocolPort(e.Protocol,e.Port),
+                    Protocol = WellKnownProtocols.ResolveProtocolId(e.Port,e.Protocol)
                 }).ToList();
 
                 newVersion.ServiceDependencies = newDependencies;

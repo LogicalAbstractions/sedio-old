@@ -19,7 +19,7 @@ namespace Sedio.Server.Runtime.Model
         
         public string Protocol { get; set; }
         
-        public int Port { get; set; }
+        public int? Port { get; set; }
         
         public long ServiceVersionId { get; set; }
         
