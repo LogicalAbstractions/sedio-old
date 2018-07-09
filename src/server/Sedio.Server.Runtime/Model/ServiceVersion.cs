@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using NuGet.Versioning;
 using Sedio.Contracts;
@@ -119,6 +122,28 @@ namespace Sedio.Server.Runtime.Model
                 CacheTime = serviceVersion.CacheTime,
                 CreatedAt = serviceVersion.CreatedAt
             };
+        }
+    }
+
+    public static class ServiceVersionQueryExtensions
+    {
+        public static async Task<ServiceVersion> FindServiceVersion(this DbSet<ServiceVersion> services, Service service,SemanticVersion serviceVersion,
+                                                                    CancellationToken cancellationToken,bool asNoTracking = false)
+        {
+            if (services == null) throw new ArgumentNullException(nameof(services));
+            if (serviceVersion == null) throw new ArgumentNullException(nameof(serviceVersion));
+
+            if (service == null)
+            {
+                return null;
+            }
+
+            var versionString = serviceVersion.ToFullString();
+
+            var queryable = asNoTracking ? services.AsNoTracking() : services;
+
+            return await queryable.Where(v => v.ServiceId == service.Id && v.Version == versionString)
+                .FirstOrDefaultAsync(cancellationToken).ConfigureAwait(false);
         }
     }
 }

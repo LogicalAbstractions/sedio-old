@@ -60,6 +60,7 @@ namespace Sedio.Server.Runtime.Api.Internal.Handlers.ServiceInstances
         }
         
         public ServiceInstanceDeletionRequest(string serviceId, SemanticVersion serviceVersion, IPAddress serviceInstanceAddress)
+            : base(ExecutionRequestType.Mutation)
         {
             if (string.IsNullOrWhiteSpace(serviceId))
                 throw new ArgumentException("Value cannot be null or whitespace.", nameof(serviceId));

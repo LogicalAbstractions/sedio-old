@@ -86,6 +86,7 @@ namespace Sedio.Server.Runtime.Api.Internal.Handlers.ServiceInstances
         }
         
         public ServiceInstanceCreationOrUpdateRequest(string serviceId, SemanticVersion serviceVersion, IPAddress serviceInstanceAddress, ServiceInstanceInputDto input)
+            : base(ExecutionRequestType.Mutation)
         {
             if (string.IsNullOrWhiteSpace(serviceId))
                 throw new ArgumentException("Value cannot be null or whitespace.", nameof(serviceId));

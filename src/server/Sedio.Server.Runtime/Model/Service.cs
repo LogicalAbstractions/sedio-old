@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using NuGet.Versioning;
@@ -59,6 +63,22 @@ namespace Sedio.Server.Runtime.Model
                 CreatedAt         = service.CreatedAt,
                 HealthAggregation = service.HealthAggregation.ToOutput<HealthAggregationConfigurationDto>()
             };
+        }
+    }
+
+    public static class ServiceQueryExtensions
+    {
+        public static async Task<Service> FindService(this DbSet<Service> services, string serviceId,CancellationToken cancellationToken,bool asNoTracking = false)
+        {
+            if (services == null) throw new ArgumentNullException(nameof(services));
+            if (string.IsNullOrWhiteSpace(serviceId))
+                throw new ArgumentException("Value cannot be null or whitespace.", nameof(serviceId));
+            
+            var queryable = asNoTracking ? services.AsNoTracking() : services;
+
+            return await queryable.Where(s => s.ServiceId == serviceId)
+                .FirstOrDefaultAsync(cancellationToken)
+                .ConfigureAwait(false);
         }
     }
 }
