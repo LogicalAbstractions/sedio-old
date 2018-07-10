@@ -5,6 +5,7 @@
     <UserSecretsId>f60fd89d-88e2-4b2e-8f3c-536e7c121ee0</UserSecretsId>
     <TrimUnusedDependencies>true</TrimUnusedDependencies>
     <RuntimeIdentifiers>win-x64;osx-x64;linux-x64</RuntimeIdentifiers>
+    <RuntimeVersion>2.1.1</RuntimeVersion>
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="wwwroot\" />

@@ -11,7 +11,7 @@
     <PackageReference Include="App.Metrics" Version="2.1.0" />
     <PackageReference Include="Autofac" Version="4.8.1" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.2" />
-    <PackageReference Include="FluentValidation" Version="7.6.103" />
+    <PackageReference Include="FluentValidation" Version="7.6.104" />
     <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.1" />
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.1" /> 
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.1.1" />
