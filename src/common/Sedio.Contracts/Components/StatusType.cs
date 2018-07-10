@@ -1,6 +1,6 @@
 ﻿namespace Sedio.Contracts.Components
 {
-    public enum HealthStatusType
+    public enum StatusType
     {
         Healthy  = 1,
         Degraded = 2,

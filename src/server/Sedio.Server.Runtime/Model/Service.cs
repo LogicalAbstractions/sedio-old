@@ -24,7 +24,7 @@ namespace Sedio.Server.Runtime.Model
                 builder.Property(s => s.ServiceId).IsRequired().HasMaxLength(48);
                 builder.HasIndex(s => s.ServiceId).IsUnique();
                 
-                builder.OwnsOne(s => s.HealthAggregation,b => b.Property(h => h.ProviderId)
+                builder.OwnsOne(s => s.StatusAggregation,b => b.Property(h => h.ProviderId)
                     .IsRequired()
                     .HasMaxLength(48));
 
@@ -39,7 +39,7 @@ namespace Sedio.Server.Runtime.Model
         
         public string ServiceId { get; set; }
         
-        public HealthAggregationConfiguration HealthAggregation { get; set; }
+        public StatusAggregationConfiguration StatusAggregation { get; set; }
         
         public TimeSpan? CacheTime { get; set; }
         
@@ -61,7 +61,7 @@ namespace Sedio.Server.Runtime.Model
                 Id                = service.ServiceId,
                 CacheTime         = service.CacheTime,
                 CreatedAt         = service.CreatedAt,
-                HealthAggregation = service.HealthAggregation.ToOutput<HealthAggregationConfigurationDto>()
+                StatusAggregation = service.StatusAggregation.ToOutput<StatusAggregationConfigurationDto>()
             };
         }
     }

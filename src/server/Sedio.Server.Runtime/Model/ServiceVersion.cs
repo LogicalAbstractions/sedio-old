@@ -24,11 +24,11 @@ namespace Sedio.Server.Runtime.Model
 
                 builder.HasIndex(s => s.VersionOrder);
                 
-                builder.OwnsOne(s => s.HealthCheck,b => b.Property(h => h.ProviderId)
+                builder.OwnsOne(s => s.StatusCheck,b => b.Property(h => h.ProviderId)
                     .IsRequired()
                     .HasMaxLength(48));
                 
-                builder.OwnsOne(s => s.HealthAggregation,b => b.Property(h => h.ProviderId)
+                builder.OwnsOne(s => s.StatusAggregation,b => b.Property(h => h.ProviderId)
                     .IsRequired()
                     .HasMaxLength(48));
                 
@@ -71,9 +71,9 @@ namespace Sedio.Server.Runtime.Model
         
         public int VersionOrder { get; set; }
 
-        public HealthCheckConfiguration HealthCheck { get; set; }
+        public StatusCheckConfiguration StatusCheck { get; set; }
         
-        public HealthAggregationConfiguration HealthAggregation { get; set; }
+        public StatusAggregationConfiguration StatusAggregation { get; set; }
         
         public NotificationConfiguration Notification { get; set; }
         
@@ -112,8 +112,8 @@ namespace Sedio.Server.Runtime.Model
                 Dependencies = serviceVersion.ServiceDependencies.Select(d => d.ToOutput()).ToList(),
                 Endpoints = serviceVersion.ServiceEndpoints.Select(e => e.ToOutput()).ToList(),
                 
-                HealthAggregation = serviceVersion.HealthAggregation.ToOutput<HealthAggregationConfigurationDto>(),
-                HealthCheck = serviceVersion.HealthCheck.ToOutput<HealthCheckConfigurationDto>(),
+                StatusAggregation = serviceVersion.StatusAggregation.ToOutput<StatusAggregationConfigurationDto>(),
+                StatusCheck = serviceVersion.StatusCheck.ToOutput<StatusCheckConfigurationDto>(),
                 Notification = serviceVersion.Notification.ToOutput<NotificationConfigurationDto>(),
                 InstanceRouting = serviceVersion.InstanceRouting.ToOutput<InstanceRoutingConfigurationDto>(),
                 InstanceRetirement = serviceVersion.InstanceRetirement.ToOutput<InstanceRetirementConfigurationDto>(),

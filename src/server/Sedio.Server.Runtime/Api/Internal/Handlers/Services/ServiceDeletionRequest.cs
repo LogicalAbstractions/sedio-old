@@ -18,22 +18,18 @@ namespace Sedio.Server.Runtime.Api.Internal.Handlers.Services
             {
                 var dbContext = context.DbContext();
 
-                var service = await dbContext.Services
-                    .FirstOrDefaultAsync(s => s.ServiceId == request.ServiceId, context.CancellationToken)
+                var service = await dbContext.Services.FindService(request.ServiceId, context.CancellationToken)
                     .ConfigureAwait(false);
 
-                if (service != null)
-                {
-                    dbContext.Services.Remove(service);
+                if (service == null) return NotFound();
+                
+                dbContext.Services.Remove(service);
                     
-                    await dbContext
-                        .SaveChangesAsync(context.CancellationToken)
-                        .ConfigureAwait(false);
+                await dbContext
+                    .SaveChangesAsync(context.CancellationToken)
+                    .ConfigureAwait(false);
                    
-                    return Deleted();
-                }
-
-                return NotFound();
+                return Deleted();
             }
         }
         

@@ -53,8 +53,8 @@ namespace Sedio.Server.Runtime.Api.Internal.Handlers.ServicesVersions
                 {
                     CacheTime = request.Input.CacheTime,
                     CreatedAt = timeProvider.UtcNow,
-                    HealthAggregation = request.Input.HealthAggregation.ToEntity<HealthAggregationConfiguration>(),
-                    HealthCheck = request.Input.HealthCheck.ToEntity<HealthCheckConfiguration>(),
+                    StatusAggregation = request.Input.StatusAggregation.ToEntity<StatusAggregationConfiguration>(),
+                    StatusCheck = request.Input.StatusCheck.ToEntity<StatusCheckConfiguration>(),
                     InstanceRetirement = request.Input.InstanceRetirement.ToEntity<InstanceRetirementConfiguration>(),
                     InstanceRouting = request.Input.InstanceRouting.ToEntity<InstanceRoutingConfiguration>(),
                     Notification = request.Input.Notification.ToEntity<NotificationConfiguration>(),

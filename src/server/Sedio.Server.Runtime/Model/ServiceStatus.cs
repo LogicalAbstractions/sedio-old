@@ -22,7 +22,7 @@ namespace Sedio.Server.Runtime.Model
         
         public long Id { get; set; }
         
-        public HealthStatusType Status { get; set; }
+        public StatusType Status { get; set; }
         
         public string Message { get; set; }
         

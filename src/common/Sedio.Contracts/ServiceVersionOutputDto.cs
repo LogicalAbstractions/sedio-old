@@ -13,9 +13,9 @@ namespace Sedio.Contracts
 
         public IReadOnlyList<ServiceEndpointDto> Endpoints { get; set; }
 
-        public HealthCheckConfigurationDto HealthCheck { get; set; }
+        public StatusCheckConfigurationDto StatusCheck { get; set; }
 
-        public HealthAggregationConfigurationDto HealthAggregation { get; set; }
+        public StatusAggregationConfigurationDto StatusAggregation { get; set; }
 
         public NotificationConfigurationDto Notification { get; set; }
 

@@ -5,7 +5,7 @@ namespace Sedio.Contracts
 {
     public sealed class ServiceStatusInputDto
     {
-        public HealthStatusType Status { get; set; }
+        public StatusType Status { get; set; }
 
         public string Message { get; set; }
     }

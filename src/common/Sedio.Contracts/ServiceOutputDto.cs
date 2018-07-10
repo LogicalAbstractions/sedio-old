@@ -8,7 +8,7 @@ namespace Sedio.Contracts
     {
         public string Id { get; set; }
 
-        public HealthAggregationConfigurationDto HealthAggregation { get; set; }
+        public StatusAggregationConfigurationDto StatusAggregation { get; set; }
 
         public TimeSpan? CacheTime { get; set; }
 

@@ -3,7 +3,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Sedio.Contracts.Components
 {
-    public sealed class HealthCheckConfigurationDto : AbstractProviderConfigurationDto
+    public sealed class StatusCheckConfigurationDto : AbstractProviderConfigurationDto
     {
       
     }

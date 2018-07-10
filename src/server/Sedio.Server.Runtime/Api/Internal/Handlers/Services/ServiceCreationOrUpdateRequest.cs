@@ -23,8 +23,7 @@ namespace Sedio.Server.Runtime.Api.Internal.Handlers.Services
                 var dbContext = context.DbContext();
 
                 var service = await dbContext.Services
-                    .FirstOrDefaultAsync(s => s.ServiceId == request.ServiceId,context.CancellationToken)
-                    .ConfigureAwait(false);
+                    .FindService(request.ServiceId, context.CancellationToken).ConfigureAwait(false);
 
                 var successResult = Updated(new
                 {
@@ -44,10 +43,10 @@ namespace Sedio.Server.Runtime.Api.Internal.Handlers.Services
                 }
 
                 service.CacheTime = request.Input.CacheTime;
-                service.HealthAggregation = request.Input.HealthAggregation?.ToEntity<HealthAggregationConfiguration>();
+                service.StatusAggregation = request.Input.StatusAggregation?.ToEntity<StatusAggregationConfiguration>();
                 service.ServiceId = request.ServiceId;
 
-                dbContext.SaveChangesAsync(context.CancellationToken).ConfigureAwait(false);
+                await dbContext.SaveChangesAsync(context.CancellationToken).ConfigureAwait(false);
 
                 return successResult;
             }
